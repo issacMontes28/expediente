@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
+  <link rel="stylesheet" href="{{asset('../css/popup.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet"        href="{{asset('css/_all-skins.min.css')}}">
+  <link rel="stylesheet"        href="{{asset('css/popup.css')}}">
   <link rel="apple-touch-icon"  href="{{asset('img/icono.png')}}">
   <link rel="shortcut icon"     href="{{asset('img/icono.png')}}">
   <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
@@ -144,6 +146,8 @@
               <ul class="treeview-menu">
                 <li><a href="{{url('pacient/')}}"><i class="fa fa-circle-o"></i>Pacientes</a></li>
                 <li><a href="{{url('nurseSheet/')}}"><i class="fa fa-circle-o"></i>Hojas de enfermería</a></li>
+                <li><a href="{{url('doctor/')}}"><i class="fa fa-circle-o"></i>Doctores</a></li>
+                <li><a href="{{url('date/')}}"><i class="fa fa-circle-o"></i>Citas</a></li>
                 <li><a href="{{url('soap/')}}"><i class="fa fa-circle-o"></i>Análisis SOAP</a></li>
               </ul>
             </li>

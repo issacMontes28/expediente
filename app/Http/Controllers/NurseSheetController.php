@@ -40,7 +40,7 @@ class NurseSheetController extends Controller
     if($request->ajax()){
       //se crea la hoja de enfermería y se recupera el registro para crear las otras partes de la hoja
       $fecha = Carbon::now();
-      NurseSheet::create(['fecha' => $fecha,'id_paciente' => 1]);
+      NurseSheet::create(['fecha' => $fecha,'id_paciente' => $request->id_paciente]);
       $nurseSheets= NurseSheet::all();
       $unurseSheets = $nurseSheets->last();
 

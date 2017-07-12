@@ -1,12 +1,11 @@
 @extends ('layouts.admin')
 @section('barra')
-	@include('pacients.forms.barra')
+	@include('dates.forms.barra')
 @endsection
 @section ('contenido')
   <div class="row">
     <div class="colg-lg-8 col-md-8 col-sm-8 col-xs-12">
       <h3>Listado de Pacientes</h3>
-      <a href="pacient/create"><button class="btn btn-success">Nuevo paciente</button></a>
     </div>
       <div class="panel-body">
           @include('pacients.search')
@@ -18,6 +17,7 @@
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
+                        <th>Id</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
@@ -26,13 +26,13 @@
                     </thead>
                     @foreach ($pacients as $pacient)
                         <tr>
+                            <td>{{ $pacient->id}}</td>
                             <td>{{ $pacient->nombre}}</td>
                             <td>{{ $pacient->apaterno}}</td>
                             <td>{{ $pacient->amaterno}}</td>
                             <td>{{ $pacient->curp}}</td>
-                            <td>
-															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
-                            </td>
+                            <td>{!!link_to_route('asignar_cita_paciente', $title = 'Consulta', $parameters = $pacient->id,
+          $attributes = ['class'=>'btn btn-info','style'=>"color:#FFFFFF"])!!}</td>
                         </tr>
                     @include('pacients.modal')
                     @endforeach
@@ -41,24 +41,4 @@
             {{$pacients->render()}}
         </div>
     </div>
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Detalle de paciente</h4>
-		      </div>
-		      <div class="modal-body">
-		        @include('pacients.forms.pacient_modal')
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
 @endsection
-@section('js')
-	{!!Html::script('js/popup.js')!!}
-@stop

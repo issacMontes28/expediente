@@ -8,6 +8,7 @@ use SIAM\Http\Requests;
 use SIAM\Http\Requests\PacientCreateRequest;
 use SIAM\Http\Controllers\Controller;
 use SIAM\Pacient;
+use SIAM\Date;
 use SIAM\State;
 use SIAM\Town;
 use SIAM\Locality;
@@ -161,8 +162,16 @@ class PacientController extends Controller
   {
     $somatometries_array = array();
     $somatometries2_array = array();
+    $paciente_array = array();
+
     $paciente = Pacient::find($id);
     $fila_hojas_enfermeria = DB::select("select * FROM nursesheets where id_paciente='$id' ORDER BY id DESC LIMIT 5");
+
+    $fila_paciente = DB::select("select * FROM pacients where id='$id'");
+    foreach ($fila_paciente as $fila) {
+      $paciente_array[] = array('id_paciente' => $fila->id);
+    }
+
     foreach ($fila_hojas_enfermeria as $fila) {
       $id_hoja = $fila->id;
       $fecha_hoja = $fila->fecha;
@@ -206,6 +215,13 @@ class PacientController extends Controller
     $collection2->toJson();
     $file2 = 'json/somatometrias2.json';
     file_put_contents($file2, $collection2);
+
+    //Se crea el archivo json, si existe, se sobreescribe
+    $collection3 = Collection::make($paciente_array);
+    $collection3->toJson();
+    $file3 = 'json/pacientehde.json';
+    file_put_contents($file3, $collection3);
+
     return view('nurseSheets/create',['pacient'=>$paciente]);
   }
 
@@ -227,7 +243,7 @@ class PacientController extends Controller
   public function actualizar(Request $request)
   {
   $pacients = Pacient::name($request->get('name'))->orderBy('apaterno','ASC')->paginate(4);
-  return view('pacient.pacient_update',compact('pacients'));
+  return view('pacients.update',compact('pacients'));
   }
   //ya que se ha eligido uno, se aparta para editarlo//
   public function edit($id)
@@ -290,8 +306,8 @@ class PacientController extends Controller
   public function deleter(Request $request)
   {
    $pacients = Pacient::name($request->get('name'))->orderBy('apaterno','ASC')->paginate(4);
-   return view('pacient.pacient_delete',compact('pacients'));
-  }
+   return view('pacients.delete',compact('pacients'));
+ }
   /**
   * Remueve el elemento de la base de datos, recibe como parámetro
   *el id del usuario que se va a eliminar
@@ -305,7 +321,7 @@ class PacientController extends Controller
    //se manda mensaje mensaje de confirmación
    Session::flash('message','Paciente eliminado de la base de datos correctamente');
    //Se redirecciona a la vista que muestra los registros
-   return Redirect::to('/pacient/show');
+   return Redirect::to('/pacient/index');
 
   }
   public function reporte(){
@@ -364,5 +380,53 @@ class PacientController extends Controller
      $nursesheets = NurseSheet::name($request->get('name'))->orderBy('id','DESC')->paginate(6);
      //se returna la vista con todos los registros
        return view('pacients.index',["pacientes"=>$pacientes]);
+  }
+  public function adddate($id)
+  {
+    $paciente = Pacient::find($id);
+    $pacients = DB::table('pacients')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    $doctors = DB::table('doctors')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    return view('dates/create',compact('pacients','doctors','paciente'));
+  }
+  public function addsoap($id)
+  {
+    $cita = Date::find($id);
+    $id_cita = $cita->id;
+    $id_paciente = $cita->id_paciente;
+    $paciente = Pacient::find($id_paciente);
+    $pacients = DB::table('pacients')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    $doctors = DB::table('doctors')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    $matches_array = array();
+    $fila_matches = DB::select("select * FROM studymatches");
+    foreach ($fila_matches as $fila) {
+      $id_estudio = $fila->id_estudio;
+      $id_enfermedad = $fila->id_enfermedad;
+      $fila_estudio = DB::select("select * FROM studies where id='$id_estudio'");
+      $fila_enfermedad = DB::select("select * FROM diagnosticos where id='$id_enfermedad'");
+      foreach ($fila_estudio as $estudios) {$estudio = $estudios->nombre;}
+      foreach ($fila_enfermedad as $enfermedades) {$enfermedad = $enfermedades->nombre;}
+
+      $matches_array[] = array('id_estudio' => $id_estudio, 'estudio' => $estudio,
+      'id_enfermedad' => $id_enfermedad, 'enfermedad' => $enfermedad);
+    }
+    $collection4 = Collection::make($matches_array);
+    $collection4->toJson();
+    $file4 = 'json/matches.json';
+    file_put_contents($file4, $collection4);
+    return view('soaps/create',compact('cita','pacients','doctors','paciente','id_cita'));
+  }
+  public function show_details(Request $request,$id){
+    if ($request->ajax()) {
+      $paciente = Pacient::find($id);
+      return response()->json($paciente);
+    }
   }
 }

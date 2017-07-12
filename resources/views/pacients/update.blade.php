@@ -22,7 +22,7 @@
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>CURP</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acciones</th>
                     </thead>
                     @foreach ($pacients as $pacient)
                         <tr>
@@ -31,8 +31,11 @@
                             <td>{{ $pacient->amaterno}}</td>
                             <td>{{ $pacient->curp}}</td>
                             <td>
-															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
+															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-info btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
                             </td>
+														<td>
+														<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar2(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#actualizar'>Actualizar paciente</a>
+										        </td>
                         </tr>
                     @include('pacients.modal')
                     @endforeach
@@ -43,6 +46,23 @@
     </div>
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Detalle de paciente</h4>
+					</div>
+					<div class="modal-body">
+						@include('pacients.forms.pacient_modal')
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="actualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">

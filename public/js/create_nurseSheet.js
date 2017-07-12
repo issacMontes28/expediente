@@ -7,6 +7,10 @@ function Medicamento(elemento){
  this.via=ko.observable(elemento.via);
 }
 
+function Paciente(elemento){
+ this.id_paciente=ko.observable(elemento.id_paciente);
+}
+
 function Habitus(elemento){
   this.condicion = ko.observable(elemento.condicion);
   this.constitucion = ko.observable(elemento.constitucion);
@@ -78,6 +82,7 @@ function appViewModel(){
   self.nuevo_habitus = ko.observableArray([]);
   self.somatometrias_previas = ko.observableArray([]);
   self.somatometrias_previas2 = ko.observableArray([]);
+  self.Paciente = ko.observableArray([]);
   self.visible_btnGrafica = ko.observable(0);
   self.visible_btnTabla = ko.observable(0);
 
@@ -100,6 +105,15 @@ function appViewModel(){
      });
      //los clientes se cargan en el arreglo que se mostrará en el <select></select>
      self.somatometrias_previas2(somatometriasArreglo);
+  });
+
+  //Función que lee el archivo en formato json que contiene el paciente al que se le asignará la HDE.
+  $.getJSON('../../json/pacientehde.json',function(result){
+    //el método map pasa cada cliente que lee de la base de datos a un arreglo temporal.
+     var pacienteArreglo= $.map(result,function(item){
+      return new Paciente(item);
+     });
+     self.Paciente(pacienteArreglo);
   });
 
   self.tabla = function(){ self.visible_btnTabla(1); }
@@ -373,6 +387,7 @@ function appViewModel(){
            headers: {'X-CSRF-TOKEN': token},
            type: 'POST',
            data: {
+             id_paciente: self.Paciente()[0].id_paciente(),
              peso: self.peso(),altura: self.altura(),
              psistolica: self.psistolica(), pdiastolica: self.pdiastolica(), frespiratoria: self.frespiratoria(),
              pulso: self.pulso(),oximetria: self.oximetria(),glucometria: self.glucometria(),

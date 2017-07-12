@@ -22,7 +22,7 @@
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>CURP</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acciones</th>
                     </thead>
                     @foreach ($pacients as $pacient)
                         <tr>
@@ -33,6 +33,9 @@
                             <td>
 															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
                             </td>
+														<td>{!!Form::model($pacient,['route'=>['pacient.destroy',$pacient->id],'method'=>'DELETE'])!!}
+										          <button type="submit" onclick="return confirm('¿Realmente desea eliminar Paciente?')" class="btn btn-danger btn-sm">Eliminar Paciente</button>
+										        </td>
                         </tr>
                     @include('pacients.modal')
                     @endforeach

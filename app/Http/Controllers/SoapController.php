@@ -185,7 +185,7 @@ class SoapController extends Controller
         }
         else {
           $difinal = $ndiagnostico;
-          $id_difinal = $diagnostico2->id;
+          $id_difinal = $diagnostico2->id;|
         }
       }
       return view('soaps.edit',['soap'=>$soap,'dinicial'=>$dinicial,'id_dinicial'=>$id_dinicial,

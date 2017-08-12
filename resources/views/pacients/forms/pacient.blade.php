@@ -1,5 +1,3 @@
-{!!Form::open(['route'=>'pacient.store', 'method'=>'POST','files' => true, 'autocomplete'=>'off'])!!}
-      {{Form::token()}}
 <div class="form-group">
 <div class="form-group">
 {!!Form::label('nombre_1','Nombre:')!!}
@@ -25,6 +23,12 @@
 <div class="form-group">
 {!!Form::label('curp_1','CURP:')!!}
 {!!Form::text('curp',null,['class'=>'form-control', 'placeholder'=>'Ingrese CURP de paciente'])!!}
+</div>
+<div class="form-group">
+{!!Form::label('estadocivil_1','Estado civil:')!!}
+{!!Form::select('estadocivil',[
+'Soltero(a)'=>'Soltero(a)','Casado(a)'=>'Casado(a)',
+'Divorciado(a)'=>'Divorciado(a)','Viudo(a)'=>'Viudo(a)','Unión libre'=>'Unión libre'],['class'=>'form-control'])!!}
 </div>
 <div class="form-group">
 {!!Form::label('nacionalidad_1','Nacionalidad:')!!}
@@ -82,8 +86,3 @@
 {!!Form::label('correo_1','Correo (opcional):')!!}
 {!!Form::email('correo',null,['class'=>'form-control', 'placeholder'=>'Ingrese correo del paciente'])!!}
 </div>
-<div class="form-group">
-<button class="btn btn-primary" type="submit">Guardar</button>
-<button class="btn btn-danger" type="reset">Cancelar</button>
-</div>
-{!!Form::close()!!}

@@ -50,7 +50,7 @@ class StudyController extends Controller
     file_put_contents($file, $collection);
     $file = 'json/diagnosticos.json';
     file_put_contents($file, $collection2);
-    return view('Estudios/studyMatchCreate');
+    return view('Estudios/studyMatchCreate2');
   }
 
   public function AddItem(Request $request)
@@ -59,23 +59,49 @@ class StudyController extends Controller
       for ($i=0; $i < count($request->matches) ; $i++) {
          StudyMatch::create([
           'id_estudio' => $request->matches[$i]["id_estudio"],
-          'id_enfermedad' => $request->matches[$i]["id_diagnostico"]
+          'id_enfermedad' => $request->matches[$i]["id_diagnostico"],
+          'proposito' => $request->matches[$i]["proposito"],
+          'metodologia' => $request->matches[$i]["metodologia"]
         ]);
     }
     return response()->json(["mensaje"=>"Estudios asignados a diagnósticos correctamente"]);
    }
  }
-  /**
-   * Muestra a todas las promociones
-   *
-   * @param  int  $id
-   * @return Response
-   */
-   /*
-  public function show(Request $request)
+ public function diagnosticos(Request $request, $letra_diagnostico){
+   if ($request->ajax()) {
+     $diag = "$letra_diagnostico"."%";
+     $diagnosticos = DB::table('diagnosticos')
+                 ->where('nombre', 'like', $diag)
+                 ->get();
+     return response()->json($diagnosticos);
+   }
+ }
+ public function estudios(Request $request, $letra_estudio){
+   if ($request->ajax()) {
+     $est = "$letra_estudio"."%";
+     $diagnosticos = DB::table('studies')
+                 ->where('nombre', 'like', $est)
+                 ->get();
+     return response()->json($diagnosticos);
+   }
+ }
+ public function eliminar(){
+   $matches = StudyMatch::all();
+   return view('Estudios/studyMatchDelete',['matches'=>$matches]);
+ }
+ public function destroy($id){
+   DB::table('studymatches')->where('id', '=', "$id")->update(['deleted_at' => Carbon::now()]);
+   Session::flash('message','Se ha eliminado enlace correctamente');
+   return Redirect::to('eliminarMatch/');
+ }
+ public function show(Request $request)
   {
-    $promotionProducts = PromotionProduct::name($request->get('name'))->orderBy('nombre','ASC')->paginate(5);
-    return view('PromotionProducts/promotionProduct_show',compact('promotionProducts'));
-
-  }*/
+    $matches = StudyMatch::fecha($request->get('fecha1'))->orderBy('id','DESC')->paginate(6);
+    return view('Estudios/studyMatchDelete',['matches'=>$matches]);
+  }
+  public function showUser(Request $request)
+   {
+     $matches = StudyMatch::user($request->get('id_usuario'))->orderBy('id','DESC')->paginate(6);
+     return view('Estudios/studyMatchDelete',['matches'=>$matches]);
+   }
 }

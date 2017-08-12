@@ -1,3 +1,8 @@
+function DiagnosticoPrevio(elemento){
+ this.id=ko.observable(elemento.id);
+ this.nombre=ko.observable(elemento.nombre);
+ this.tipo=ko.observable(elemento.tipo);
+}
 function Diagnostico(elemento){
  this.consecutivo=ko.observable(elemento.consecutivo);
  this.nombre=ko.observable(elemento.nombre);
@@ -23,25 +28,28 @@ function appViewModel(){
 	var self=this;
 
   //Variables para el SOAP
-  self.subjetivo = ko.observable();
-  self.objetivo = ko.observable();
-  self.analisis = ko.observable();
-  self.plan = ko.observable();
   self.dinicial = ko.observable();
   self.difinal = ko.observable();
 	self.nuevos_diagnosticos_ini = ko.observableArray([]);
   self.nuevos_diagnosticos_fin = ko.observableArray([]);
+  self.diagnosticos_previos = ko.observableArray([]);
   self.matches = ko.observableArray([]);
   self.aux_matchesi = ko.observableArray([]);
   self.aux_matchesf = ko.observableArray([]);
 	var consec = 0;
   var consecfin = 0;
 
-  $.getJSON('../../json/matches.json',function(result){
-    var matchesArreglo= $.map(result,function(item){
-      return new Match(item);
+  $.getJSON('../../json/diagnosticos_modificar.json',function(result){
+    var DiagnosticosArreglo= $.map(result,function(item){
+      return new DiagnosticoPrevio(item);
     });
-    self.matches(matchesArreglo);
+    self.diagnosticos_previos(DiagnosticosArreglo);
+    /*
+    for (var i = 0; i < self.diagnosticos_previos().length; i++) {
+      if (self.diagnosticos_previos()[i].tipo()=="Inicial") {
+        $( "#tabla_previos_iniciales" ).append( "<tr><td width='50%'><input value='"+self.diagnosticos_previos()[i].id()+"'disabled></input></td><td width='50%'><input value='"+self.diagnosticos_previos()[i].nombre()+"'disabled></input></td></tr>" );
+      }
+    }*/
   });
 
 	//agregar nuevo diagnostico
@@ -85,42 +93,92 @@ function appViewModel(){
 		self.nuevos_diagnosticos_fin.remove(diagnostico);
 	}
 
-  self.agregarSoap=function(){
-    var r= confirm("¿Guardar nuevo registro?");
+  self.modificarSoap=function(){
+    var subjetivo = $('#subjetivo').val();
+    var objetivo = $('#objetivo').val();
+    var analisis = $('#analisis').val();
+    var plan = $('#plan').val();
+
+    var r= confirm("¿Modificar nota SOAP?");
     if (r==true) {
       //Variable que indica si hubo algún error
+      var diniciales = self.nuevos_diagnosticos_ini();
+      var difinales = self.nuevos_diagnosticos_fin();
       var bandera = 0;
       //condiciones para la somatometría
-      if (self.subjetivo()==undefined && bandera==0) {alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
-      if (self.objetivo()==undefined && bandera==0) {alert("Faltan datos: objetivo en el análisis SOAP"); bandera =1;}
-      if (self.analisis()==undefined && bandera==0) {alert("Faltan datos: análisis en el análisis SOAP"); bandera =1;}
-      if (self.plan()==undefined && bandera==0) {alert("Faltan datos: plan en el análisis SOAP"); bandera =1;}
-      if (self.nuevos_diagnosticos_ini().length == 0 && bandera==0) {alert("Faltan datos: diagnóstico inicial en el análisis SOAP"); bandera =1;}
-      if (self.nuevos_diagnosticos_fin().length == 0 && bandera==0) {alert("Faltan datos: diagnóstico final en el análisis SOAP"); bandera =1;}
-
+      if (subjetivo=="" && bandera==0) {alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
+      if (objetivo=="" && bandera==0) {alert("Faltan datos: objetivo en el análisis SOAP"); bandera =1;}
+      if (analisis=="" && bandera==0) {alert("Faltan datos: análisis en el análisis SOAP"); bandera =1;}
+      if (plan=="" && bandera==0) {alert("Faltan datos: plan en el análisis SOAP"); bandera =1;}
       if(bandera == 0){
-        var token = $("#token").val();
-        var id_cita = $("#id_cita").val();
-        $.ajax({
-           url: 'AddSoap',
-           headers: {'X-CSRF-TOKEN': token},
-           type: 'POST',
-           data: {
-             subjetivo: self.subjetivo(), objetivo: self.objetivo(), analisis: self.analisis(),
-						 plan: self.plan(), diniciales: self.nuevos_diagnosticos_ini(),
-             id_cita: id_cita, difinales: self.nuevos_diagnosticos_fin()
-           },
-           dataType: 'JSON',
-           error: function(respuesta) {alert("error");},
-           success: function(respuesta) {
-             if (respuesta) {
-                alert("Se han asignado análisis SOAP correctamente");
-               }else {
-               alert("error");
-             }
-           }
-       });
-     }
+        if (self.nuevos_diagnosticos_ini().length==0 || self.nuevos_diagnosticos_fin().length==0) {
+          if (self.nuevos_diagnosticos_fin().length==0 && self.nuevos_diagnosticos_ini().length==0) {
+            var r2= confirm("No modificó diagnósticos iniciales ni finales,¿mantener los prievios?");
+            var diniciales = "Ninguno";
+            var difinales="Ninguno";
+          }
+          else if(self.nuevos_diagnosticos_ini().length==0) {
+            var r2= confirm("No modificó diagnósticos iniciales,¿mantener los prievios?");
+            var diniciales = "Ninguno";
+          }
+          else{
+            var r2= confirm("No modificó diagnósticos finales,¿mantener los prievios?");
+            var difinales="Ninguno";
+          }
+          /*
+          alert(diniciales);
+          alert(difinales);*/
+          if (r2==true) {
+            var token = $("#token").val();
+            var id_soap = $("#id_soap").val();
+            $.ajax({
+               url: 'UpdateSoap',
+               headers: {'X-CSRF-TOKEN': token},
+               type: 'POST',
+               data: {
+                 subjetivo: subjetivo, objetivo: objetivo, analisis: analisis,
+                 plan: plan, diniciales: diniciales,
+                 difinales: difinales, soap: id_soap
+               },
+               dataType: 'JSON',
+               error: function(respuesta) {alert("error");},
+               success: function(respuesta) {
+                 if (respuesta) {
+                    alert(respuesta.mensaje);
+                   }else {
+                   alert("error");
+                }
+              }
+            });
+          }
+        }
+        else {
+          /*
+          alert(diniciales);
+          alert(difinales);*/
+          var token = $("#token").val();
+          var id_soap = $("#id_soap").val();
+          $.ajax({
+             url: 'UpdateSoap',
+             headers: {'X-CSRF-TOKEN': token},
+             type: 'POST',
+             data: {
+               subjetivo: subjetivo, objetivo: objetivo, analisis: analisis,
+               plan: plan, diniciales: self.nuevos_diagnosticos_ini(),
+               difinales: self.nuevos_diagnosticos_fin(), soap: id_soap
+             },
+             dataType: 'JSON',
+             error: function(respuesta) {alert("error");},
+             success: function(respuesta) {
+               if (respuesta) {
+                  alert("Se ha actualizado análisis SOAP correctamente");
+                 }else {
+                 alert("error");
+              }
+            }
+         });
+        }
+      }
     }
   }
 }

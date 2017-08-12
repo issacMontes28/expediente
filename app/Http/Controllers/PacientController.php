@@ -151,6 +151,83 @@ class PacientController extends Controller
     return $pdf ->download($nombre_ticket);
     //return redirect('pacient/');
   }
+  public function addPacient(PacientCreateRequest $request)
+  {
+    //el método create() crea un nuevo registro, se deben asociar los datos del request
+    //con las columnas de la tabla
+    Pacient::create([
+    'nombre' => $request['nombre'],
+    'apaterno' => $request['apaterno'],
+    'amaterno' => $request['amaterno'],
+    'sexo' => $request['sexo'],
+    'fecha_nac' => $request['fecha_nac'],
+    'curp' => $request['curp'],
+    'nacionalidad' => $request['nacionalidad'],
+    'calle' => $request['calle'],
+    'num_ext' => $request['num_ext'],
+    'num_int' => $request['num_int'],
+    'colonia' => $request['colonia'],
+    'cp' => $request['cp'],
+    'localidad' => $request['localidad'],
+    'municipio' => $request['municipio'],
+    'estado' => $request['estado'],
+    'telefono_casa' => $request['telefono_casa'],
+    'telefono_celular' => $request['telefono_celular'],
+    'telefono_oficina' => $request['telefono_oficina'],
+    'correo' => $request['correo']
+    ]);
+    Session::flash('message','Paciente agregado correctamente');
+    $fecha = Carbon::now();
+    $pacients= Pacient::all();
+    $upacient = $pacients->last();
+    $id_paciente = $upacient->id;
+    $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
+
+    $nombre = $upacient->nombre;
+    $apaterno = $upacient->apaterno;
+    $amaterno = $upacient->amaterno;
+    $sexo = $upacient->sexo;
+    $fecha_nac = $upacient->fecha_nac;
+    $curp = $upacient->curp;
+    $nacionalidad = $upacient->nacionalidad;
+    $calle = $upacient->calle;
+    $num_ext = $upacient->num_ext;
+    $num_int = $upacient->num_int;
+    $colonia = $upacient->colonia;
+    $cp = $upacient->cp;
+    $localidad = $upacient->localidad;
+    $municipio = $upacient->municipio;
+    $estado = $upacient->estado;
+    $telefono_casa = $upacient->telefono_casa;
+    $telefono_celular = $upacient->telefono_celular;
+    $telefono_oficina = $upacient->telefono_oficina;
+    $correo = $upacient->correo;
+
+    $pdf = PDF::loadView('reports/pacient_report',[
+      'nombre' => $nombre,
+      'apaterno' => $apaterno,
+      'amaterno' => $amaterno,
+      'sexo' => $sexo,
+      'fecha_nac' => $fecha_nac,
+      'curp' => $curp,
+      'nacionalidad' => $nacionalidad,
+      'calle' => $calle,
+      'num_ext' => $num_ext,
+      'num_int' => $num_int,
+      'colonia' => $colonia,
+      'cp' => $cp,
+      'localidad' => $localidad,
+      'municipio' => $municipio,
+      'estado' => $estado,
+      'telefono_casa' => $telefono_casa,
+      'telefono_celular' => $telefono_celular,
+      'telefono_oficina' => $telefono_oficina,
+      'correo' => $correo]);
+    $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
+    return $pdf->stream($nombre_ticket);
+    //return $pdf ->download($nombre_ticket);
+    //return redirect('pacient/');
+  }
 
   /**
   * Display the specified resource.

@@ -102,22 +102,133 @@ class SoapController extends Controller
         //self::reporte($request);
       }
     }
-  /*
-   public function store(Request $request)
-   {
-     //el método create() crea un nuevo registro, se deben asociar los datos del request
-     //con las columnas de la tabla
-     Soap::create([
-       'id_cita' => 1,
-       'subjetivo' => $request['subjetivo'],
-       'objetivo' => $request['objetivo'],
-       'analisis' => $request['analisis'],
-       'plan' => $request['plan']
-     ]);
-
-     return redirect('soap/show')->with('message','Se ha agregado análisis SOAP a la conculta');
-   }*/
-
+    public function updateItem(Request $request)
+    {
+      if($request->ajax()){
+        //Se actualizan los datos del SOAP
+        $soap = Soap::find($request->soap);
+        $soap->fill([
+          'subjetivo' => $request->subjetivo,
+          'objetivo' => $request->objetivo,
+          'analisis' => $request->analisis,
+          'plan' => $request->plan]);
+        $soap->save();
+        $soap = $request->soap;
+        //Si hay nuevos diagnósticos iniciales o finales
+        if ($request->diniciales!="Ninguno" || $request->difinales!="Ninguno") {
+          //Se comparan los diagnósticos previos con los nuevos para eliminar
+          //aquellos diagnósticos previos que no figuren en los nuevos
+          $diagnosticos = DB::select("select * from soapdiagnostics where id_soap='$soap'");
+          foreach ($diagnosticos as $diagnostico) {
+            //bandera que indica si se encontró un diganóstico tanto previo como nuevo
+            $bandera_diag_ini = 0;
+            $bandera_diag_fin = 0;
+            $id_diagnostico = $diagnostico->id_diagnostico;
+            $id_diagnostico_soap = $diagnostico->id;
+            $tipo_diag = $diagnostico->tipo;
+            //Se selecciona el diagnóstico asociado al soap
+            $diag = DB::select("select * from diagnosticos where id='$id_diagnostico'");
+            //Se extrae el nombre del diagnóstico asociado al soap
+            foreach ($diag as $diag2) {
+              $ndiag = $diag2->nombre;
+            }
+            //Se busca en los nuevos diagnósticos iniciales si se encuentra el diagnóstico previo
+            //para no eliminarlo(si el diagnóstico previo es inicial)
+            if ($request->diniciales!="Ninguno") {
+              for ($i=0; $i < count($request->diniciales); $i++) {
+                if ($request->diniciales[$i]["nombre"] == $ndiag && $tipo_diag="Inicial") {
+                  //si el diagnóstico previo se haya entre los actuales, la bandera cambia
+                  $bandera_diag_ini = 1;
+                }
+              }
+              //Si el diagnóstico previo no se encuentra entre los nuevos, se elimina
+              if ($bandera_diag_ini == 0) {
+                DB::table('soapdiagnostics')->where('id', '=', "$id_diagnostico_soap")->update(['deleted_at' => Carbon::now()]);
+              }
+            }
+            //Se busca en los nuevos diagnósticos finales si se encuentra el diagnóstico previo
+            //para no eliminarlo(si el diagnóstico previo es final)
+            if ($request->difinales!="Ninguno") {
+              for ($i=0; $i < count($request->difinales); $i++) {
+                if ($request->difinales[$i]["nombre"] == $ndiag && $tipo_diag="Final") {
+                  $bandera_diag_fin = 1;
+                }
+              }
+              //Si el diagnóstico previo no se encuentra entre los nuevos, se elimina
+              if ($bandera_diag_fin == 0) {
+                DB::table('soapdiagnostics')->where('id', '=', "$id_diagnostico_soap")->update(['deleted_at' => Carbon::now()]);
+              }
+            }
+            $bandera_diag_ini = 0;
+            $bandera_diag_fin = 0;
+          }
+          //se agregan los diagnósticos iniciales nuevos si no han sido ya ingresados
+          if ($request->diniciales!="Ninguno") {
+            for ($i=0; $i < count($request->diniciales); $i++) {
+              //Se recupera el id del nuevo diagnóstico para compararlo con los previos
+              $nombre = $request->diniciales[$i]["nombre"];
+              $diagno =  DB::select("select * from diagnosticos where nombre='$nombre'");
+              foreach ($diagno as $diag) {
+                $id_diag = $diag->id;
+              }
+              $bandera_diag_ini_1 = 0;
+              //Se valida que los nuevos diagnósticos no estén entre los previos
+              foreach ($diagnosticos as $diagnostico) {
+                $tipo_diag = $diagnostico->tipo;
+                if ($id_diag == $diagnostico->id_diagnostico && $tipo_diag=="Inicial" ) {
+                  $bandera_diag_ini_1 = 1;
+                }
+              }
+              if ($bandera_diag_ini_1 == 0) {
+                SoapDiagnostic::create([
+                'id_soap' => $soap,
+                'id_diagnostico' => $id_diag,
+                'tipo' => "Inicial"]);
+              }
+              $bandera_diag_ini_1 = 0;
+            }
+          }
+          //Se agregan los diagnósticos iniciales nuevo que no estén en los previos
+          if ($request->difinales!="Ninguno") {
+            for ($i=0; $i < count($request->difinales); $i++) {
+              //Se recupera el id del nuevo diagnóstico para compararlo con los previos
+              $nombre = $request->difinales[$i]["nombre"];
+              $diagno =  DB::select("select * from diagnosticos where nombre='$nombre'");
+              foreach ($diagno as $diag) {
+                $id_diag = $diag->id;
+              }
+              $bandera_diag_fin_1 = 0;
+              //Se valida que los nuevos diagnósticos no estén entre los previos
+              foreach ($diagnosticos as $diagnostico) {
+                $tipo_diag = $diagnostico->tipo;
+                if ($id_diag == $diagnostico->id_diagnostico && $tipo_diag=="Final" ) {
+                  $bandera_diag_ini_1 = 1;
+                }
+              }
+              if ($bandera_diag_fin_1 == 0) {
+                SoapDiagnostic::create([
+                'id_soap' => $soap,
+                'id_diagnostico' => $id_diag,
+                'tipo' => "Final"]);
+              }
+              $bandera_diag_fin_1 = 0;
+            }
+          }
+        }
+        if ($request->diniciales=="Ninguno" || $request->difinales=="Ninguno") {
+          if ($request->diniciales=="Ninguno" && $request->difinales=="Ninguno") {
+            return response()->json(["mensaje"=>"No hubo cambios en diagnósticos iniciales ni finales. Análisis SOAP actualizado correctamente"]);
+          }
+          if ($request->diniciales=="Ninguno") {
+            return response()->json(["mensaje"=>"No hubo cambio en diagnósticos iniciales. Análisis SOAP actualizado correctamente"]);
+          }
+          if ($request->difinales=="Ninguno") {
+            return response()->json(["mensaje"=>"No hubo cambio en diagnósticos finales. Análisis SOAP actualizado correctamente"]);
+          }
+        }
+        return response()->json(["mensaje"=>"Se ha actualizado análisis SOAP satisfactoriamente"]);
+      }
+    }
    /**
     * Display the specified resource.
     *
@@ -173,23 +284,30 @@ class SoapController extends Controller
    {
       $soap = Soap::find($id);
       $id_soap = $soap->id;
-      $data = SoapDiagnostic::select("id_diagnostico","tipo")->where("id_soap","=","$id_soap")->get();
+      $diagnostics_array = array();
+
+      $data = SoapDiagnostic::select("id_diagnostico","tipo","id")->where("id_soap","=","$id_soap")->get();
       foreach ($data as $diagnostico) {
-        $data2 = Diagnostic::select("id","nombre")->where("id","=","{$diagnostico->id_diagnostico}")->get();
+        $id_diagnostico = $diagnostico->id_diagnostico;
+        $data2 = DB::select("select * from diagnosticos where id='$id_diagnostico'");
         foreach ($data2 as $diagnostico2) {
           $ndiagnostico = $diagnostico2->nombre;
         }
         if ($diagnostico->tipo == 'Inicial') {
-          $dinicial = $ndiagnostico;
-          $id_dinicial = $diagnostico2->id;
+          $diagnostics_array[] = array('id' => $diagnostico2->id,'nombre'=> $ndiagnostico, 'tipo'=>'Inicial');
         }
         else {
-          $difinal = $ndiagnostico;
-          $id_difinal = $diagnostico2->id;|
+          $diagnostics_array[] = array('id' => $diagnostico2->id,'nombre'=> $ndiagnostico, 'tipo'=>'Final');
         }
       }
-      return view('soaps.edit',['soap'=>$soap,'dinicial'=>$dinicial,'id_dinicial'=>$id_dinicial,
-       'difinal'=>$difinal, 'id_difinal'=>$id_difinal]);
+
+      //Se crea el archivo json, si existe, se sobreescribe
+      $collection = Collection::make($diagnostics_array);
+      $collection->toJson();
+      $file = 'json/diagnosticos_modificar.json';
+      file_put_contents($file, $collection);
+
+      return view('soaps.edit',['soap'=>$soap]);
    }
    /**
     * Actualiza el registro en la base de datos

@@ -21,5 +21,17 @@ class StudyMatch extends Model
    * @var array
    */
 
-  protected $fillable = ['id_estudio','id_enfermedad'];
+  protected $fillable = ['id_estudio','id_enfermedad','proposito','metodologia'];
+
+  public function scopeFecha($query,$fecha1){
+    if ($fecha1 != null) {
+      $fecha = $fecha1.'%';
+      $query->where('created_at',"like","$fecha");
+    }
+  }
+  public function scopeUser($query,$user){
+    if ($user != null) {
+      $query->where('id_usuario',"=","$user");
+    }
+  }
 }

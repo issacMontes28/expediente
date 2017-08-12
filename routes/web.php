@@ -31,6 +31,7 @@ Route::get('pacient/actualizar','PacientController@actualizar');
 //sub-rutas para extraer el detalle del paciente
 Route::get('pacient/show_details/{id}','PacientController@show_details');
 Route::get('pacient/pacient/show_details/{id}','PacientController@show_details');
+Route::post('pacient/addPacient','PacientController@addPacient');
 Route::resource('pacient','PacientController');
 
 //Rutas para CRUD de hojas de enfermería
@@ -64,6 +65,7 @@ Route::resource('date', 'DateController');
 //ruta para obtener los diagnósticos
 Route::get('find', 'SoapController@diagnosticos');
 Route::post('soap/create/AddSoap','SoapController@addItem');
+Route::post('soap/{id}/UpdateSoap','SoapController@updateItem');
 Route::get('/soap/create/{id}',
 ['uses' => 'PacientController@addsoap', 'as' => 'asignar_analisis_soap']);
 Route::get('soap/show/{id}', 'SoapController@showsoap')->name('mostrar_analisis_soap');
@@ -73,4 +75,10 @@ Route::get('soap/deleter/show_details/{id}','SoapController@show_details');
 Route::resource('soap', 'soapController');
 
 Route::get('match', 'StudyController@create');
+Route::get('eliminarMatch', 'StudyController@eliminar');
+Route::get('match/{letra_diagnostico}', 'StudyController@diagnosticos');
+Route::get('match2/{letra_estudio}', 'StudyController@estudios');
 Route::post('/addMatch', 'StudyController@AddItem');
+
+Route::get('study/show/usuario', 'StudyController@showUser');
+Route::resource('study', 'studyController');

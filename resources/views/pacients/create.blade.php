@@ -15,10 +15,21 @@
 					</ul>
 				</div>
 			@endif
-			@include('pacients.forms.pacient')
+			<form id="formulario_paciente">
+		    {{Form::token()}}
+				@include('pacients.forms.pacient')
+				@include('pacients.forms.antecedentes_hf')
+				@include('pacients.forms.antecedentes_pp')
+				@include('pacients.forms.antecedentes_pnp')
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit" data-bind="click: $root.submit">Guardar</button>
+						<button class="btn btn-danger" type="reset">Cancelar</button>
+					</div>
+			</form>
 		</div>
 	</div>
 @endsection
 @section('js')
 	{!!Html::script('js/pacientes.js')!!}
+	{!!Html::script('js/create_nurseSheet.js')!!}
 @stop

@@ -70,6 +70,7 @@
 					{!!Form::open()!!}
 					@include('nurseSheets.forms.nursesheet_modal_somatometry')
 					@include('nurseSheets.forms.nursesheet_modal_habitus')
+					@include('nurseSheets.forms.nursesheet_modal_medicaments')
 					{!!Form::close()!!}
 				</div>
 				<div class="modal-footer">

@@ -82,7 +82,7 @@ function mostrarnurse(btn){
     $("#pulso").val(res.somatometria[0].pulso);
     $("#oximetria").val(res.somatometria[0].oximetria);
     $("#glucometria").val(res.somatometria[0].glucometria);
-    
+
     if (res.habitus.length > 0){
       $("#condicion").val(res.habitus[0].condicion);
       $("#constitucion").val(res.habitus[0].constitucion);
@@ -96,6 +96,19 @@ function mostrarnurse(btn){
       $("#movanormal_obs").val(res.habitus[0].movanormal_obs);
       $("#marchanormal").val(res.habitus[0].marchanormal);
     }
+
+    if (res.medicamentos.length > 0){
+      for (var i = 0; i < res.medicamentos.length; i++) {
+        $("#modal_medicaments").html("<div class='form-group'><label>Nombre de medicamento</label><input id='nombre_med' class='form-control' value='"+res.medicamentos[i].nombre_med+"'></input></div><div class='form-group'><label>Fecha de administración</label><input id='fecha_admin' class='form-control' value='"+res.medicamentos[i].fecha_admin+"'></input></div><div class='form-group'><label>Cantidad</label><input id='cantidad' class='form-control' value='"+res.medicamentos[i].cantidad+"'></input></div><div class='form-group'><label>Vía de administración</label><input id='via' class='form-control' value='"+res.medicamentos[i].via+"'></input></div><br></br>");
+      }
+    }
+
+    if (res.actuals.length > 0){
+      for (var i = 0; i < res.medicamentos.length; i++) {
+        $("#modal_medicaments").html("<div class='form-group'><label>Nombre de medicamento</label><input id='nombre_med' class='form-control' value='"+res.medicamentos[i].nombre_med+"'></input></div><label>Vía de administración</label><input id='via' class='form-control' value='"+res.medicamentos[i].via+"'></input></div><br></br>");
+      }
+    }
+
   });
 }
 function modificarestudio(btn){

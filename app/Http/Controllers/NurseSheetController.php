@@ -232,8 +232,19 @@ class NurseSheetController extends Controller
         'movanormal'=> $habs->movanormal,'movanormal_obs' => $habs->movanormal_obs,
         'marchanormal'=> $habs->marchanormal);
       }
+      $medicaments = NsMedicament::select("*")->where("id_ns","=","$id_nursesheet")->get();
+      $medicamentos = array();
+      foreach ($medicaments as $medicament) {
+        $medicamentos[] = array('nombre_med' => $medicament->nombre_med,'fecha_admin'=> $medicament->fecha_admin,
+        'cantidad'=> $medicament->cantidad,'via' => $medicament->via);
+      }
+      $mactuals = nsActualMedicament::select("*")->where("id_ns","=","$id_nursesheet")->get();
+      $actuals = array();
+      foreach ($mactuals as $mactual) {
+        $actuals[] = array('nombre_med' => $mactual->nombre_med,'via' => $mactual->via);
+      }
       $info = array('paciente' => $nombre_paciente, 'nursesheet' => $nursesheet,
-      'somatometria' => $somas, 'habitus' => $habits);
+      'somatometria' => $somas, 'habitus' => $habits, 'medicamentos' => $medicamentos, 'actuals' => $actuals);
       return response()->json($info);
     }
   }

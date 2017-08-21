@@ -4,7 +4,7 @@
           <a href="{!!URL::to('index')!!}">Menú principal</a>
       </li>
       <li>
-          <a href="{!!URL::to('/pacient')!!}">Crear Paciente</a>
+          <a href="{!!URL::to('pacient/create')!!}">Crear Paciente</a>
       </li>
       <li>
           <a href="{!!URL::to('pacient/deleter')!!}">Eliminar Paciente</a>

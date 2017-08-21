@@ -6,10 +6,7 @@
     <div class="row">
    {!!Form::open()!!}
         <input type="hidden" name="_token" value="{{ csrf_token()}}" id="token"></input>
-          @include('Estudios.forms.studyMatch')
+          @include('Estudios.forms.studyDelete')
     {!!Form::close()!!}
   </div>
-  @section('js')
-    {!!Html::script('js/matches.js')!!}
-  @stop
 @stop

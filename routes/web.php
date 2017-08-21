@@ -35,7 +35,6 @@ Route::post('pacient/addPacient','PacientController@addPacient');
 Route::resource('pacient','PacientController');
 
 //Rutas para CRUD de hojas de enfermería
-Route::resource('nurseSheet','NurseSheetController');
 Route::post('nurseSheet/create/AddNurseSheet','NurseSheetController@addItem');
 Route::get('nurseSheet/create/pdf','NurseSheetController@reporte');
 Route::get('/nurseSheet/show/',
@@ -46,7 +45,9 @@ Route::get('nurseSheet/create/hojas', function () {
     return redirect('/nurseSheet/show');
 })->name('profile');
 Route::get('nurseSheet/create/pdf','NurseSheetController@reporte');
-
+Route::get('nurseSheet/deleter','nurseSheetController@deleter');
+Route::get('nurseSheet/deleter/show_details/{id}','nurseSheetController@show_details_deleter');
+Route::resource('nurseSheet','NurseSheetController');
 
 //Rutas para doctores
 Route::get('doctor/deleter','DoctorController@deleter');
@@ -79,6 +80,17 @@ Route::get('eliminarMatch', 'StudyController@eliminar');
 Route::get('match/{letra_diagnostico}', 'StudyController@diagnosticos');
 Route::get('match2/{letra_estudio}', 'StudyController@estudios');
 Route::post('/addMatch', 'StudyController@AddItem');
+Route::get('studyCreate', 'StudyController@createEstudio');
+Route::get('studyDelete', 'StudyController@eliminarEstudio');
+Route::get('studyUpdate', 'StudyController@actualizarEstudio');
+Route::post('studyCreate/studyStore', 'StudyController@storeEstudio')->name('agregarEstudio');
+Route::delete('studyDelete/{id}', 'StudyController@destroyEstudio')->name('destroyEstudio');
+Route::get('showStudy', 'StudyController@showEstudio');
 
+Route::get('studyUpdate/show_details/{id}', 'StudyController@modifyEstudio');
+Route::post('studyUpdate/update/{id}', 'StudyController@updateEstudio');
+Route::post('pacient/pacientUpdate/update/{id}', 'PacientController@updatePaciente');
+
+Route::get('soap/show/{id}', 'SoapController@showsoap')->name('mostrar_analisis_soap');
 Route::get('study/show/usuario', 'StudyController@showUser');
 Route::resource('study', 'studyController');

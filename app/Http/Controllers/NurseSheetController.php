@@ -200,4 +200,41 @@ class NurseSheetController extends Controller
      //se returna la vista con todos los registros
      return view('nurseSheets/nurseSheet_show',compact('nursesheets','pacients'));
   }
+  //Muestra todos los pacientes de la base de datos para elegir al que se quiere eliminar
+  public function deleter(Request $request)
+  {
+    $nursesheets = NurseSheet::fecha($request->get('fecha1'))->orderBy('id','DESC')->paginate(6);
+    $pacients = DB::table('pacients')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    return view('nurseSheets/delete',compact('nursesheets','pacients'));
+  }
+  public function show_details_deleter(Request $request,$id){
+    if ($request->ajax()) {
+      $nursesheet = NurseSheet::find($id);
+      $id_paciente = $nursesheet->id_paciente;
+      $paciente = Pacient::find($id_paciente);
+      $nombre_paciente = $paciente->nombre.' '.$paciente->apaterno.' '.$paciente->amaterno;
+      $id_nursesheet = $nursesheet->id;
+      $somatometria = NSomatometry::select("*")->where("id_ns","=","$id_nursesheet")->get();
+      $somas = array();
+      foreach ($somatometria as $som) {
+        $somas[] = array('peso' => $som->peso,'altura'=> $som->altura, 'psistolica'=> $som->psistolica,
+        'pdiastolica' => $som->pdiastolica,'frespiratoria'=> $som->frespiratoria, 'pulso'=> $som->pulso,
+        'oximetria' => $som->oximetria,'glucometria'=> $som->glucometria);
+      }
+      $habitus = NSHabitus::select("*")->where("id_ns","=","$id_nursesheet")->get();
+      $habits = array();
+      foreach ($habitus as $habs) {
+        $habits[] = array('condicion' => $habs->condicion,'constitucion'=> $habs->constitucion,
+        'entereza'=> $habs->entereza,'proporcion' => $habs->proporcion,'simetria'=> $habs->simetria,
+        'biotipo'=> $habs->biotipo,'actitud' => $habs->actitud,'fascies'=> $habs->fascies,
+        'movanormal'=> $habs->movanormal,'movanormal_obs' => $habs->movanormal_obs,
+        'marchanormal'=> $habs->marchanormal);
+      }
+      $info = array('paciente' => $nombre_paciente, 'nursesheet' => $nursesheet,
+      'somatometria' => $somas, 'habitus' => $habits);
+      return response()->json($info);
+    }
+  }
 }

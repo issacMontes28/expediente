@@ -6,5 +6,14 @@
     <li>
         <a href="{!!URL::to('eliminarMatch')!!}">Eliminar Match</a>
     </li>
+    <li>
+        <a href="{!!URL::to('studyCreate')!!}">Crear Estudio</a>
+    </li>
+    <li>
+        <a href="{!!URL::to('studyDelete')!!}">Eliminar estudio</a>
+    </li>
+    <li>
+        <a href="{!!URL::to('studyUpdate')!!}">Modificar estudio</a>
+    </li>
   </ul>
 </div>

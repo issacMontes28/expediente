@@ -4,13 +4,13 @@
           <a href="{!!URL::to('index')!!}">Menú principal</a>
       </li>
       <li>
-          <a href="{!!URL::to('/date')!!}">Crear HDE</a>
+          <a href="{!!URL::to('nurseSheet/create')!!}">Crear HDE</a>
       </li>
       <li>
-          <a href="{!!URL::to('/date')!!}">Eliminar HDE</a>
+          <a href="{!!URL::to('nurseSheet/deleter')!!}">Eliminar HDE</a>
       </li>
       <li>
-          <a href="{!!URL::to('/date')!!}">Actualizar HDE</a>
+          <a href="{!!URL::to('nurseSheet/actualizar')!!}">Actualizar HDE</a>
       </li>
       <li>
           <a href="{!!URL::to('nurseSheet/show')!!}">Mostrar HDE</a>

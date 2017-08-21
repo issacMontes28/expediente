@@ -506,4 +506,11 @@ class PacientController extends Controller
       return response()->json($paciente);
     }
   }
+  public function updatePaciente(Request $request,$id)
+  {
+    $paciente = Pacient::find($id);
+    $paciente->fill($request->all());
+    $paciente->save();
+    return response()->json("paciente actualizado correctamente");
+  }
 }

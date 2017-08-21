@@ -107,7 +107,6 @@ class DoctorController extends Controller
     Session::flash('message','doctor Actualizado Correctamente');
     //Se redirecciona a la vista que muestra los registros
     return Redirect::to('doctor/');
-
   }
    //Muestra todos los Doctores de la base de datos para elegir al que se quiere eliminar
    public function deleter(Request $request)

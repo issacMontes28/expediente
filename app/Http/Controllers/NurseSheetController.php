@@ -248,4 +248,58 @@ class NurseSheetController extends Controller
       return response()->json($info);
     }
   }
+  public function destroy($id)
+  {
+    $nursesheet = NurseSheet::find($id);
+    $nursesheet->delete();
+    Session::flash('message','Hoja de enfermería eliminada de la base de datos correctamente');
+    return Redirect::to('nurseSheet/deleter');
+  }
+  public function actualizar(Request $request)
+  {
+    $nursesheets = NurseSheet::fecha($request->get('fecha1'))->orderBy('id','DESC')->paginate(6);
+    $pacients = DB::table('pacients')
+                ->orderBy('apaterno', 'asc')
+                ->get();
+    return view('nurseSheets/update',compact('nursesheets','pacients'));
+  }
+  //ya que se ha eligido uno, se aparta para editarlo
+  public function edit($id)
+  {
+    $nursesheet = NurseSheet::find($id);
+    $id_paciente = $nursesheet->id_paciente;
+    $paciente = Pacient::find($id_paciente);
+    $nombre_paciente = $paciente->nombre.' '.$paciente->apaterno.' '.$paciente->amaterno;
+    $id_nursesheet = $nursesheet->id;
+    $somatometria = NSomatometry::select("*")->where("id_ns","=","$id_nursesheet")->get();
+    $somas = array();
+    foreach ($somatometria as $som) {
+      $somas[] = array('peso' => $som->peso,'altura'=> $som->altura, 'psistolica'=> $som->psistolica,
+      'pdiastolica' => $som->pdiastolica,'frespiratoria'=> $som->frespiratoria, 'pulso'=> $som->pulso,
+      'oximetria' => $som->oximetria,'glucometria'=> $som->glucometria);
+    }
+    $habitus = NSHabitus::select("*")->where("id_ns","=","$id_nursesheet")->get();
+    $habits = array();
+    foreach ($habitus as $habs) {
+      $habits[] = array('condicion' => $habs->condicion,'constitucion'=> $habs->constitucion,
+      'entereza'=> $habs->entereza,'proporcion' => $habs->proporcion,'simetria'=> $habs->simetria,
+      'biotipo'=> $habs->biotipo,'actitud' => $habs->actitud,'fascies'=> $habs->fascies,
+      'movanormal'=> $habs->movanormal,'movanormal_obs' => $habs->movanormal_obs,
+      'marchanormal'=> $habs->marchanormal);
+    }
+    $medicaments = NsMedicament::select("*")->where("id_ns","=","$id_nursesheet")->get();
+    $medicamentos = array();
+    foreach ($medicaments as $medicament) {
+      $medicamentos[] = array('nombre_med' => $medicament->nombre_med,'fecha_admin'=> $medicament->fecha_admin,
+      'cantidad'=> $medicament->cantidad,'via' => $medicament->via);
+    }
+    $mactuals = nsActualMedicament::select("*")->where("id_ns","=","$id_nursesheet")->get();
+    $actuals = array();
+    foreach ($mactuals as $mactual) {
+      $actuals[] = array('nombre_med' => $mactual->nombre_med,'via' => $mactual->via);
+    }
+    $info = array('paciente' => $nombre_paciente, 'nursesheet' => $nursesheet,
+    'somatometria' => $somas, 'habitus' => $habits, 'medicamentos' => $medicamentos, 'actuals' => $actuals);
+    return view('nurseSheets.edit',['info'=>$info]);
+  }
 }

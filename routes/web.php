@@ -45,8 +45,9 @@ Route::get('nurseSheet/create/hojas', function () {
     return redirect('/nurseSheet/show');
 })->name('profile');
 Route::get('nurseSheet/create/pdf','NurseSheetController@reporte');
-Route::get('nurseSheet/deleter','nurseSheetController@deleter');
-Route::get('nurseSheet/deleter/show_details/{id}','nurseSheetController@show_details_deleter');
+Route::get('nurseSheet/deleter','NurseSheetController@deleter');
+Route::get('nurseSheet/deleter/show_details/{id}','NurseSheetController@show_details_deleter');
+Route::get('nurseSheet/actualizar','NurseSheetController@actualizar');
 Route::resource('nurseSheet','NurseSheetController');
 
 //Rutas para doctores

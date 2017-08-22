@@ -104,8 +104,8 @@ function mostrarnurse(btn){
     }
 
     if (res.actuals.length > 0){
-      for (var i = 0; i < res.medicamentos.length; i++) {
-        $("#modal_medicaments").html("<div class='form-group'><label>Nombre de medicamento</label><input id='nombre_med' class='form-control' value='"+res.medicamentos[i].nombre_med+"'></input></div><label>Vía de administración</label><input id='via' class='form-control' value='"+res.medicamentos[i].via+"'></input></div><br></br>");
+      for (var i = 0; i < res.actuals.length; i++) {
+        $("#modal_actuals").html("<div class='form-group'><label>Nombre de medicamento</label><input id='nombre_med' class='form-control' value='"+res.actuals[i].nombre_med+"'></input></div><label>Vía de administración</label><input id='via' class='form-control' value='"+res.actuals[i].via+"'></input></div><br></br>");
       }
     }
 

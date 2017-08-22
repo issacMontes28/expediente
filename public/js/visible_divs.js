@@ -1,6 +1,8 @@
 $( document ).ready(function() {
     $("#modal_somatometry").hide();
     $("#modal_habitus").hide();
+    $("#modal_medicaments").hide();
+    $("#modal_actuals").hide();
 
     $("#btnsomatometry").click(function(event){
      $("#modal_somatometry").show("slow");

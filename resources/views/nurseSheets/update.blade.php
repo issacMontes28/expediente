@@ -45,9 +45,9 @@
 						<button  type="button" value="<?php  echo $nursesheet->id?>" Onclick="mostrarnurse(this.value);" class="btn btn-info btn-sm" data-toggle='modal' data-target='#myModal'>Mostrar info</a>
 					</td>
 					<td>
-						{!!Form::model($nursesheet,['route'=>['nurseSheet.destroy', $nursesheet->id],'method'=>'DELETE'])!!}
-						<button type="submit" onclick="return confirm('¿Realmente desea eliminar hoja de enfermería?')"
-						class="btn btn-danger btn-sm">Eliminar HDE</button>{{Form::Close()}}
+						<td>{!!link_to_route('nurseSheet.edit', $title = 'Actualizar HDE', $parameters = $nursesheet->id,
+							$attributes = ['class'=>'btn btn-primary btn-sm','style'=>"color:#FFFFFF"])!!}
+						</td>
 					</td>
         </tr>
       </tbody>

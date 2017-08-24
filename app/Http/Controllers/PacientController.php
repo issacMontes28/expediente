@@ -13,6 +13,9 @@ use SIAM\State;
 use SIAM\Town;
 use SIAM\Locality;
 use SIAM\Nationality;
+use SIAM\Ahf;
+use SIAM\App;
+use SIAM\Apnp;
 use DB;
 use PDF;
 use Carbon\Carbon;
@@ -105,6 +108,50 @@ class PacientController extends Controller
     $pacients= Pacient::all();
     $upacient = $pacients->last();
     $id_paciente = $upacient->id;
+
+    //Agregamos antecedentes heredoFamiliares
+    Ahf::create([
+      'id_paciente'	=> $id_paciente,
+      'diabetes'	=> $request['diabetes'],
+      'hipertension' => $request['hipertension'],
+      'cardiopatia'	=> $request['cardiopatia'],
+      'hepatopatia'	=> $request['hepatopatia'],
+      'nefropatia'	=> $request['nefropatia'],
+      'enmentales'	=> $request['enmentales'],
+      'asma'	=> $request['asma'],
+      'cancer'	=> $request['cancer'],
+      'enalergicas'	=> $request['enalergicas'],
+      'endocrinas'	=> $request['endocrinas'],
+      'otros'	=> $request['otros'],
+      'intneg'	=> $request['intneg']
+    ]);
+
+    //Agregamos antecedentes personales patológicos
+    App::create([
+      'id_paciente'	=> $id_paciente,
+      'enactuales'	=> $request['enactuales'],
+      'quirurjicos'	=> $request['quirurjicos'],
+      'transfuncionales' => $request['transfuncionales'],
+      'alergias'	=> $request['alergias'],
+      'traumaticos'	=> $$request['traumaticos'],
+      'hosprevias'	=> $request['hosprevias'],
+      'adicciones'	=> $request['adicciones'],
+      'otros' => $request['adicciones']
+    ]);
+
+    //Agregamos antecedentes personales no patológicos
+    Apnp::create([
+      'id_paciente'	=> $id_paciente,
+      'enactuales'	=> $request['enactuales'],
+      'quirurjicos'	=> $request['quirurjicos'],
+      'transfuncionales' => $request['transfuncionales'],
+      'alergias'	=> $request['alergias'],
+      'traumaticos'	=> $$request['traumaticos'],
+      'hosprevias'	=> $request['hosprevias'],
+      'adicciones'	=> $request['adicciones'],
+      'otros' => $request['otros']
+    ]);
+
     $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
 
     $nombre = $upacient->nombre;

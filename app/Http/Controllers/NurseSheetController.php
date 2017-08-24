@@ -3,6 +3,7 @@
 namespace SIAM\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use SIAM\Http\Requests;
 use SIAM\Http\Requests\PacientCreateRequest;
 use SIAM\Http\Controllers\Controller;
@@ -298,8 +299,29 @@ class NurseSheetController extends Controller
     foreach ($mactuals as $mactual) {
       $actuals[] = array('nombre_med' => $mactual->nombre_med,'via' => $mactual->via);
     }
-    $info = array('paciente' => $nombre_paciente, 'nursesheet' => $nursesheet,
-    'somatometria' => $somas, 'habitus' => $habits, 'medicamentos' => $medicamentos, 'actuals' => $actuals);
+    $info = array('paciente' => $nombre_paciente, 'nursesheet' => $nursesheet);
+
+    //Se crean los archivo json, si existe, se sobreescribe
+    $collection_somatometria = Collection::make($somas);
+    $collection_somatometria->toJson();
+    $file_somatometria = 'json/nurseSheet_somatometria.json';
+    file_put_contents($file_somatometria, $collection_somatometria);
+
+    $collection_habitus = Collection::make($habits);
+    $collection_habitus->toJson();
+    $file_habitus = 'json/nurseSheet_habitus.json';
+    file_put_contents($file_habitus, $collection_habitus);
+
+    $collection_medicamentos = Collection::make($medicamentos);
+    $collection_medicamentos->toJson();
+    $file_medicamentos = 'json/nurseSheet_medicamentos.json';
+    file_put_contents($file_medicamentos, $collection_medicamentos);
+
+    $collection_actuals = Collection::make($actuals);
+    $collection_actuals->toJson();
+    $file_actuals = 'json/nurseSheet_actuals.json';
+    file_put_contents($file_actuals, $collection_actuals);
+
     return view('nurseSheets.edit',['info'=>$info]);
   }
 }

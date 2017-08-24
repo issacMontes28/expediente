@@ -12,8 +12,5 @@
       <li>
           <a href="{!!URL::to('nurseSheet/actualizar')!!}">Actualizar HDE</a>
       </li>
-      <li>
-          <a href="{!!URL::to('nurseSheet/show')!!}">Mostrar HDE</a>
-      </li>
   </ul>
 </div>

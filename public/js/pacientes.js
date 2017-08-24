@@ -27,13 +27,6 @@ function appViewModel(){
   self.mostrarAHF = function(){ self.visible_AHF(1); }
   self.ocultarAHF = function(){ self.visible_AHF(0); }
 
-/*
-  self.visible_AHF = ko.observable(0);
-  self.mostrarAHF = function(){ $("#tablita").fadeIn("slow");
-   $("#btnOcultarAHF").fadeIn("slow"); $("#btnMostrarAHF").fadeOut("slow");}
-  self.ocultarAHF = function(){ $("#tablita").fadeOut("slow");
-   $("#btnMostrarAHF").fadeIn("slow"); $("#btnOcultarAHF").fadeOut("slow");}*/
-
   self.visible_APP = ko.observable(0);
   self.mostrarAPP = function(){ self.visible_APP(1); }
   self.ocultarAPP = function(){ self.visible_APP(0); }

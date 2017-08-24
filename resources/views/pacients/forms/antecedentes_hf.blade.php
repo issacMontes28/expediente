@@ -34,7 +34,7 @@
  			 </thead>
  			 <tbody>
  					 <tr>
- 							 <td><input class="form-control" placeholder="ingrese antecedente" name="hepatopatias"></input></td>
+ 							 <td><input class="form-control" placeholder="ingrese antecedente" name="hepatopatia"></input></td>
  					 </tr>
  			 </tbody>
        <thead>
@@ -42,7 +42,7 @@
  			 </thead>
  			 <tbody>
  					 <tr>
- 							 <td><input class="form-control" placeholder="ingrese antecedente" name="nefropatias"></input></td>
+ 							 <td><input class="form-control" placeholder="ingrese antecedente" name="nefropatia"></input></td>
  					 </tr>
  			 </tbody>
        <thead>

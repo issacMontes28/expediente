@@ -44,10 +44,8 @@
 					<td>
 						<button  type="button" value="<?php  echo $nursesheet->id?>" Onclick="mostrarnurse(this.value);" class="btn btn-info btn-sm" data-toggle='modal' data-target='#myModal'>Mostrar info</a>
 					</td>
-					<td>
-						<td>{!!link_to_route('nurseSheet.edit', $title = 'Actualizar HDE', $parameters = $nursesheet->id,
-							$attributes = ['class'=>'btn btn-primary btn-sm','style'=>"color:#FFFFFF"])!!}
-						</td>
+					<td>{!!link_to_route('nurseSheet.edit', $title = 'Actualizar HDE', $parameters = $nursesheet->id,
+						$attributes = ['class'=>'btn btn-primary btn-sm','style'=>"color:#FFFFFF"])!!}
 					</td>
         </tr>
       </tbody>

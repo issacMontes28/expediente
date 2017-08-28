@@ -6,7 +6,6 @@
   <div class="row">
     <div class="colg-lg-8 col-md-8 col-sm-8 col-xs-12">
       <h3>Listado de Pacientes</h3>
-      <a href="pacient/create"><button class="btn btn-success">Nuevo paciente</button></a>
     </div>
       <div class="panel-body">
           @include('pacients.search')

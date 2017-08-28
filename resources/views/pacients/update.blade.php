@@ -6,7 +6,6 @@
   <div class="row">
     <div class="colg-lg-8 col-md-8 col-sm-8 col-xs-12">
       <h3>Listado de Pacientes</h3>
-      <a href="pacient/create"><button class="btn btn-success">Nuevo paciente</button></a>
     </div>
       <div class="panel-body">
           @include('pacients.search')
@@ -22,7 +21,7 @@
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>CURP</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acciónes</th>
                     </thead>
                     @foreach ($pacients as $pacient)
                         <tr>
@@ -31,8 +30,10 @@
                             <td>{{ $pacient->amaterno}}</td>
                             <td>{{ $pacient->curp}}</td>
                             <td>
-															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>Actualizar</a>
+															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-info btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
                             </td>
+														<td>{!!link_to_route('pacient.edit', $title = 'Actualizar datos', $parameters = $pacient->id,
+										          $attributes = ['class'=>'btn btn-primary btn-sm','style'=>"color:#FFFFFF"])!!}</td>
                         </tr>
                     @include('pacients.modal')
                     @endforeach
@@ -50,14 +51,91 @@
 						<h4 class="modal-title" id="myModalLabel">Detalle de paciente</h4>
 					</div>
 					<div class="modal-body">
-						@include('pacients.forms.pacient_modal')
+						<ul class="nav nav-tabs">
+								<li class="active"><a href="#tab1" data-toggle="tab">Datos personales</a></li>
+								<li><a href="#tab2" data-toggle="tab" >Antecedentes heredo-familiares</a></li>
+								<li><a href="#tab3" data-toggle="tab" >Antecedentes personales patológicos</a></li>
+								<li><a href="#tab4" data-toggle="tab" >Antecedentes personales no patológicos</a></li>
+								<li><a href="#tab5" data-toggle="tab" >Antecedentes gineco-obstétricos</a></li>
+						</ul>
+						<form id="formulario_paciente">
+							{{Form::token()}}
+							<div class="tab-content">
+								<div class="tab-pane active"  id="tab1">
+									@include('pacients.forms.pacient_modal')
+									<br>
+									<div align="center">
+										<a 	class="btn btn-primary  btn-lg btnNext">
+											Siguiente
+										</a>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab2">
+									@include('pacients.forms.antecedenteshf_modal')
+									<div class="row">
+										<br>
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+											<a class="btn btn-primary  btn-lg btnPrevious">
+												Anterior
+											</a>
+											<a class="btn btn-primary  btn-lg btnNext">
+												Siguiente
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab3">
+									@include('pacients.forms.antecedentespp_modal')
+
+									<div class="row">
+										<br>
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+											<a 	class="btn btn-primary btn-lg btnPrevious">
+												Anterior
+											</a>
+											<a 	class="btn btn-primary btn-lg  btnNext">
+												Siguiente
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab4">
+									@include('pacients.forms.antecedentespnp_modal')
+									<div class="form-group" align="center">
+										<br>
+										<a class="btn btn-primary btn-lg btnPrevious">Anterior</a>
+										<a 	class="btn btn-primary btn-lg  btnNext">
+											Siguiente
+										</a>
+									</div>
+								</div>
+								<div class="tab-pane" id="tab5">
+									@include('pacients.forms.antecedentesgo_modal')
+									<div class="form-group" align="center">
+										<br>
+										<a class="btn btn-primary btn-lg btnPrevious">Anterior</a>
+									</div>
+								</div>
+							</div>
+						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		@push('scripts')
+			<script>
+				$('.btnNext').click(function(){
+					$('.nav-tabs > .active').next('li').find('a').trigger('click');
+				});
+
+				$('.btnPrevious').click(function(){
+					$('.nav-tabs > .active').prev('li').find('a').trigger('click');
+				});
+			</script>
+		@endpush
 @endsection
 @section('js')
 	{!!Html::script('js/popup.js')!!}

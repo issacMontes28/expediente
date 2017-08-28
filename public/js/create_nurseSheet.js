@@ -59,6 +59,7 @@ function appViewModel(){
   self.pulso = ko.observable();
   self.oximetria = ko.observable();
   self.glucometria = ko.observable();
+  self.prueba = ko.observable(1);
 
   //Arreglos para el habitus
   self.condiciones = ko.observableArray(['Ambulante','Encamado']);
@@ -120,177 +121,184 @@ function appViewModel(){
   self.tabla_ocultar = function(){ self.visible_btnTabla(0); }
   self.graficas_ocultar = function(){ self.visible_btnGrafica(0); }
   self.grafica = function(){
-    self.visible_btnGrafica(1);
-    //Se crea la gráfica
-    chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'contenedor', 	// Le doy el nombre a la gráfica
-        defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
-      },
-      title: {
-        text: 'Registros previos de peso de paciente'	// Titulo (Opcional)
-      },
-      subtitle: {
-        text: 'Paciente : Issac Montes Escamilla'
-      },
-      xAxis: {
-        semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
-        // Pongo el título para el eje de las 'X'
-        title: {
-          text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
-        }
-      },
-      yAxis: {
-        // Pongo el título para el eje de las 'Y'
+     var tam = self.somatometrias_previas2().length;
+     if (tam > 0) {
+       self.visible_btnGrafica(1);
+       //Se crea la gráfica
+       chart = new Highcharts.Chart({
+         chart: {
+           renderTo: 'contenedor', 	// Le doy el nombre a la gráfica
+           defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
+         },
+         title: {
+           text: 'Registros previos de peso de paciente'	// Titulo (Opcional)
+         },
+         subtitle: {
+           text: 'JM Research'
+         },
+         xAxis: {
+           semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+           // Pongo el título para el eje de las 'X'
+           title: {
+             text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+           }
+         },
+         yAxis: {
+           // Pongo el título para el eje de las 'Y'
+             title: {
+               text: 'Peso'
+             }
+         },
+         series: [{
+             name: 'Peso en Kg',
+             data: (function() {
+                     // generate an array of random data
+                     var data = [];
+                     var tam2 = tam - 1;
+                       for(var i = tam2; i >= 0; i--){
+                          data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].peso()]);
+                       }
+                     return data;
+                 })()
+         }],
+         credits: {
+                 enabled: false
+         }
+      });
+      chart2 = new Highcharts.Chart({
+          chart: {
+            renderTo: 'contenedor2', 	// Le doy el nombre a la gráfica
+            defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
+          },
           title: {
-            text: 'Peso'
+            text: 'Registros previos de oximetría de paciente'	// Titulo (Opcional)
+          },
+          subtitle: {
+            text: 'JM Research'
+          },
+          xAxis: {
+            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            // Pongo el título para el eje de las 'X'
+            title: {
+              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+            }
+          },
+          yAxis: {
+            // Pongo el título para el eje de las 'Y'
+              title: {
+                text: 'Peso'
+              }
+          },
+          series: [{
+              name: 'Oximetría en % de oxígeno en la sangre',
+              data: (function() {
+                      // generate an array of random data
+                      var data = [];
+                      var tam2 = tam - 1;
+                      for(var i=tam2; i>=0; i--){
+                         data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].oximetria()]);
+                      }
+                      return data;
+                  })()
+          }],
+          credits: {
+                  enabled: false
           }
-      },
-      series: [{
-          name: 'Peso en Kg',
-          data: (function() {
-                  // generate an array of random data
-                  var data = [];
-                  for(var i=4; i>=0; i--){
-                     data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].peso()]);
-                  }
-                  return data;
-              })()
-      }],
-      credits: {
-              enabled: false
-      }
-  });
+      });
 
-  chart2 = new Highcharts.Chart({
-      chart: {
-        renderTo: 'contenedor2', 	// Le doy el nombre a la gráfica
-        defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
-      },
-      title: {
-        text: 'Registros previos de oximetría de paciente'	// Titulo (Opcional)
-      },
-      subtitle: {
-        text: 'Paciente : Issac Montes Escamilla'
-      },
-      xAxis: {
-        semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
-        // Pongo el título para el eje de las 'X'
-        title: {
-          text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
-        }
-      },
-      yAxis: {
-        // Pongo el título para el eje de las 'Y'
+      chart3 = new Highcharts.Chart({
+          chart: {
+            renderTo: 'contenedor3', 	// Le doy el nombre a la gráfica
+            defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
+          },
           title: {
-            text: 'Peso'
+            text: 'Registros previos de presión sistólica y diastólica'	// Titulo (Opcional)
+          },
+          subtitle: {
+             text: 'JM Research'
+          },
+          xAxis: {
+            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            // Pongo el título para el eje de las 'X'
+            title: {
+              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+            }
+          },
+          yAxis: {
+            // Pongo el título para el eje de las 'Y'
+              title: {
+                text: 'Presión'
+              }
+          },
+          series: [{
+              name: 'Presión sistólica en mm/Hg',
+              data: (function() {
+                      // generate an array of random data
+                      var data = [];
+                      var tam2 = tam - 1;
+                      for(var i=tam2; i>=0; i--){
+                         data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].psistolica()]);
+                      }
+                      return data;
+                  })()
+          },{
+            name: 'Presión diastólica en mm/Hg',
+            data: (function() {
+                    // generate an array of random data
+                    var data = [];
+                    var tam2 = tam - 1;
+                    for(var i=tam2; i>=0; i--){
+                       data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].pdiastolica()]);
+                    }
+                    return data;
+                })()
+          }],
+          credits: {
+                  enabled: false
           }
-      },
-      series: [{
-          name: 'Oximetría en % de oxígeno en la sangre',
-          data: (function() {
-                  // generate an array of random data
-                  var data = [];
-                  for(var i=4; i>=0; i--){
-                     data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].oximetria()]);
-                  }
-                  return data;
-              })()
-      }],
-      credits: {
-              enabled: false
-      }
-  });
+      });
 
-  chart3 = new Highcharts.Chart({
-      chart: {
-        renderTo: 'contenedor3', 	// Le doy el nombre a la gráfica
-        defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
-      },
-      title: {
-        text: 'Registros previos de presión sistólica y diastólica'	// Titulo (Opcional)
-      },
-      subtitle: {
-        text: 'Paciente : Issac Montes Escamilla'
-      },
-      xAxis: {
-        semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
-        // Pongo el título para el eje de las 'X'
-        title: {
-          text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
-        }
-      },
-      yAxis: {
-        // Pongo el título para el eje de las 'Y'
+      chart4 = new Highcharts.Chart({
+          chart: {
+            renderTo: 'contenedor4', 	// Le doy el nombre a la gráfica
+            defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
+          },
           title: {
-            text: 'Presión'
+            text: 'Registros previos de glucometría'	// Titulo (Opcional)
+          },
+          subtitle: {
+            text: 'JM Research'
+          },
+          xAxis: {
+            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            // Pongo el título para el eje de las 'X'
+            title: {
+              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+            }
+          },
+          yAxis: {
+            // Pongo el título para el eje de las 'Y'
+              title: {
+                text: 'Glucometría'
+              }
+          },
+          series: [{
+              name: 'Glucometría en mg/dL',
+              data: (function() {
+                      // generate an array of random data
+                      var data = [];
+                      var tam2 = tam - 1;
+                      for(var i=tam2; i>=0; i--){
+                         data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].glucometria()]);
+                      }
+                      return data;
+                  })()
+          }],
+          credits: {
+                  enabled: false
           }
-      },
-      series: [{
-          name: 'Presión sistólica en mm/Hg',
-          data: (function() {
-                  // generate an array of random data
-                  var data = [];
-                  for(var i=4; i>=0; i--){
-                     data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].psistolica()]);
-                  }
-                  return data;
-              })()
-      },{
-        name: 'Presión diastólica en mm/Hg',
-        data: (function() {
-                // generate an array of random data
-                var data = [];
-                for(var i=4; i>=0; i--){
-                   data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].pdiastolica()]);
-                }
-                return data;
-            })()
-      }],
-      credits: {
-              enabled: false
-      }
-  });
-
-  chart4 = new Highcharts.Chart({
-      chart: {
-        renderTo: 'contenedor4', 	// Le doy el nombre a la gráfica
-        defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
-      },
-      title: {
-        text: 'Registros previos de glucometría'	// Titulo (Opcional)
-      },
-      subtitle: {
-        text: 'Paciente : Issac Montes Escamilla'
-      },
-      xAxis: {
-        semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
-        // Pongo el título para el eje de las 'X'
-        title: {
-          text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
-        }
-      },
-      yAxis: {
-        // Pongo el título para el eje de las 'Y'
-          title: {
-            text: 'Glucometría'
-          }
-      },
-      series: [{
-          name: 'Glucometría en mg/dL',
-          data: (function() {
-                  // generate an array of random data
-                  var data = [];
-                  for(var i=4; i>=0; i--){
-                     data.push([self.somatometrias_previas2()[i].fecha(),self.somatometrias_previas2()[i].glucometria()]);
-                  }
-                  return data;
-              })()
-      }],
-      credits: {
-              enabled: false
-      }
-  });
+      });
+     }
 }
   //agregar nuevo medicamento administrado
    self.agregarMedicamento=function(){

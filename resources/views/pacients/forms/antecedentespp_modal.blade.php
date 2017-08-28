@@ -46,7 +46,7 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">8.-Otros</label>
-			<input class="form-control" disabled id="otros"></input>
+			<input class="form-control" disabled id="otros2"></input>
 		</div>
 	</div>
 </div>

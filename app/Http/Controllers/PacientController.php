@@ -354,11 +354,44 @@ class PacientController extends Controller
 
     $states = State::all();
     $nationalities = Nationality::nationalities();
+    $id_paciente       = $pacient->id;
+    $antecedentes_go   = " ";
+    $fila_go           = DB::select("select * FROM antecedentesgo where id_paciente='$id_paciente'");
+    foreach ($fila_go as $go) {
+    $antecedentes_go   = $go;
+    }
+    $antecedentes_hf   = " ";
+    $fila_hf           = DB::select("select * FROM antecedenteshf where id_paciente='$id_paciente'");
+    foreach ($fila_hf as $hf) {
+    $antecedentes_hf   = $hf;
+    }
+    $antecedentes_pnp  = " ";
+    $fila_pnp          = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
+    foreach ($fila_pnp as $pnp) {
+    $antecedentes_pnp  = $pnp;
+    }
+    $antecedentes_pp   = " ";
+    $fila_pp           = DB::select("select * FROM antecedentespp where id_paciente='$id_paciente'");
+    foreach ($fila_pp as $pp) {
+    $antecedentes_pp   = $pp;
+    }
 
     //se returna la vista del formulario que contendrá los datos del elemento
     //a editar
-    return view('pacients.edit',['pacient'=>$pacient,'pacients'=>$pacients,
-    'nationalities'=>$nationalities,'states'=>$states,'nac'=>$nac,'ent'=>$ent,'mun'=>$mun,'loc'=>$loc]);
+    return view('pacients.edit',[
+    'pacient'          => $pacient,
+    'pacients'         => $pacients,
+    'nationalities'    => $nationalities,
+    'states'           => $states,
+    'nac'              => $nac,
+    'ent'              => $ent,
+    'mun'              => $mun,
+    'loc'              => $loc,
+    'antecedentes_go'  => $antecedentes_go,
+    'antecedentes_hf'  => $antecedentes_hf,
+    'antecedentes_pnp' => $antecedentes_pnp,
+    'antecedentes_pp'  => $antecedentes_pp
+    ]);
   }
   /**
   * Actualiza el registro en la base de datos
@@ -403,57 +436,6 @@ class PacientController extends Controller
    Session::flash('message','Paciente eliminado de la base de datos correctamente');
    //Se redirecciona a la vista que muestra los registros
    return Redirect::to('/pacient/index');
-
-  }
-  public function reporte(){
-    $fecha = Carbon::now();
-    $pacients= Pacient::all();
-    $upacient = $pacients->last();
-    $id_paciente = $upacient->id;
-    $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
-
-    $nombre = $upacient->nombre;
-    $apaterno = $upacient->apaterno;
-    $amaterno = $upacient->amaterno;
-    $sexo = $upacient->sexo;
-    $fecha_nac = $upacient->fecha_nac;
-    $curp = $upacient->curp;
-    $nacionalidad = $upacient->nacionalidad;
-    $calle = $upacient->calle;
-    $num_ext = $upacient->num_ext;
-    $num_int = $upacient->num_int;
-    $colonia = $upacient->colonia;
-    $cp = $upacient->cp;
-    $localidad = $upacient->localidad;
-    $municipio = $upacient->municipio;
-    $estado = $upacient->estado;
-    $telefono_casa = $upacient->telefono_casa;
-    $telefono_celular = $upacient->telefono_celular;
-    $telefono_oficina = $upacient->telefono_oficina;
-    $correo = $upacient->correo;
-
-    $pdf = PDF::loadView('reports/pacient_report',[
-      'nombre' => $nombre,
-      'apaterno' => $apaterno,
-      'amaterno' => $amaterno,
-      'sexo' => $sexo,
-      'fecha_nac' => $fecha_nac,
-      'curp' => $curp,
-      'nacionalidad' => $nacionalidad,
-      'calle' => $calle,
-      'num_ext' => $num_ext,
-      'num_int' => $num_int,
-      'colonia' => $colonia,
-      'cp' => $cp,
-      'localidad' => $localidad,
-      'municipio' => $municipio,
-      'estado' => $estado,
-      'telefono_casa' => $telefono_casa,
-      'telefono_celular' => $telefono_celular,
-      'telefono_oficina' => $telefono_oficina,
-      'correo' => $correo]);
-    $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-    $pdf ->download($nombre_ticket);
 
   }
   public function registros_paciente(Request $request)
@@ -506,11 +488,28 @@ class PacientController extends Controller
   }
   public function show_details(Request $request,$id){
     if ($request->ajax()) {
-      $paciente         = Pacient::find($id);
-      $antecedentes_go  = Ago::antecedentesgo($paciente->id);
-      $antecedentes_hf  = Ahf::antecedenteshf($paciente->id);
-      $antecedentes_pnp = Apnp::antecedentespnp($paciente->id);
-      $antecedentes_pp  = App::antecedentespp($paciente->id);
+      $paciente          = Pacient::find($id);
+      $id_paciente       = $paciente->id;
+      $antecedentes_go   = " ";
+      $fila_go           = DB::select("select * FROM antecedentesgo where id_paciente='$id_paciente'");
+      foreach ($fila_go as $go) {
+      $antecedentes_go   = $go;
+      }
+      $antecedentes_hf   = " ";
+      $fila_hf           = DB::select("select * FROM antecedenteshf where id_paciente='$id_paciente'");
+      foreach ($fila_hf as $hf) {
+      $antecedentes_hf   = $hf;
+      }
+      $antecedentes_pnp  = " ";
+      $fila_pnp          = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
+      foreach ($fila_pnp as $pnp) {
+      $antecedentes_pnp  = $pnp;
+      }
+      $antecedentes_pp   = " ";
+      $fila_pp           = DB::select("select * FROM antecedentespp where id_paciente='$id_paciente'");
+      foreach ($fila_pp as $pp) {
+      $antecedentes_pp   = $pp;
+      }
       $info = array(
         'paciente'        => $paciente,
         'antecedentesgo'  => $antecedentes_go,

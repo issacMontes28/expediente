@@ -63,9 +63,5 @@
 {!!Form::label('correo_1','Correo:')!!}
 <input type="text" id="correo" class="form-control"  disabled></input>
 </div>
-<div class="form-group">
-   <button id="btnAgregar2" type="submit" class="btn btn-primary btn-sm" Onclick="modifyPacient();">
-   Modificar paciente</button>
-</div>
 </div>
 {!!Form::close()!!}

@@ -42,7 +42,7 @@ function mostrar(btn){
     $("#traumaticos").val(res.antecedentespp.traumaticos);
     $("#hosprevias").val(res.antecedentespp.hosprevias);
     $("#adicciones").val(res.antecedentespp.adicciones);
-    $("#otros").val(res.antecedentespp.otros);
+    $("#otros2").val(res.antecedentespp.otros);
 
     //Antecedentes personales patologicos
     $("#banio").val(res.antecedentespnp.banio);
@@ -64,6 +64,7 @@ function mostrar(btn){
     $("#partos").val(res.antecedentesgo.partos);
     $("#cesareas").val(res.antecedentesgo.cesareas);
     $("#fpp").val(res.antecedentesgo.fpp);
+    $("#menopausia").val(res.antecedentesgo.menopausia);
     $("#climaterio").val(res.antecedentesgo.climaterio);
     $("#mpp").val(res.antecedentesgo.mpp);
     $("#citologia").val(res.antecedentesgo.citologia);

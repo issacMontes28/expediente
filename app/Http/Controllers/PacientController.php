@@ -16,6 +16,7 @@ use SIAM\Nationality;
 use SIAM\Ahf;
 use SIAM\App;
 use SIAM\Apnp;
+use SIAM\Ago;
 use DB;
 use PDF;
 use Carbon\Carbon;
@@ -78,32 +79,33 @@ class PacientController extends Controller
   *
   * @return Response
   */
-  public function store(PacientCreateRequest $request)
+
+  public function addPacient(PacientCreateRequest $request)
   {
     //el método create() crea un nuevo registro, se deben asociar los datos del request
     //con las columnas de la tabla
     Pacient::create([
-    'nombre' => $request['nombre'],
-    'apaterno' => $request['apaterno'],
-    'amaterno' => $request['amaterno'],
-    'sexo' => $request['sexo'],
-    'fecha_nac' => $request['fecha_nac'],
-    'curp' => $request['curp'],
-    'nacionalidad' => $request['nacionalidad'],
-    'calle' => $request['calle'],
-    'num_ext' => $request['num_ext'],
-    'num_int' => $request['num_int'],
-    'colonia' => $request['colonia'],
-    'cp' => $request['cp'],
-    'localidad' => $request['localidad'],
-    'municipio' => $request['municipio'],
-    'estado' => $request['estado'],
-    'telefono_casa' => $request['telefono_casa'],
+    'nombre'           => $request['nombre'],
+    'apaterno'         => $request['apaterno'],
+    'amaterno'         => $request['amaterno'],
+    'sexo'             => $request['sexo'],
+    'fecha_nac'        => $request['fecha_nac'],
+    'curp'             => $request['curp'],
+    'nacionalidad'     => $request['nacionalidad'],
+    'calle'            => $request['calle'],
+    'num_ext'          => $request['num_ext'],
+    'num_int'          => $request['num_int'],
+    'colonia'          => $request['colonia'],
+    'cp'               => $request['cp'],
+    'localidad'        => $request['localidad'],
+    'municipio'        => $request['municipio'],
+    'estado'           => $request['estado'],
+    'telefono_casa'    => $request['telefono_casa'],
     'telefono_celular' => $request['telefono_celular'],
     'telefono_oficina' => $request['telefono_oficina'],
-    'correo' => $request['correo']
+    'correo'           => $request['correo']
     ]);
-    Session::flash('message','Paciente agregado correctamente');
+
     $fecha = Carbon::now();
     $pacients= Pacient::all();
     $upacient = $pacients->last();
@@ -111,171 +113,126 @@ class PacientController extends Controller
 
     //Agregamos antecedentes heredoFamiliares
     Ahf::create([
-      'id_paciente'	=> $id_paciente,
-      'diabetes'	=> $request['diabetes'],
+      'id_paciente'	 => $id_paciente,
+      'diabetes'	   => $request['diabetes'],
       'hipertension' => $request['hipertension'],
-      'cardiopatia'	=> $request['cardiopatia'],
-      'hepatopatia'	=> $request['hepatopatia'],
-      'nefropatia'	=> $request['nefropatia'],
-      'enmentales'	=> $request['enmentales'],
-      'asma'	=> $request['asma'],
-      'cancer'	=> $request['cancer'],
-      'enalergicas'	=> $request['enalergicas'],
-      'endocrinas'	=> $request['endocrinas'],
-      'otros'	=> $request['otros'],
-      'intneg'	=> $request['intneg']
+      'cardiopatia'	 => $request['cardiopatia'],
+      'hepatopatia'	 => $request['hepatopatia'],
+      'nefropatia'	 => $request['nefropatia'],
+      'enmentales'	 => $request['enmentales'],
+      'asma'	       => $request['asma'],
+      'cancer'	     => $request['cancer'],
+      'enalergicas'	 => $request['enalergicas'],
+      'endocrinas'	 => $request['endocrinas'],
+      'otros'	       => $request['otros'],
+      'intneg'	     => $request['intneg']
     ]);
 
     //Agregamos antecedentes personales patológicos
     App::create([
-      'id_paciente'	=> $id_paciente,
-      'enactuales'	=> $request['enactuales'],
-      'quirurjicos'	=> $request['quirurjicos'],
+      'id_paciente'	     => $id_paciente,
+      'enactuales'	     => $request['enactuales'],
+      'quirurjicos'	     => $request['quirurjicos'],
       'transfuncionales' => $request['transfuncionales'],
-      'alergias'	=> $request['alergias'],
-      'traumaticos'	=> $$request['traumaticos'],
-      'hosprevias'	=> $request['hosprevias'],
-      'adicciones'	=> $request['adicciones'],
-      'otros' => $request['adicciones']
+      'alergias'	       => $request['alergias'],
+      'traumaticos'	     => $request['traumaticos'],
+      'hosprevias'	     => $request['hosprevias'],
+      'adicciones'	     => $request['adicciones'],
+      'otros'            => $request['adicciones']
     ]);
 
     //Agregamos antecedentes personales no patológicos
     Apnp::create([
-      'id_paciente'	=> $id_paciente,
-      'enactuales'	=> $request['enactuales'],
-      'quirurjicos'	=> $request['quirurjicos'],
-      'transfuncionales' => $request['transfuncionales'],
-      'alergias'	=> $request['alergias'],
-      'traumaticos'	=> $$request['traumaticos'],
-      'hosprevias'	=> $request['hosprevias'],
-      'adicciones'	=> $request['adicciones'],
-      'otros' => $request['otros']
+      'id_paciente'  => $id_paciente,
+      'banio'        => $request['banio'],
+      'dientes'      => $request['dientes'],
+      'habitacion'   => $request['habitacion'],
+      'tabaquismo'   => $request['tabaquismo'],
+      'alcoholismo'  => $request['alcoholismo'],
+      'alimentacion' => $request['alimentacion'],
+      'deportes'     => $request['deportes']
     ]);
 
-    $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
+    if (empty($request['menarca']) && empty($request['rmenstrual']) && empty($request['dismenorrea']) && empty($request['ivsa']) && empty($request['parejas']) && empty($request['gestas']) && empty($request['abortos']) && empty($request['partos']) && empty($request['cesareas']) && empty($request['fpp']) && empty($request['menopausia']) && empty($request['climaterio']) && empty($request['mpp']) && empty($request['citologia']) && empty($request['mastografia'])) {
+      # nothing to do here...
+    }
+    else {
+      //Agregamos antecedentes gineco-obstétricos
+      Ago::create([
+        'id_paciente' => $id_paciente,
+        'menarca'     => $request['menarca'],
+        'rmenstrual'  => $request['rmenstrual'],
+        'dismenorrea' => $request['dismenorrea'],
+        'ivsa'        => $request['ivsa'],
+        'parejas'     => $request['parejas'],
+        'gestas'      => $request['gestas'],
+        'abortos'     => $request['abortos'],
+        'partos'      => $request['partos'],
+        'cesareas'    => $request['cesareas'],
+        'fpp'         => $request['fpp'],
+        'menopausia'  => $request['menopausia'],
+        'climaterio'  => $request['climaterio'],
+        'mpp'         => $request['mpp'],
+        'citologia'   => $request['citologia'],
+        'mastografia' => $request['mastografia']
+      ]);
+    }
 
-    $nombre = $upacient->nombre;
-    $apaterno = $upacient->apaterno;
-    $amaterno = $upacient->amaterno;
-    $sexo = $upacient->sexo;
-    $fecha_nac = $upacient->fecha_nac;
-    $curp = $upacient->curp;
-    $nacionalidad = $upacient->nacionalidad;
-    $calle = $upacient->calle;
-    $num_ext = $upacient->num_ext;
-    $num_int = $upacient->num_int;
-    $colonia = $upacient->colonia;
-    $cp = $upacient->cp;
-    $localidad = $upacient->localidad;
-    $municipio = $upacient->municipio;
-    $estado = $upacient->estado;
-    $telefono_casa = $upacient->telefono_casa;
-    $telefono_celular = $upacient->telefono_celular;
-    $telefono_oficina = $upacient->telefono_oficina;
-    $correo = $upacient->correo;
-
-    $pdf = PDF::loadView('reports/pacient_report',[
-      'nombre' => $nombre,
-      'apaterno' => $apaterno,
-      'amaterno' => $amaterno,
-      'sexo' => $sexo,
-      'fecha_nac' => $fecha_nac,
-      'curp' => $curp,
-      'nacionalidad' => $nacionalidad,
-      'calle' => $calle,
-      'num_ext' => $num_ext,
-      'num_int' => $num_int,
-      'colonia' => $colonia,
-      'cp' => $cp,
-      'localidad' => $localidad,
-      'municipio' => $municipio,
-      'estado' => $estado,
-      'telefono_casa' => $telefono_casa,
-      'telefono_celular' => $telefono_celular,
-      'telefono_oficina' => $telefono_oficina,
-      'correo' => $correo]);
-    $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-    return $pdf ->download($nombre_ticket);
-    //return redirect('pacient/');
+    return response()->json("Paciente registrado correctamente");
   }
-  public function addPacient(PacientCreateRequest $request)
+  public function pdf()
   {
-    //el método create() crea un nuevo registro, se deben asociar los datos del request
-    //con las columnas de la tabla
-    Pacient::create([
-    'nombre' => $request['nombre'],
-    'apaterno' => $request['apaterno'],
-    'amaterno' => $request['amaterno'],
-    'sexo' => $request['sexo'],
-    'fecha_nac' => $request['fecha_nac'],
-    'curp' => $request['curp'],
-    'nacionalidad' => $request['nacionalidad'],
-    'calle' => $request['calle'],
-    'num_ext' => $request['num_ext'],
-    'num_int' => $request['num_int'],
-    'colonia' => $request['colonia'],
-    'cp' => $request['cp'],
-    'localidad' => $request['localidad'],
-    'municipio' => $request['municipio'],
-    'estado' => $request['estado'],
-    'telefono_casa' => $request['telefono_casa'],
-    'telefono_celular' => $request['telefono_celular'],
-    'telefono_oficina' => $request['telefono_oficina'],
-    'correo' => $request['correo']
-    ]);
-    Session::flash('message','Paciente agregado correctamente');
-    $fecha = Carbon::now();
-    $pacients= Pacient::all();
-    $upacient = $pacients->last();
-    $id_paciente = $upacient->id;
+    $fecha           = Carbon::now();
+    $pacients        = Pacient::all();
+    $upacient        = $pacients->last();
+    $id_paciente     = $upacient->id;
     $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
 
-    $nombre = $upacient->nombre;
-    $apaterno = $upacient->apaterno;
-    $amaterno = $upacient->amaterno;
-    $sexo = $upacient->sexo;
-    $fecha_nac = $upacient->fecha_nac;
-    $curp = $upacient->curp;
-    $nacionalidad = $upacient->nacionalidad;
-    $calle = $upacient->calle;
-    $num_ext = $upacient->num_ext;
-    $num_int = $upacient->num_int;
-    $colonia = $upacient->colonia;
-    $cp = $upacient->cp;
-    $localidad = $upacient->localidad;
-    $municipio = $upacient->municipio;
-    $estado = $upacient->estado;
-    $telefono_casa = $upacient->telefono_casa;
+    $nombre           = $upacient->nombre;
+    $apaterno         = $upacient->apaterno;
+    $amaterno         = $upacient->amaterno;
+    $sexo             = $upacient->sexo;
+    $fecha_nac        = $upacient->fecha_nac;
+    $curp             = $upacient->curp;
+    $nacionalidad     = $upacient->nacionalidad;
+    $calle            = $upacient->calle;
+    $num_ext          = $upacient->num_ext;
+    $num_int          = $upacient->num_int;
+    $colonia          = $upacient->colonia;
+    $cp               = $upacient->cp;
+    $localidad        = $upacient->localidad;
+    $municipio        = $upacient->municipio;
+    $estado           = $upacient->estado;
+    $telefono_casa    = $upacient->telefono_casa;
     $telefono_celular = $upacient->telefono_celular;
     $telefono_oficina = $upacient->telefono_oficina;
-    $correo = $upacient->correo;
+    $correo           = $upacient->correo;
 
     $pdf = PDF::loadView('reports/pacient_report',[
-      'nombre' => $nombre,
-      'apaterno' => $apaterno,
-      'amaterno' => $amaterno,
-      'sexo' => $sexo,
-      'fecha_nac' => $fecha_nac,
-      'curp' => $curp,
-      'nacionalidad' => $nacionalidad,
-      'calle' => $calle,
-      'num_ext' => $num_ext,
-      'num_int' => $num_int,
-      'colonia' => $colonia,
-      'cp' => $cp,
-      'localidad' => $localidad,
-      'municipio' => $municipio,
-      'estado' => $estado,
-      'telefono_casa' => $telefono_casa,
+      'nombre'           => $nombre,
+      'apaterno'         => $apaterno,
+      'amaterno'         => $amaterno,
+      'sexo'             => $sexo,
+      'fecha_nac'        => $fecha_nac,
+      'curp'             => $curp,
+      'nacionalidad'     => $nacionalidad,
+      'calle'            => $calle,
+      'num_ext'          => $num_ext,
+      'num_int'          => $num_int,
+      'colonia'          => $colonia,
+      'cp'               => $cp,
+      'localidad'        => $localidad,
+      'municipio'        => $municipio,
+      'estado'           => $estado,
+      'telefono_casa'    => $telefono_casa,
       'telefono_celular' => $telefono_celular,
       'telefono_oficina' => $telefono_oficina,
-      'correo' => $correo]);
+      'correo'           => $correo]);
     $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
     return $pdf->stream($nombre_ticket);
     //return $pdf ->download($nombre_ticket);
     //return redirect('pacient/');
   }
-
   /**
   * Display the specified resource.
   *
@@ -549,8 +506,19 @@ class PacientController extends Controller
   }
   public function show_details(Request $request,$id){
     if ($request->ajax()) {
-      $paciente = Pacient::find($id);
-      return response()->json($paciente);
+      $paciente         = Pacient::find($id);
+      $antecedentes_go  = Ago::antecedentesgo($paciente->id);
+      $antecedentes_hf  = Ahf::antecedenteshf($paciente->id);
+      $antecedentes_pnp = Apnp::antecedentespnp($paciente->id);
+      $antecedentes_pp  = App::antecedentespp($paciente->id);
+      $info = array(
+        'paciente'        => $paciente,
+        'antecedentesgo'  => $antecedentes_go,
+        'antecedenteshf'  => $antecedentes_hf,
+        'antecedentespnp' => $antecedentes_pnp,
+        'antecedentespp'  => $antecedentes_pp,
+      );
+      return response()->json($info);
     }
   }
   public function updatePaciente(Request $request,$id)

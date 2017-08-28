@@ -1,23 +1,73 @@
 function mostrar(btn){
   var route="pacient/show_details/"+btn;
   $.get(route,function(res){
-    $("#id").val(res.id);
-    $("#nombre").val(res.nombre);
-    $("#apaterno").val(res.apaterno);
-    $("#amaterno").val(res.amaterno);
-    $("#sexo").val(res.sexo);
-    $("#fecha_nac").val(res.fecha_nac);
-    $("#curp").val(res.curp);
-    $("#nacionalidad").val(res.nacionalidad);
-    $("#calle").val(res.calle);
-    $("#num_ext").val(res.num_ext);
-    $("#num_int").val(res.num_int);
-    $("#colonia").val(res.colonia);
-    $("#cp").val(res.cp);
-    $("#telefono_casa").val(res.telefono_casa);
-    $("#telefono_celular").val(res.telefono_celular);
-    $("#telefono_oficina").val(res.telefono_oficina);
-    $("#correo").val(res.correo);
+    //Datos del paciente
+    $("#id").val(res.paciente.id);
+    $("#nombre").val(res.paciente.nombre);
+    $("#apaterno").val(res.paciente.apaterno);
+    $("#amaterno").val(res.paciente.amaterno);
+    $("#sexo").val(res.paciente.sexo);
+    $("#fecha_nac").val(res.paciente.fecha_nac);
+    $("#curp").val(res.paciente.curp);
+    $("#nacionalidad").val(res.paciente.nacionalidad);
+    $("#calle").val(res.paciente.calle);
+    $("#num_ext").val(res.paciente.num_ext);
+    $("#num_int").val(res.paciente.num_int);
+    $("#colonia").val(res.paciente.colonia);
+    $("#cp").val(res.paciente.cp);
+    $("#telefono_casa").val(res.paciente.telefono_casa);
+    $("#telefono_celular").val(res.paciente.telefono_celular);
+    $("#telefono_oficina").val(res.paciente.telefono_oficina);
+    $("#correo").val(res.paciente.correo);
+
+    //Antecedentes heredo-familiares
+    $("#diabetes").val(res.antecedenteshf.diabetes);
+    $("#hipertension").val(res.antecedenteshf.hipertension);
+    $("#cardiopatia").val(res.antecedenteshf.cardiopatia);
+    $("#hepatopatia").val(res.antecedenteshf.hepatopatia);
+    $("#nefropatia").val(res.antecedenteshf.nefropatia);
+    $("#enmentales").val(res.antecedenteshf.enmentales);
+    $("#asma").val(res.antecedenteshf.asma);
+    $("#cancer").val(res.antecedenteshf.cancer);
+    $("#enalergicas").val(res.antecedenteshf.enalergicas);
+    $("#endocrinas").val(res.antecedenteshf.endocrinas);
+    $("#otros").val(res.antecedenteshf.otros);
+    $("#intneg").val(res.antecedenteshf.intneg);
+
+    //Antecedentes personales patologicos
+    $("#enactuales").val(res.antecedentespp.enactuales);
+    $("#quirurjicos").val(res.antecedentespp.quirurjicos);
+    $("#transfuncionales").val(res.antecedentespp.transfuncionales);
+    $("#alergias").val(res.antecedentespp.alergias);
+    $("#traumaticos").val(res.antecedentespp.traumaticos);
+    $("#hosprevias").val(res.antecedentespp.hosprevias);
+    $("#adicciones").val(res.antecedentespp.adicciones);
+    $("#otros").val(res.antecedentespp.otros);
+
+    //Antecedentes personales patologicos
+    $("#banio").val(res.antecedentespnp.banio);
+    $("#dientes").val(res.antecedentespnp.dientes);
+    $("#habitacion").val(res.antecedentespnp.habitacion);
+    $("#tabaquismo").val(res.antecedentespnp.tabaquismo);
+    $("#alcoholismo").val(res.antecedentespnp.alcoholismo);
+    $("#alimentacion").val(res.antecedentespnp.alimentacion);
+    $("#deportes").val(res.antecedentespnp.deportes);
+
+    //Antecedentes gineco-obstétricos
+    $("#menarca").val(res.antecedentesgo.menarca);
+    $("#rmenstrual").val(res.antecedentesgo.rmenstrual);
+    $("#dismenorrea").val(res.antecedentesgo.dismenorrea);
+    $("#ivsa").val(res.antecedentesgo.ivsa);
+    $("#parejas").val(res.antecedentesgo.parejas);
+    $("#gestas").val(res.antecedentesgo.gestas);
+    $("#abortos").val(res.antecedentesgo.abortos);
+    $("#partos").val(res.antecedentesgo.partos);
+    $("#cesareas").val(res.antecedentesgo.cesareas);
+    $("#fpp").val(res.antecedentesgo.fpp);
+    $("#climaterio").val(res.antecedentesgo.climaterio);
+    $("#mpp").val(res.antecedentesgo.mpp);
+    $("#citologia").val(res.antecedentesgo.citologia);
+    $("#mastografia").val(res.antecedentesgo.mastografia);
   });
 }
 function modifyPacient(btn){

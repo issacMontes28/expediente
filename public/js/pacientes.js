@@ -23,18 +23,6 @@ function appViewModel(){
   // hace referencia a los atrubutos de la clase appViewModel.
 	var self=this;
 
-  self.visible_AHF = ko.observable(0);
-  self.mostrarAHF = function(){ self.visible_AHF(1); }
-  self.ocultarAHF = function(){ self.visible_AHF(0); }
-
-  self.visible_APP = ko.observable(0);
-  self.mostrarAPP = function(){ self.visible_APP(1); }
-  self.ocultarAPP = function(){ self.visible_APP(0); }
-
-  self.visible_APNP = ko.observable(0);
-  self.mostrarAPNP = function(){ self.visible_APNP(1); }
-  self.ocultarAPNP = function(){ self.visible_APNP(0); }
-
   self.submit=function(){
     var r= confirm("¿Guardar nuevo registro de paciente?");
     if (r==true) {
@@ -43,10 +31,9 @@ function appViewModel(){
          type: "POST",
          url: url,
          data: $("#formulario_paciente").serialize(), // Adjuntar los campos del formulario enviado.
-         success: function(data)
+         success: function(response)
          {
-            //alert("Se ha agregado nuevo paciente");
-           //$("#respuesta").html(data); // Mostrar la respuestas del script PHP.
+            alert(response);
          }
       });
     }

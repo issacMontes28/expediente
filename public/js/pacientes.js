@@ -59,11 +59,11 @@ function appViewModel(){
                   }
                   else {
                     var dialog2 = bootbox.dialog({
-                        message: '<p><i class="fa fa-spin fa-spinner"></i> Hecho...</p>'
+                        message: '<p><i class="fa fa-spin fa-spinner"></i> Espere...</p>'
                     });
                     dialog2.init(function(){
                         setTimeout(function(){
-                            dialog.find('.bootbox-body').html(response);
+                            dialog.find('.bootbox-body').html("Hecho");
                         }, 1000);
                     });
                   }

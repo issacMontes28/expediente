@@ -145,56 +145,57 @@
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="img/icono.png">
+        <img src="img/logo.png">
       </div>
       <h1>Hoja de registro</h1>
-      <div id="company" class="clearfix">
-        <div>Clínica X</div>
-        <div>Teopanzolco 408-102B | Col. Reforma |<br /> C.P 62260 Cuernavaca</div>
-        <div>(01) 777 364 5008</div>
-        <div><a href="mailto:clinica@gmail.com">clinica@gmail.com</a></div>
-      </div>
     </header>
     <main>
       <table class="table">
-        <thead><tr><th>Nombre</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $nombre?></td></tr></tbody>
-        <thead><tr><th>Apellido paterno</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $apaterno?></td></tr></tbody>
-        <thead><tr><th>Apellido materno</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $amaterno?></td></tr></tbody>
-        <thead><tr><th>Sexo</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $sexo?></td></tr></tbody>
-        <thead><tr><th>Fecha de nacimiento</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $fecha_nac?></td></tr></tbody>
-        <thead><tr><th>CURP</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $curp?></td></tr></tbody>
-        <thead><tr><th>Nacionalidad</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $nacionalidad?></td></tr></tbody>
-        <thead><tr><th>Calle</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $calle?></td></tr></tbody>
-        <thead><tr><th>Número exterior</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $num_ext?></td></tr></tbody>
-        <thead><tr><th>Número interior</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $num_int?></td></tr></tbody>
-        <thead><tr><th>Colonia</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $colonia?></td></tr></tbody>
-        <thead><tr><th>Código postal</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $cp?></td></tr></tbody>
-        <thead><tr><th>Localidad</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $localidad?></td></tr></tbody>
-        <thead><tr><th>Municipio</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $municipio?></td></tr></tbody>
-        <thead><tr><th>Estado</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $estado?></td></tr></tbody>
-        <thead><tr><th>Teléfono de casa</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $telefono_casa?></td></tr></tbody>
-        <thead><tr><th>Teléfono celular</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $telefono_celular?></td></tr></tbody>
-        <thead><tr><th>Teléfono de oficina</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $telefono_oficina?></td></tr></tbody>
+        <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="service"><?php echo $nombre?></td>
+            <td class="service"><?php echo $apaterno?></td>
+            <td class="service"><?php echo $amaterno?></td>
+          </tr>
+        </tbody>
+        <thead><tr><th>Sexo</th><th>Fecha de nacimiento</th><th>CURP</th></tr></thead>
+        <tbody><tr><td class="service"><?php echo $sexo?></td>
+          <td class="service"><?php echo $fecha_nac?></td>
+          <td class="service"><?php echo $curp?></td>
+        </tr></tbody>
+        <thead><tr><th>Nacionalidad</th><th>Calle</th><th>Número exterior</th></tr></thead>
+        <tbody><tr>
+          <td class="service"><?php echo $nacionalidad?></td>
+          <td class="service"><?php echo $calle?></td>
+          <td class="service"><?php echo $num_ext?></td>
+        </tr></tbody>
+        <thead><tr><th>Número interior</th><th>Colonia</th><th>Código postal</th></tr></thead>
+        <tbody><tr><td class="service">
+          <?php echo $num_int?></td>
+          <td class="service"><?php echo $colonia?></td>
+          <td class="service"><?php echo $cp?></td>
+        </tr></tbody>
+        <thead><tr><th>Localidad</th><th>Municipio</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="service"><?php echo $localidad?></td>
+            <td class="service"><?php echo $municipio?></td>
+            <td class="service"><?php echo $estado?></td>
+          </tr>
+        </tbody>
+        <thead><tr><th>Teléfono de casa</th><th>Teléfono celular</th><th>Teléfono de oficina</th></tr></thead>
+        <tbody><tr>
+          <td class="service"><?php echo $telefono_casa?></td>
+          <td class="service"><?php echo $telefono_celular?></td>
+          <td class="service"><?php echo $telefono_oficina?></td>
+        </tr></tbody>
         <thead><tr><th>Correo</th></tr></thead>
         <tbody><tr><td class="service"><?php echo $correo?></td></tr></tbody>
+        <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
+        <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
+        <thead><tr><th colspan="3">Firma</th></tr></thead>
+        <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
 
   		</table>
       <div id="notices">
@@ -203,7 +204,7 @@
       </div>
     </main>
     <footer>
-      Ésta hoja de registro fue creada en computadora y es válida sin firma y sello.
+      Ésta hoja de registro fue creada en computadora y no es válida sin firma.
     </footer>
   </body>
 </html>

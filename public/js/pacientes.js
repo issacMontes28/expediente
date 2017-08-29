@@ -24,19 +24,55 @@ function appViewModel(){
 	var self=this;
 
   self.submit=function(){
-    var r= confirm("¿Guardar nuevo registro de paciente?");
-    if (r==true) {
-      var url = "addPacient"; // El script a dónde se realizará la petición.
-      $.ajax({
-         type: "POST",
-         url: url,
-         data: $("#formulario_paciente").serialize(), // Adjuntar los campos del formulario enviado.
-         success: function(response)
-         {
-            alert(response);
-         }
-      });
-    }
+    bootbox.confirm({
+      message: "Confirme para registrar nuevo paciente",
+      buttons: {
+          confirm: {
+              label: 'Aceptar',
+              className: 'btn-primary'
+          },
+          cancel: {
+              label: 'Cancelar'
+          }
+      },
+      callback: function (result) {
+        if (result==true) {
+          var dialog = bootbox.dialog({
+              title: 'Registrando paciente',
+              message: '<p><i class="fa fa-spin fa-spinner"></i> Espere...</p>'
+          });
+          var url = "addPacient"; // El script a dónde se realizará la petición.
+          $.ajax({
+             type: "POST",
+             url: url,
+             data: $("#formulario_paciente").serialize(), // Adjuntar los campos del formulario enviado.
+             success: function(response)
+             {
+               dialog.init(function(){
+                   setTimeout(function(){
+                       dialog.find('.bootbox-body').html(response);
+                   }, 2500);
+               });
+               bootbox.confirm("¿Desea crear documento PDF del registro del paciente?", function(result){
+                 if (result==true) {
+                    document.location.href = 'pdf';
+                  }
+                  else {
+                    var dialog2 = bootbox.dialog({
+                        message: '<p><i class="fa fa-spin fa-spinner"></i> Hecho...</p>'
+                    });
+                    dialog2.init(function(){
+                        setTimeout(function(){
+                            dialog.find('.bootbox-body').html(response);
+                        }, 1000);
+                    });
+                  }
+               })
+             }
+          });
+        }
+      }
+    });
   }
 
  }

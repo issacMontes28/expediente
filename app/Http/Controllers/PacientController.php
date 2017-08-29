@@ -229,9 +229,7 @@ class PacientController extends Controller
       'telefono_oficina' => $telefono_oficina,
       'correo'           => $correo]);
     $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-    return $pdf->stream($nombre_ticket);
-    //return $pdf ->download($nombre_ticket);
-    //return redirect('pacient/');
+    return $pdf->download($nombre_ticket);
   }
   /**
   * Display the specified resource.

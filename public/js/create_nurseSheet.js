@@ -413,7 +413,7 @@ function appViewModel(){
                  //document.location.href = 'hojas';
                }
                else {
-                 document.location.href = 'hojas';
+                 //document.location.href = 'hojas';
                }
 
              }else {

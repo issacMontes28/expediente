@@ -53,9 +53,72 @@ function appViewModel(){
                        dialog.find('.bootbox-body').html(response);
                    }, 2500);
                });
-               bootbox.confirm("¿Desea crear documento PDF del registro del paciente?", function(result){
-                 if (result==true) {
-                    document.location.href = 'pdf';
+               bootbox.confirm({
+                 message: "¿Desea crear documento PDF del registro del paciente?",
+                 buttons: {
+                     confirm: {
+                         label: 'Si',
+                         className: 'btn-primary'
+                     },
+                     cancel: {
+                         label: 'No'
+                     }
+                 },
+                 callback: function (result) {
+                   if (result==true) {
+                   bootbox.prompt({
+                     title: "Elija los apartados que quiere ver en el documento PDF",
+                     inputType: 'checkbox',
+                     inputOptions: [
+                         {
+                             text: 'Datos de contacto',
+                             value: '1',
+                         },
+                         {
+                             text: 'Antecedentes herdo-familiares',
+                             value: '2',
+                         },
+                         {
+                             text: 'Antecedentes personales patológicos',
+                             value: '3',
+                         },
+                         {
+                             text: 'Antecedentes personales no patológicos',
+                             value: '4',
+                         },
+                         {
+                             text: 'Antecedentes gineco-obstétricos',
+                             value: '5',
+                         },
+                         {
+                             text: 'Inspección general',
+                             value: '6',
+                         },
+                         {
+                             text: 'Interrogatorio por aparatos y sistemas',
+                             value: '7',
+                         },
+                         {
+                             text: 'Padecimiento actual',
+                             value: '8',
+                         },
+                         {
+                             text: 'Síntomas generales',
+                             value: '9',
+                         },
+                         {
+                             text: 'Exploración física',
+                             value: '10',
+                         },
+                         {
+                             text: 'Somatometría',
+                             value: '11',
+                         }
+                       ],
+                       callback: function (result) {
+                           document.location.href = 'pdf/'+result+"";
+                       }
+                    });
                   }
                   else {
                     var dialog2 = bootbox.dialog({
@@ -67,14 +130,14 @@ function appViewModel(){
                         }, 1000);
                     });
                   }
-               })
+                 }
+               });
              }
-          });
-        }
-      }
+           });
+         }
+       }
     });
-  }
-
+   }
  }
 //Se aplican los "enlaces" o "encadenamientos"  de las variables de javascript con sus
 //contrapartes en la parte visual de la aplicación

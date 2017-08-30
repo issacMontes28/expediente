@@ -51,11 +51,11 @@
 </div>
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 {!!Form::label('municipio_1','Municipio:')!!}
-{!!Form::select('municipio',['placeholder'=>'Seleccione un municipio','class'=>'form-control selectpicker', 'data-live-search'=>'true'],null,['id'=>'town'])!!}
+{!!Form::select('municipio',['placeholder'=>'Seleccione un municipio','class'=>'selectpicker show-tick form-control', 'data-live-search'=>'true'],null,['id'=>'town'])!!}
 </div>
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 {!!Form::label('localidad_1','localidad:')!!}
-{!!Form::select('localidad',['placeholder'=>'Seleccione una localidad','class'=>'form-control selectpicker', 'data-live-search'=>'true'],null,['id'=>'locality'])!!}
+{!!Form::select('localidad',['placeholder'=>'Seleccione una localidad','class'=>'selectpicker show-tick form-control', 'data-live-search'=>'true'],null,['id'=>'locality'])!!}
 </div>
 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 {!!Form::label('cp_1','Código postal (opcional):')!!}

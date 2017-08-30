@@ -180,56 +180,110 @@ class PacientController extends Controller
 
     return response()->json("Paciente registrado correctamente");
   }
-  public function pdf()
+  public function pdf($apartados)
   {
-    $fecha           = Carbon::now();
-    $pacients        = Pacient::all();
-    $upacient        = $pacients->last();
-    $id_paciente     = $upacient->id;
-    $nombre_paciente = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
+    $fecha                  = Carbon::now();
+    $pacients               = Pacient::all();
+    $upacient               = $pacients->last();
+    $id_paciente            = $upacient->id;
+    $datos_personales_array = array();
+    $antecedentes_hd_array  = array();
+    $antecedentes_pp_array  = array();
+    $antecedentes_pnp_array = array();
+    $antecedentes_go_array  = array();
 
-    $nombre           = $upacient->nombre;
-    $apaterno         = $upacient->apaterno;
-    $amaterno         = $upacient->amaterno;
-    $sexo             = $upacient->sexo;
-    $fecha_nac        = $upacient->fecha_nac;
-    $curp             = $upacient->curp;
-    $nacionalidad     = $upacient->nacionalidad;
-    $calle            = $upacient->calle;
-    $num_ext          = $upacient->num_ext;
-    $num_int          = $upacient->num_int;
-    $colonia          = $upacient->colonia;
-    $cp               = $upacient->cp;
-    $localidad        = $upacient->localidad;
-    $municipio        = $upacient->municipio;
-    $estado           = $upacient->estado;
-    $telefono_casa    = $upacient->telefono_casa;
-    $telefono_celular = $upacient->telefono_celular;
-    $telefono_oficina = $upacient->telefono_oficina;
-    $correo           = $upacient->correo;
+    for ($i=0; $i < count($apartados) ; $i++) {
+      if ($apartados[$i] == 1) {
+        $datos_personales_array[] = array(
+        'nombre_paciente'  => $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno,
+        'nombre'           => $upacient->nombre,
+        'apaterno'         => $upacient->apaterno,
+        'amaterno'         => $upacient->amaterno,
+        'sexo'             => $upacient->sexo,
+        'fecha_nac'        => $upacient->fecha_nac,
+        'curp'             => $upacient->curp,
+        'nacionalidad'     => $upacient->nacionalidad,
+        'calle'            => $upacient->calle,
+        'num_ext'          => $upacient->num_ext,
+        'num_int'          => $upacient->num_int,
+        'colonia'          => $upacient->colonia,
+        'cp'               => $upacient->cp,
+        'localidad'        => $upacient->localidad,
+        'municipio'        => $upacient->municipio,
+        'estado'           => $upacient->estado,
+        'telefono_casa'    => $upacient->telefono_casa,
+        'telefono_celular' => $upacient->telefono_celular,
+        'telefono_oficina' => $upacient->telefono_oficina,
+        'correo'           => $upacient->correo
+        );
+      }
+      if ($apartados[$i] == 2) {
+        $fila_antecedentes_hd = DB::select("select * FROM antecedenteshd where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_hd as $antecedente_hd) {
+          $antecedentes_hd_array [] = array(
+          'diabetes'         => $antecedente_hd->diabetes,
+          'amaterno'         => $antecedente_hd->hipertension,
+          'sexo'             => $antecedente_hd->cardiopatia,
+          'fecha_nac'        => $antecedente_hd->hepatopatia,
+          'curp'             => $antecedente_hd->nefropatia,
+          'nacionalidad'     => $antecedente_hd->enmentales,
+          'calle'            => $antecedente_hd->asma,
+          'num_ext'          => $antecedente_hd->cancer,
+          'num_int'          => $antecedente_hd->enalergicas,
+          'colonia'          => $antecedente_hd->endocrinas,
+          'cp'               => $antecedente_hd->otros,
+          'localidad'        => $antecedente_hd->intneg
+          );
+        }
+      }
+      if ($apartados[$i] == 3) {
+        $fila_antecedentes_pp = DB::select("select * FROM antecedentespp where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_pp as $antecedente_pp) {
+          $antecedentes_pp_array [] = array(
+          'enactuales'        => $antecedente_pp->enactuales,
+          'quirurjicos'       => $antecedente_pp->quirurjicos,
+          'transfucionales'   => $antecedente_pp->transfuncionales,
+          'alergias'          => $antecedente_pp->alergias,
+          'traumaticos'       => $antecedente_pp->traumaticos,
+          'hosprevias'        => $antecedente_pp->hosprevias,
+          'adicciones'        => $antecedente_pp->adicciones,
+          'otros'             => $antecedente_pp->otros,
+          );
+        }
+      }
+      if ($apartados[$i] == 4) {
+        $fila_antecedentes_pnp = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_pnp as $antecedente_pnp) {
+          $antecedentes_pnp_array [] = array(
+          'banio'         => $antecedente_pnp->banio,
+          'dientes'       => $antecedente_pnp->dientes,
+          'habitacion'    => $antecedente_pnp->habitacion,
+          'tabaquismo'    => $antecedente_pnp->tabaquismo,
+          'alcoholismo'   => $antecedente_pnp->alcoholismo,
+          'alimentacion'  => $antecedente_pnp->alimentacion,
+          'deportes'      => $antecedente_pnp->deportes,
+          );
+        }
+      }
+      if ($apartados[$i] == 5) {
+        $fila_antecedentes_go = DB::select("select * FROM antecedentesgo where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_go as $antecedente_go) {
+          $antecedentes_go_array [] = array(
+          'banio'         => $antecedente_go->banio,
+          'dientes'       => $antecedente_go->dientes,
+          'habitacion'    => $antecedente_go->habitacion,
+          'tabaquismo'    => $antecedente_go->tabaquismo,
+          'alcoholismo'   => $antecedente_go->alcoholismo,
+          'alimentacion'  => $antecedente_go->alimentacion,
+          'deportes'      => $antecedente_go->deportes,
+          );
+        }
+      }
+        $pdf = PDF::loadView('reports/pacient_report',);
+        $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
+        return $pdf->download($nombre_ticket);
 
-    $pdf = PDF::loadView('reports/pacient_report',[
-      'nombre'           => $nombre,
-      'apaterno'         => $apaterno,
-      'amaterno'         => $amaterno,
-      'sexo'             => $sexo,
-      'fecha_nac'        => $fecha_nac,
-      'curp'             => $curp,
-      'nacionalidad'     => $nacionalidad,
-      'calle'            => $calle,
-      'num_ext'          => $num_ext,
-      'num_int'          => $num_int,
-      'colonia'          => $colonia,
-      'cp'               => $cp,
-      'localidad'        => $localidad,
-      'municipio'        => $municipio,
-      'estado'           => $estado,
-      'telefono_casa'    => $telefono_casa,
-      'telefono_celular' => $telefono_celular,
-      'telefono_oficina' => $telefono_oficina,
-      'correo'           => $correo]);
-    $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-    return $pdf->download($nombre_ticket);
+    }
   }
   /**
   * Display the specified resource.
@@ -248,39 +302,54 @@ class PacientController extends Controller
 
     $fila_paciente = DB::select("select * FROM pacients where id='$id'");
     foreach ($fila_paciente as $fila) {
-      $paciente_array[] = array('id_paciente' => $fila->id);
+      $paciente_array[] = array(
+        'id_paciente' => $fila->id);
     }
 
     foreach ($fila_hojas_enfermeria as $fila) {
-      $id_hoja = $fila->id;
+      $id_hoja    = $fila->id;
       $fecha_hoja = $fila->fecha;
       $fila_somatometria = DB::select("select * FROM nsomatometries where id_ns='$id_hoja'");
       foreach ($fila_somatometria as $fila2) {
-        $peso=$fila2->peso.' kg';
-        $altura=$fila2->altura.' cm';
-        $psistolica=$fila2->psistolica.' mm/Hg';
-        $pdiastolica=$fila2->pdiastolica.' mm/Hg';
-        $frespiratoria=$fila2->frespiratoria;
-        $pulso=$fila2->pulso;
-        $oximetria=$fila2->oximetria.' %';
-        $glucometria=$fila2->glucometria.' mg/dL';
+        $peso           = $fila2->peso.' kg';
+        $altura         = $fila2->altura.' cm';
+        $psistolica     = $fila2->psistolica.' mm/Hg';
+        $pdiastolica    = $fila2->pdiastolica.' mm/Hg';
+        $frespiratoria  = $fila2->frespiratoria;
+        $pulso          = $fila2->pulso;
+        $oximetria      = $fila2->oximetria.' %';
+        $glucometria    = $fila2->glucometria.' mg/dL';
 
-        $peso2=$fila2->peso;
-        $altura2=$fila2->altura;
-        $psistolica2=$fila2->psistolica;
-        $pdiastolica2=$fila2->pdiastolica;
-        $frespiratoria2=$fila2->frespiratoria;
-        $pulso2=$fila2->pulso;
-        $oximetria2=$fila2->oximetria;
-        $glucometria2=$fila2->glucometria;
+        $peso2          = $fila2->peso;
+        $altura2        = $fila2->altura;
+        $psistolica2    = $fila2->psistolica;
+        $pdiastolica2   = $fila2->pdiastolica;
+        $frespiratoria2 = $fila2->frespiratoria;
+        $pulso2         = $fila2->pulso;
+        $oximetria2     = $fila2->oximetria;
+        $glucometria2   = $fila2->glucometria;
 
-        $somatometries_array[] = array('fecha' => $fecha_hoja,'peso'=> $peso, 'altura'=> $altura,'psistolica'=> $psistolica,
-        'pdiastolica'=> $pdiastolica, 'frespiratoria'=> $frespiratoria,'pulso'=> $pulso,
-        'oximetria'=> $oximetria, 'glucometria'=> $glucometria);
+        $somatometries_array[] = array(
+        'fecha'         => $fecha_hoja,
+        'peso'          => $peso,
+        'altura'        => $altura,
+        'psistolica'    => $psistolica,
+        'pdiastolica'   => $pdiastolica,
+        'frespiratoria' => $frespiratoria,
+        'pulso'         => $pulso,
+        'oximetria'     => $oximetria,
+        'glucometria'   => $glucometria);
 
-        $somatometries2_array[] = array('fecha' => $fecha_hoja,'peso'=> $peso2, 'altura'=> $altura2,'psistolica'=> $psistolica2,
-        'pdiastolica'=> $pdiastolica2, 'frespiratoria'=> $frespiratoria2,'pulso'=> $pulso2,
-        'oximetria'=> $oximetria2, 'glucometria'=> $glucometria2);
+        $somatometries2_array[] = array(
+        'fecha'         => $fecha_hoja,
+        'peso'          => $peso2,
+        'altura'        => $altura2,
+        'psistolica'    => $psistolica2,
+        'pdiastolica'   => $pdiastolica2,
+        'frespiratoria' => $frespiratoria2,
+        'pulso'         => $pulso2,
+        'oximetria'     => $oximetria2,
+        'glucometria'   => $glucometria2);
       }
     }
     //Se crea el archivo json, si existe, se sobreescribe

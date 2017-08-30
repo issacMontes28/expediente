@@ -32,7 +32,7 @@ Route::get('pacient/actualizar','PacientController@actualizar');
 Route::get('pacient/show_details/{id}','PacientController@show_details');
 Route::get('pacient/pacient/show_details/{id}','PacientController@show_details');
 Route::post('pacient/addPacient','PacientController@addPacient');
-Route::get('pacient/pdf','PacientController@pdf');
+Route::get('pacient/pdf/{apartdados}','PacientController@pdf');
 Route::resource('pacient','PacientController');
 
 //Rutas para CRUD de hojas de enfermería

@@ -150,54 +150,116 @@
       <h1>Hoja de registro</h1>
     </header>
     <main>
-      <table class="table">
-        <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="service"><?php echo $nombre?></td>
-            <td class="service"><?php echo $apaterno?></td>
-            <td class="service"><?php echo $amaterno?></td>
-          </tr>
-        </tbody>
-        <thead><tr><th>Sexo</th><th>Fecha de nacimiento</th><th>CURP</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $sexo?></td>
-          <td class="service"><?php echo $fecha_nac?></td>
-          <td class="service"><?php echo $curp?></td>
-        </tr></tbody>
-        <thead><tr><th>Nacionalidad</th><th>Calle</th><th>Número exterior</th></tr></thead>
-        <tbody><tr>
-          <td class="service"><?php echo $nacionalidad?></td>
-          <td class="service"><?php echo $calle?></td>
-          <td class="service"><?php echo $num_ext?></td>
-        </tr></tbody>
-        <thead><tr><th>Número interior</th><th>Colonia</th><th>Código postal</th></tr></thead>
-        <tbody><tr><td class="service">
-          <?php echo $num_int?></td>
-          <td class="service"><?php echo $colonia?></td>
-          <td class="service"><?php echo $cp?></td>
-        </tr></tbody>
-        <thead><tr><th>Localidad</th><th>Municipio</th><th>Estado</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="service"><?php echo $localidad?></td>
-            <td class="service"><?php echo $municipio?></td>
-            <td class="service"><?php echo $estado?></td>
-          </tr>
-        </tbody>
-        <thead><tr><th>Teléfono de casa</th><th>Teléfono celular</th><th>Teléfono de oficina</th></tr></thead>
-        <tbody><tr>
-          <td class="service"><?php echo $telefono_casa?></td>
-          <td class="service"><?php echo $telefono_celular?></td>
-          <td class="service"><?php echo $telefono_oficina?></td>
-        </tr></tbody>
-        <thead><tr><th>Correo</th></tr></thead>
-        <tbody><tr><td class="service"><?php echo $correo?></td></tr></tbody>
-        <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
-        <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
-        <thead><tr><th colspan="3">Firma</th></tr></thead>
-        <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+      <?php
+          for ($i=0; $i < count($info_array); $i++) {
+            if ( $info_array[$i] == "Datos_personales") {
+              for ($j=0; $j < count($datos_personales_array); $j++) {
+      ?>
+              <table class="table">
+                <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $datos_personales_array[$j]["nombre"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["apaterno"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["amaterno"]?></td>
+                  </tr>
+                </tbody>
+                <thead><tr><th>Sexo</th><th>Fecha de nacimiento</th><th>CURP</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["sexo"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["fecha_nac"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["curp"]?></td>
+                </tr></tbody>
+                <thead><tr><th>Nacionalidad</th><th>Calle</th><th>Número exterior</th></tr></thead>
+                <tbody><tr>
+                  <td class="service"><?php echo $datos_personales_array[$j]["nacionalidad"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["calle"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["num_ext"]?></td>
+                </tr></tbody>
+                <thead><tr><th>Número interior</th><th>Colonia</th><th>Código postal</th></tr></thead>
+                <tbody><tr><td class="service">
+                  <?php echo $datos_personales_array[$j]["num_int"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["colonia"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["cp"]?></td>
+                </tr></tbody>
+                <thead><tr><th>Localidad</th><th>Municipio</th><th>Estado</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $datos_personales_array[$j]["localidad"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["municipio"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["estado"]?></td>
+                  </tr>
+                </tbody>
+                <thead><tr><th>Teléfono de casa</th><th>Teléfono celular</th><th>Teléfono de oficina</th></tr></thead>
+                <tbody><tr>
+                  <td class="service"><?php echo $datos_personales_array[$j]["telefono_casa"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["telefono_celular"]?></td>
+                  <td class="service"><?php echo $datos_personales_array[$j]["telefono_oficina"]?></td>
+                </tr></tbody>
+                <thead><tr><th>Correo</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["correo"]?></td></tr></tbody>
+                <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
+                <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
+                <thead><tr><th colspan="3">Firma</th></tr></thead>
+                <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+              </table>
+       <?php
 
-  		</table>
+              }
+            }
+            if ( $info_array[$i] == "Antecedentes_HF") {
+              for ($j=0; $j < count($antecedentes_hf_array); $j++) {
+       ?>
+                <table class="table">
+                  <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td class="service"><?php echo $datos_personales_array[$j]["nombre"]?></td>
+                      <td class="service"><?php echo $datos_personales_array[$j]["apaterno"]?></td>
+                      <td class="service"><?php echo $datos_personales_array[$j]["amaterno"]?></td>
+                    </tr>
+                  </tbody>
+                  <thead><tr><th>Sexo</th><th>Fecha de nacimiento</th><th>CURP</th></tr></thead>
+                  <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["sexo"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["fecha_nac"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["curp"]?></td>
+                  </tr></tbody>
+                  <thead><tr><th>Nacionalidad</th><th>Calle</th><th>Número exterior</th></tr></thead>
+                  <tbody><tr>
+                    <td class="service"><?php echo $datos_personales_array[$j]["nacionalidad"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["calle"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["num_ext"]?></td>
+                  </tr></tbody>
+                  <thead><tr><th>Número interior</th><th>Colonia</th><th>Código postal</th></tr></thead>
+                  <tbody><tr><td class="service">
+                    <?php echo $datos_personales_array[$j]["num_int"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["colonia"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["cp"]?></td>
+                  </tr></tbody>
+                  <thead><tr><th>Localidad</th><th>Municipio</th><th>Estado</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td class="service"><?php echo $datos_personales_array[$j]["localidad"]?></td>
+                      <td class="service"><?php echo $datos_personales_array[$j]["municipio"]?></td>
+                      <td class="service"><?php echo $datos_personales_array[$j]["estado"]?></td>
+                    </tr>
+                  </tbody>
+                  <thead><tr><th>Teléfono de casa</th><th>Teléfono celular</th><th>Teléfono de oficina</th></tr></thead>
+                  <tbody><tr>
+                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_casa"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_celular"]?></td>
+                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_oficina"]?></td>
+                  </tr></tbody>
+                  <thead><tr><th>Correo</th></tr></thead>
+                  <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["correo"]?></td></tr></tbody>
+                  <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
+                  <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
+                  <thead><tr><th colspan="3">Firma</th></tr></thead>
+                  <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+                </table>
+              }
+            }
+          }
+       ?>
       <div id="notices">
         <div>NOTA:</div>
         <div class="notice">Si hay alguna inconsistecia en sus datos, puede modificarlos.</div>

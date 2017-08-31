@@ -186,11 +186,13 @@ class PacientController extends Controller
     $pacients               = Pacient::all();
     $upacient               = $pacients->last();
     $id_paciente            = $upacient->id;
+    $nombre_paciente        = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
     $datos_personales_array = array();
-    $antecedentes_hd_array  = array();
+    $antecedentes_hf_array  = array();
     $antecedentes_pp_array  = array();
     $antecedentes_pnp_array = array();
     $antecedentes_go_array  = array();
+    $info_array             = array();
 
     for ($i=0; $i < count($apartados) ; $i++) {
       if ($apartados[$i] == 1) {
@@ -216,25 +218,27 @@ class PacientController extends Controller
         'telefono_oficina' => $upacient->telefono_oficina,
         'correo'           => $upacient->correo
         );
+        $info_array[]  = 'Datos_personales';
       }
       if ($apartados[$i] == 2) {
-        $fila_antecedentes_hd = DB::select("select * FROM antecedenteshd where id_paciente='$id_paciente'");
-        foreach ($fila_antecedentes_hd as $antecedente_hd) {
-          $antecedentes_hd_array [] = array(
-          'diabetes'         => $antecedente_hd->diabetes,
-          'amaterno'         => $antecedente_hd->hipertension,
-          'sexo'             => $antecedente_hd->cardiopatia,
-          'fecha_nac'        => $antecedente_hd->hepatopatia,
-          'curp'             => $antecedente_hd->nefropatia,
-          'nacionalidad'     => $antecedente_hd->enmentales,
-          'calle'            => $antecedente_hd->asma,
-          'num_ext'          => $antecedente_hd->cancer,
-          'num_int'          => $antecedente_hd->enalergicas,
-          'colonia'          => $antecedente_hd->endocrinas,
-          'cp'               => $antecedente_hd->otros,
-          'localidad'        => $antecedente_hd->intneg
+        $fila_antecedentes_hf = DB::select("select * FROM antecedenteshf where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_hf as $antecedente_hf) {
+          $antecedentes_hf_array [] = array(
+          'diabetes'         => $antecedente_hf->diabetes,
+          'amaterno'         => $antecedente_hf->hipertension,
+          'sexo'             => $antecedente_hf->cardiopatia,
+          'fecha_nac'        => $antecedente_hf->hepatopatia,
+          'curp'             => $antecedente_hf->nefropatia,
+          'nacionalidad'     => $antecedente_hf->enmentales,
+          'calle'            => $antecedente_hf->asma,
+          'num_ext'          => $antecedente_hf->cancer,
+          'num_int'          => $antecedente_hf->enalergicas,
+          'colonia'          => $antecedente_hf->endocrinas,
+          'cp'               => $antecedente_hf->otros,
+          'localidad'        => $antecedente_hf->intneg
           );
         }
+        $info_array[]  = 'Antecedentes_HF';
       }
       if ($apartados[$i] == 3) {
         $fila_antecedentes_pp = DB::select("select * FROM antecedentespp where id_paciente='$id_paciente'");
@@ -250,6 +254,7 @@ class PacientController extends Controller
           'otros'             => $antecedente_pp->otros,
           );
         }
+        $info_array[]  =  'Antecedentes_PP';
       }
       if ($apartados[$i] == 4) {
         $fila_antecedentes_pnp = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
@@ -264,24 +269,41 @@ class PacientController extends Controller
           'deportes'      => $antecedente_pnp->deportes,
           );
         }
+        $info_array[]  = 'Antecedentes_PNP';
       }
       if ($apartados[$i] == 5) {
         $fila_antecedentes_go = DB::select("select * FROM antecedentesgo where id_paciente='$id_paciente'");
         foreach ($fila_antecedentes_go as $antecedente_go) {
           $antecedentes_go_array [] = array(
-          'banio'         => $antecedente_go->banio,
-          'dientes'       => $antecedente_go->dientes,
-          'habitacion'    => $antecedente_go->habitacion,
-          'tabaquismo'    => $antecedente_go->tabaquismo,
-          'alcoholismo'   => $antecedente_go->alcoholismo,
-          'alimentacion'  => $antecedente_go->alimentacion,
-          'deportes'      => $antecedente_go->deportes,
+          'menarca'          => $antecedente_go->menarca,
+          'rmenstrual'       => $antecedente_go->rmenstrual,
+          'dismenorrea'      => $antecedente_go->dismenorrea,
+          'ivsa'             => $antecedente_go->ivsa,
+          'parejas'          => $antecedente_go->parejas,
+          'gestas'           => $antecedente_go->gestas,
+          'abortos'          => $antecedente_go->abortos,
+          'partos'           => $antecedente_go->partos,
+          'cesareas'         => $antecedente_go->cesareas,
+          'fpp'              => $antecedente_go->fpp,
+          'menopausia'       => $antecedente_go->menopausia,
+          'climaterio'       => $antecedente_go->climaterio,
+          'mpp'              => $antecedente_go->climaterio,
+          'citologia'        => $antecedente_go->citologia,
+          'mastografia'      => $antecedente_go->mastografia,
           );
         }
+        $info_array[]  = 'Antecedentes_GO';
       }
-        $pdf = PDF::loadView('reports/pacient_report',);
-        $nombre_ticket = 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-        return $pdf->download($nombre_ticket);
+        $pdf = PDF::loadView('reports/pacient_report',compact(
+          'info_array',
+          'datos_personales_array',
+          'antecedentes_hf_array',
+          'antecedentes_pnp_array',
+          'antecedentes_pnp_array',
+          'antecedentes_go_array'
+        ));
+        $nombre_hoja= 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
+        return $pdf->download($nombre_hoja);
 
     }
   }
@@ -509,7 +531,7 @@ class PacientController extends Controller
   {
      $nursesheets = NurseSheet::name($request->get('name'))->orderBy('id','DESC')->paginate(6);
      //se returna la vista con todos los registros
-       return view('pacients.index',["pacientes"=>$pacientes]);
+     return view('pacients.index',["pacientes"=>$pacientes]);
   }
   public function adddate($id)
   {
@@ -524,10 +546,11 @@ class PacientController extends Controller
   }
   public function addsoap($id)
   {
-    $cita = Date::find($id);
-    $id_cita = $cita->id;
+    $cita        = Date::find($id);
+    $id_cita     = $cita->id;
     $id_paciente = $cita->id_paciente;
-    $paciente = Pacient::find($id_paciente);
+    $paciente    = Pacient::find($id_paciente);
+
     $pacients = DB::table('pacients')
                 ->orderBy('apaterno', 'asc')
                 ->get();
@@ -536,21 +559,32 @@ class PacientController extends Controller
                 ->get();
     $matches_array = array();
     $fila_matches = DB::select("select * FROM studymatches");
-    foreach ($fila_matches as $fila) {
-      $id_estudio = $fila->id_estudio;
-      $id_enfermedad = $fila->id_enfermedad;
-      $fila_estudio = DB::select("select * FROM studies where id='$id_estudio'");
-      $fila_enfermedad = DB::select("select * FROM diagnosticos where id='$id_enfermedad'");
-      foreach ($fila_estudio as $estudios) {$estudio = $estudios->nombre;}
-      foreach ($fila_enfermedad as $enfermedades) {$enfermedad = $enfermedades->nombre;}
 
-      $matches_array[] = array('id_estudio' => $id_estudio, 'estudio' => $estudio,
-      'id_enfermedad' => $id_enfermedad, 'enfermedad' => $enfermedad);
+    foreach ($fila_matches as $fila) {
+      $id_estudio      = $fila->id_estudio;
+      $id_enfermedad   = $fila->id_enfermedad;
+      $fila_estudio    = DB::select("select * FROM studies where id='$id_estudio'");
+      $fila_enfermedad = DB::select("select * FROM diagnosticos where id='$id_enfermedad'");
+
+      foreach ($fila_estudio as $estudios) {
+        $estudio = $estudios->nombre;
+      }
+      foreach ($fila_enfermedad as $enfermedades) {
+        $enfermedad = $enfermedades->nombre;
+      }
+
+      $matches_array[] = array(
+      'id_estudio'    => $id_estudio,
+      'estudio'       => $estudio,
+      'id_enfermedad' => $id_enfermedad,
+      'enfermedad'    => $enfermedad);
     }
-    $collection4 = Collection::make($matches_array);
-    $collection4->toJson();
-    $file4 = 'json/matches.json';
+
+    $collection4 =  Collection::make($matches_array);
+    $collection4 -> toJson();
+    $file4       = 'json/matches.json';
     file_put_contents($file4, $collection4);
+
     return view('soaps/create',compact('cita','pacients','doctors','paciente','id_cita'));
   }
   public function show_details(Request $request,$id){

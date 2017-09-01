@@ -156,6 +156,7 @@
               for ($j=0; $j < count($datos_personales_array); $j++) {
       ?>
               <table class="table">
+                <thead><tr><th colspan="3">Datos demográficos</th></tr></thead>
                 <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
                 <tbody>
                   <tr>
@@ -206,6 +207,7 @@
               for ($j=0; $j < count($antecedentes_hf_array); $j++) {
        ?>
                 <table class="table">
+                  <thead><tr><th colspan="3">Antecedentes heredo-familiares</th></tr></thead>
                   <thead><tr><th>Diabetes</th><th>Hipertensión</th><th>Cardiopatía</th></tr></thead>
                   <tbody>
                     <tr>
@@ -238,6 +240,7 @@
               for ($j=0; $j < count($antecedentes_pp_array); $j++) {
        ?>
                 <table class="table">
+                  <thead><tr><th colspan="3">Antecedentes personales patológicos</th></tr></thead>
                   <thead><tr><th>Enfermedades actuales</th><th>Quirúrgicos</th><th>Transfucionales</th></tr></thead>
                   <tbody>
                     <tr>
@@ -264,6 +267,7 @@
               for ($j=0; $j < count($antecedentes_pnp_array); $j++) {
       ?>
             <table class="table">
+              <thead><tr><th colspan="3">Antecedentes personales no patológicos</th></tr></thead>
               <thead><tr><th>Baño</th><th>Dientes</th><th>Habitación</th></tr></thead>
               <tbody>
                 <tr>
@@ -289,6 +293,7 @@
              for ($j=0; $j < count($antecedentes_go_array); $j++) {
       ?>
             <table class="table">
+              <thead><tr><th colspan="3">Antecedentes gineco-obstétricos</th></tr></thead>
               <thead><tr><th>Menarca</th><th>Ritmo menstrual</th><th>Dismenorrea</th></tr></thead>
               <tbody>
                 <tr>

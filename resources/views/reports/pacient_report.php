@@ -197,10 +197,6 @@
                 </tr></tbody>
                 <thead><tr><th>Correo</th></tr></thead>
                 <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["correo"]?></td></tr></tbody>
-                <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
-                <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
-                <thead><tr><th colspan="3">Firma</th></tr></thead>
-                <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
               </table>
        <?php
 
@@ -210,56 +206,66 @@
               for ($j=0; $j < count($antecedentes_hf_array); $j++) {
        ?>
                 <table class="table">
-                  <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
+                  <thead><tr><th>Diabetes</th><th>Hipertensión</th><th>Cardiopatía</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td class="service"><?php echo $datos_personales_array[$j]["nombre"]?></td>
-                      <td class="service"><?php echo $datos_personales_array[$j]["apaterno"]?></td>
-                      <td class="service"><?php echo $datos_personales_array[$j]["amaterno"]?></td>
+                      <td class="service"><?php echo $antecedentes_hf_array[$j]["diabetes"]?></td>
+                      <td class="service"><?php echo $antecedentes_hf_array[$j]["hipertension"]?></td>
+                      <td class="service"><?php echo $antecedentes_hf_array[$j]["cardiopatia"]?></td>
                     </tr>
                   </tbody>
-                  <thead><tr><th>Sexo</th><th>Fecha de nacimiento</th><th>CURP</th></tr></thead>
-                  <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["sexo"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["fecha_nac"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["curp"]?></td>
+                  <thead><tr><th>Hepatopatía</th><th>Nefropatía</th><th>Enfermedades mentales</th></tr></thead>
+                  <tbody><tr><td class="service"><?php echo $antecedentes_hf_array[$j]["hepatopatia"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["nefropatia"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["enmentales"]?></td>
                   </tr></tbody>
-                  <thead><tr><th>Nacionalidad</th><th>Calle</th><th>Número exterior</th></tr></thead>
+                  <thead><tr><th>Asma</th><th>Cancer</th><th>Enfermedades alérgicas</th></tr></thead>
                   <tbody><tr>
-                    <td class="service"><?php echo $datos_personales_array[$j]["nacionalidad"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["calle"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["num_ext"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["asma"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["cancer"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["enalergicas"]?></td>
                   </tr></tbody>
-                  <thead><tr><th>Número interior</th><th>Colonia</th><th>Código postal</th></tr></thead>
+                  <thead><tr><th>Enfermedades endócrinas</th><th colspan="2">Otros</th></tr></thead>
                   <tbody><tr><td class="service">
-                    <?php echo $datos_personales_array[$j]["num_int"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["colonia"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["cp"]?></td>
+                    <?php echo $antecedentes_hf_array[$j]["endocrinas"]?></td>
+                    <td class="service"><?php echo $antecedentes_hf_array[$j]["otros"]?></td>
                   </tr></tbody>
-                  <thead><tr><th>Localidad</th><th>Municipio</th><th>Estado</th></tr></thead>
+                </table>
+      <?php
+              }
+            }
+            if ( $info_array[$i] == "Antecedentes_PP") {
+              for ($j=0; $j < count($antecedentes_pp_array); $j++) {
+       ?>
+                <table class="table">
+                  <thead><tr><th>Enfermedades actuales</th><th>Quirúrgicos</th><th>Transfucionales</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td class="service"><?php echo $datos_personales_array[$j]["localidad"]?></td>
-                      <td class="service"><?php echo $datos_personales_array[$j]["municipio"]?></td>
-                      <td class="service"><?php echo $datos_personales_array[$j]["estado"]?></td>
+                      <td class="service"><?php echo $antecedentes_pp_array[$j]["enactuales"]?></td>
+                      <td class="service"><?php echo $antecedentes_pp_array[$j]["quirurjicos"]?></td>
+                      <td class="service"><?php echo $antecedentes_pp_array[$j]["transfuncionales"]?></td>
                     </tr>
                   </tbody>
-                  <thead><tr><th>Teléfono de casa</th><th>Teléfono celular</th><th>Teléfono de oficina</th></tr></thead>
-                  <tbody><tr>
-                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_casa"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_celular"]?></td>
-                    <td class="service"><?php echo $datos_personales_array[$j]["telefono_oficina"]?></td>
+                  <thead><tr><th>Alergias</th><th>Traumáticos</th><th>Hospitalizaciones previas</th></tr></thead>
+                  <tbody><tr><td class="service"><?php echo $antecedentes_pp_array[$j]["alergias"]?></td>
+                    <td class="service"><?php echo $antecedentes_pp_array[$j]["traumaticos"]?></td>
+                    <td class="service"><?php echo $antecedentes_pp_array[$j]["hosprevias"]?></td>
                   </tr></tbody>
-                  <thead><tr><th>Correo</th></tr></thead>
-                  <tbody><tr><td class="service"><?php echo $datos_personales_array[$j]["correo"]?></td></tr></tbody>
-                  <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
-                  <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
-                  <thead><tr><th colspan="3">Firma</th></tr></thead>
-                  <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+                  <thead><tr><th>Adicciones</th><th colspan="2">Otros</th></tr></thead>
+                  <tbody><tr>
+                    <td class="service"><?php echo $antecedentes_pp_array[$j]["adicciones"]?></td>
+                    <td class="service"><?php echo $antecedentes_pp_array[$j]["otros"]?></td>
+                  </tr></tbody>
                 </table>
+      <?php
               }
             }
           }
        ?>
+      <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
+      <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
+      <thead><tr><th colspan="3">Firma</th></tr></thead>
+      <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
       <div id="notices">
         <div>NOTA:</div>
         <div class="notice">Si hay alguna inconsistecia en sus datos, puede modificarlos.</div>

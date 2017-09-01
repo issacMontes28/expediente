@@ -180,8 +180,9 @@ class PacientController extends Controller
 
     return response()->json("Paciente registrado correctamente");
   }
-  public function pdf($apartados)
+  public function pdf($apartados2)
   {
+    $apartados              = str_split($apartados2, 1);
     $fecha                  = Carbon::now();
     $pacients               = Pacient::all();
     $upacient               = $pacients->last();
@@ -224,18 +225,18 @@ class PacientController extends Controller
         $fila_antecedentes_hf = DB::select("select * FROM antecedenteshf where id_paciente='$id_paciente'");
         foreach ($fila_antecedentes_hf as $antecedente_hf) {
           $antecedentes_hf_array [] = array(
-          'diabetes'         => $antecedente_hf->diabetes,
-          'amaterno'         => $antecedente_hf->hipertension,
-          'sexo'             => $antecedente_hf->cardiopatia,
-          'fecha_nac'        => $antecedente_hf->hepatopatia,
-          'curp'             => $antecedente_hf->nefropatia,
-          'nacionalidad'     => $antecedente_hf->enmentales,
-          'calle'            => $antecedente_hf->asma,
-          'num_ext'          => $antecedente_hf->cancer,
-          'num_int'          => $antecedente_hf->enalergicas,
-          'colonia'          => $antecedente_hf->endocrinas,
-          'cp'               => $antecedente_hf->otros,
-          'localidad'        => $antecedente_hf->intneg
+          'diabetes'        => $antecedente_hf->diabetes,
+          'hipertension'    => $antecedente_hf->hipertension,
+          'cardiopatia'     => $antecedente_hf->cardiopatia,
+          'hepatopatia'     => $antecedente_hf->hepatopatia,
+          'nefropatia'      => $antecedente_hf->nefropatia,
+          'enmentales'      => $antecedente_hf->enmentales,
+          'asma'            => $antecedente_hf->asma,
+          'cancer'          => $antecedente_hf->cancer,
+          'enalergicas'     => $antecedente_hf->enalergicas,
+          'endocrinas'      => $antecedente_hf->endocrinas,
+          'otros'           => $antecedente_hf->otros,
+          'intneg'          => $antecedente_hf->intneg
           );
         }
         $info_array[]  = 'Antecedentes_HF';
@@ -294,18 +295,17 @@ class PacientController extends Controller
         }
         $info_array[]  = 'Antecedentes_GO';
       }
-        $pdf = PDF::loadView('reports/pacient_report',compact(
-          'info_array',
-          'datos_personales_array',
-          'antecedentes_hf_array',
-          'antecedentes_pnp_array',
-          'antecedentes_pnp_array',
-          'antecedentes_go_array'
-        ));
-        $nombre_hoja= 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
-        return $pdf->download($nombre_hoja);
-
     }
+    $pdf = PDF::loadView('reports/pacient_report',compact(
+      'info_array',
+      'datos_personales_array',
+      'antecedentes_hf_array',
+      'antecedentes_pp_array',
+      'antecedentes_pnp_array',
+      'antecedentes_go_array'
+    ));
+    $nombre_hoja= 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
+    return $pdf->download($nombre_hoja);
   }
   /**
   * Display the specified resource.

@@ -252,7 +252,7 @@ class PacientController extends Controller
           'traumaticos'       => $antecedente_pp->traumaticos,
           'hosprevias'        => $antecedente_pp->hosprevias,
           'adicciones'        => $antecedente_pp->adicciones,
-          'otros'             => $antecedente_pp->otros,
+          'otros'             => $antecedente_pp->otros
           );
         }
         $info_array[]  =  'Antecedentes_PP';
@@ -267,7 +267,7 @@ class PacientController extends Controller
           'tabaquismo'    => $antecedente_pnp->tabaquismo,
           'alcoholismo'   => $antecedente_pnp->alcoholismo,
           'alimentacion'  => $antecedente_pnp->alimentacion,
-          'deportes'      => $antecedente_pnp->deportes,
+          'deportes'      => $antecedente_pnp->deportes
           );
         }
         $info_array[]  = 'Antecedentes_PNP';
@@ -290,7 +290,7 @@ class PacientController extends Controller
           'climaterio'       => $antecedente_go->climaterio,
           'mpp'              => $antecedente_go->climaterio,
           'citologia'        => $antecedente_go->citologia,
-          'mastografia'      => $antecedente_go->mastografia,
+          'mastografia'      => $antecedente_go->mastografia
           );
         }
         $info_array[]  = 'Antecedentes_GO';

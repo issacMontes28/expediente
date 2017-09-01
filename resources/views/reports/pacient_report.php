@@ -243,7 +243,7 @@
                     <tr>
                       <td class="service"><?php echo $antecedentes_pp_array[$j]["enactuales"]?></td>
                       <td class="service"><?php echo $antecedentes_pp_array[$j]["quirurjicos"]?></td>
-                      <td class="service"><?php echo $antecedentes_pp_array[$j]["transfuncionales"]?></td>
+                      <td class="service"><?php echo $antecedentes_pp_array[$j]["transfucionales"]?></td>
                     </tr>
                   </tbody>
                   <thead><tr><th>Alergias</th><th>Traumáticos</th><th>Hospitalizaciones previas</th></tr></thead>
@@ -313,7 +313,7 @@
                 <td class="service"><?php echo $antecedentes_go_array[$j]["climaterio"]?></td>
               </tr></tbody>
               <thead><tr><th>Método de planificación familiar</th><th>Citología</th><th>Mastografía</th></tr></thead>
-              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["mpf"]?></td>
+              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["mpp"]?></td>
                 <td class="service"><?php echo $antecedentes_go_array[$j]["citologia"]?></td>
                 <td class="service"><?php echo $antecedentes_go_array[$j]["mastografia"]?></td>
               </tr></tbody>
@@ -323,10 +323,12 @@
           }
         }
        ?>
-      <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
-      <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
-      <thead><tr><th colspan="3">Firma</th></tr></thead>
-      <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+      <table>
+        <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
+        <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
+        <thead><tr><th colspan="3">Firma</th></tr></thead>
+        <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+      </table>
       <div id="notices">
         <div>NOTA:</div>
         <div class="notice">Si hay alguna inconsistecia en sus datos, puede modificarlos.</div>

@@ -260,7 +260,68 @@
       <?php
               }
             }
+            if ( $info_array[$i] == "Antecedentes_PNP") {
+              for ($j=0; $j < count($antecedentes_pnp_array); $j++) {
+      ?>
+            <table class="table">
+              <thead><tr><th>Baño</th><th>Dientes</th><th>Habitación</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="service"><?php echo $antecedentes_pnp_array[$j]["banio"]?></td>
+                  <td class="service"><?php echo $antecedentes_pnp_array[$j]["dientes"]?></td>
+                  <td class="service"><?php echo $antecedentes_pnp_array[$j]["habitacion"]?></td>
+                </tr>
+              </tbody>
+              <thead><tr><th>Tabaquismo</th><th>Alcoholismo</th><th>Alimentación</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $antecedentes_pnp_array[$j]["tabaquismo"]?></td>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alcoholismo"]?></td>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alimentacion"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Deportes</th></tr></thead>
+              <tbody><tr>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["deportes"]?></td>
+              </tr></tbody>
+            </table>
+      <?php
+            }
+           }
+           if ( $info_array[$i] == "Antecedentes_GO") {
+             for ($j=0; $j < count($antecedentes_go_array); $j++) {
+      ?>
+            <table class="table">
+              <thead><tr><th>Menarca</th><th>Ritmo menstrual</th><th>Dismenorrea</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="service"><?php echo $antecedentes_go_array[$j]["menarca"]?></td>
+                  <td class="service"><?php echo $antecedentes_go_array[$j]["rmenstrual"]?></td>
+                  <td class="service"><?php echo $antecedentes_go_array[$j]["dismenorrea"]?></td>
+                </tr>
+              </tbody>
+              <thead><tr><th>Inicio de Vida sexual activa</th><th>Parejas</th><th>Gestas</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["ivsa"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["parejas"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["gestas"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Abortos</th><th>Partos</th><th>Cesáreas</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["abortos"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["partos"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["gestas"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Fecha probable de parto</th><th>Menopausia</th><th>Climaterio</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["fpp"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["menopausia"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["climaterio"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Método de planificación familiar</th><th>Citología</th><th>Mastografía</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $antecedentes_go_array[$j]["mpf"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["citologia"]?></td>
+                <td class="service"><?php echo $antecedentes_go_array[$j]["mastografia"]?></td>
+              </tr></tbody>
+            </table>
+      <?php
+            }
           }
+        }
        ?>
       <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
       <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>

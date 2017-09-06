@@ -29,8 +29,19 @@ $("#letra_estudio").change(function(event){
     }
   })
 
-
-
+  $("#sname").keyup(function(event){
+    if (event.target.value != "") {
+      var jqxhr = $.get("match4/"+event.target.value+"",function(response,state){
+          $("#estudios").empty();
+          for (var i = 0; i < response.length; i++) {
+            $("#estudios").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>");
+          }
+      })
+      .fail(function() {
+        console.log( "Ninguna coincidencia con texto ingresado" );
+      });
+    }
+  })
 
 function Match(elemento){
  this.id_diagnostico=ko.observable(elemento.id_diagnostico);

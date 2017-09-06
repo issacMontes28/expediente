@@ -68,6 +68,10 @@
    </select>
 </div>
 <div class="form-group">
+<strong>Búsqueda de estudios por nombre</strong>
+  <input type="text" class="form-control" name="sname" id="sname" placeholder="Buscar...">
+</div>
+<div class="form-group">
    <strong>Estudio que le asignará al diagnóstico</strong>
    <select id="estudios" class="form-control"></select>
 </div>

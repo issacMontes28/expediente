@@ -81,6 +81,7 @@ Route::get('match', 'StudyController@create');
 Route::get('eliminarMatch', 'StudyController@eliminar');
 Route::get('match/{letra_diagnostico}', 'StudyController@diagnosticos');
 Route::get('match2/{letra_estudio}', 'StudyController@estudios');
+Route::get('match3/{nombre_estudio}', 'StudyController@diagnosticosDos');
 Route::post('/addMatch', 'StudyController@AddItem');
 Route::get('studyCreate', 'StudyController@createEstudio');
 Route::get('studyDelete', 'StudyController@eliminarEstudio');

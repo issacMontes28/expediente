@@ -96,6 +96,15 @@ class StudyController extends Controller
      return response()->json($diagnosticos);
    }
  }
+ public function diagnosticosDos(Request $request, $nombre_estudio){
+   if ($request->ajax()) {
+     $est = "%".$nombre_estudio."%";
+     $diagnosticos = DB::table('diagnosticos')
+                 ->where('nombre', 'like', $est)
+                 ->get();
+     return response()->json($diagnosticos);
+   }
+ }
  public function eliminar(){
    $matches = StudyMatch::all();
    return view('Estudios/studyMatchDelete',['matches'=>$matches]);

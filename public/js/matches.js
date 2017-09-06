@@ -6,7 +6,6 @@ $("#letra_diagnostico").change(function(event){
       }
   });
 });
-
 $("#letra_estudio").change(function(event){
   $.get("match2/"+event.target.value+"",function(response,state){
       $("#estudios").empty();
@@ -15,6 +14,22 @@ $("#letra_estudio").change(function(event){
       }
   });
 });
+
+  $("#dname").keyup(function(event){
+    if (event.target.value != "") {
+      var jqxhr = $.get("match3/"+event.target.value+"",function(response,state){
+          $("#diagnosticos").empty();
+          for (var i = 0; i < response.length; i++) {
+            $("#diagnosticos").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>");
+          }
+      })
+      .fail(function() {
+        console.log( "Ninguna coincidencia con texto ingresado" );
+      });
+    }
+  })
+
+
 
 
 function Match(elemento){

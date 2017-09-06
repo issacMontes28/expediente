@@ -29,6 +29,7 @@
 }
 </style>
 
+<div class="form-group">
 <strong>Primera letra de diagnóstico</strong>
 <select id="letra_diagnostico" class="form-control selectpicker"  data-live-search="true">
    <option selected>Elija letra</option>
@@ -42,6 +43,10 @@
    <option>U</option><option>V</option><option>W</option>
    <option>X</option><option>Y</option><option>Z</option>
 </select>
+</div>
+<div class="form-group">
+<strong>Búsqueda de diagnósticos por nombre</strong>
+  <input type="text" class="form-control" name="dname" id="dname" placeholder="Buscar...">
 </div>
 <div class="form-group">
    <strong>Diagnóstico al cual le asignará un estudio</strong>

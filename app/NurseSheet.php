@@ -2,11 +2,11 @@
 
 namespace SIAM;
 
-use COEM\Pacient;
-use COEM\NsHabitus;
-use COEM\NSomatometry;
-use COEM\NsMedicament;
-use COEM\nsActualMedicament;
+use SIAM\Pacient;
+use SIAM\NsHabitus;
+use SIAM\NSomatometry;
+use SIAM\NsMedicament;
+use SIAM\nsActualMedicament;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

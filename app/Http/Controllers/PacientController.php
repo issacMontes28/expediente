@@ -7,16 +7,26 @@ use Illuminate\Http\Request;
 use SIAM\Http\Requests;
 use SIAM\Http\Requests\PacientCreateRequest;
 use SIAM\Http\Controllers\Controller;
+
 use SIAM\Pacient;
 use SIAM\Date;
 use SIAM\State;
-use SIAM\Town;
-use SIAM\Locality;
-use SIAM\Nationality;
 use SIAM\Ahf;
 use SIAM\App;
 use SIAM\Apnp;
 use SIAM\Ago;
+use SIAM\NSomatometry;
+use SIAM\Aeg;
+use SIAM\Aapysis;
+use SIAM\Apact;
+use SIAM\Asg;
+use SIAM\Aer;
+use SIAM\NurseSheet;
+
+use SIAM\Town;
+use SIAM\Locality;
+use SIAM\Nationality;
+
 use DB;
 use PDF;
 use Carbon\Carbon;
@@ -153,6 +163,86 @@ class PacientController extends Controller
       'deportes'     => $request['deportes']
     ]);
 
+
+    //se crea la hoja de enfermería y se recupera el registro para crear las otras partes de la hoja
+    $fecha = Carbon::now();
+    NurseSheet::create([
+      'fecha'       => $fecha,
+      'id_paciente' => $id_paciente
+    ]);
+    $nurseSheets = NurseSheet::all();
+    $unurseSheets = $nurseSheets->last();
+
+    //Se crea la somatometría de la hoja de enfermería
+    //Exploracion fisica
+    NSomatometry::create([
+    'id_ns' 		    => $unurseSheets->id,
+    'peso' 			    => $request['peso_pacient'],
+    'altura' 		    => $request['altura_pacient'],
+    'psistolica'  	=> $request['psistolica_pacient'],
+    'pdiastolica' 	=> $request['pdiastolica_pacient'],
+    'frespiratoria' => $request['frespiratoria_pacient'],
+    'pulso' 		    => $request['pulso_pacient'],
+    'oximetria' 	  => $request['oximetria_pacient'],
+    'glucometria' 	=> $request['glucometria_pacient']
+    ]);
+
+    //Antecedentes Exploracion general
+     Aeg::create([
+     'id_paciente'  		  => $id_paciente,
+     'ori_desori'         => $request['ori_desori'],
+     'hidra_deshidra'     => $request['hidra_deshidra'],
+     'coloracion'   		  => $request['coloracion'],
+     'marcha_normal'   	  => $request['marcha_normal'],
+     'altMarcha_otrasAlt' => $request['altMarcha_otrasAlt'],
+     'otro_iter' 		      => $request['otro_iter']
+     ]);
+
+    //Antecedentes Exploracion de aparatos y sistemas
+     Aapysis::create([
+      'id_paciente'  			=> $id_paciente,
+      'ap_digestivo'      => $request['ap_digestivo'],
+      'ap_cardivascular'  => $request['ap_cardivascular'],
+      'ap_respiratorio'   => $request['ap_respiratorio'],
+      'ap_urinario'   		=> $request['ap_urinario'],
+      'ap_genital'  			=> $request['ap_genital'],
+      'ap_hematologico' 	=> $request['ap_hematologico'],
+      'ap_endocrino' 			=> $request['ap_endocrino'],
+      'ap_osteomuscular' 	=> $request['ap_osteomuscular'],
+      'si_nervioso' 			=> $request['si_nervioso'],
+      'si_sensorial' 			=> $request['si_sensorial'],
+      'sicosomatico' 			=> $request['sicosomatico']
+     ]);
+
+     //Antecedentes Padecimiento actual
+     Apact::create([
+      'id_paciente'  		    => $id_paciente,
+      'descripcion_pacient' => $request['descripcion_pacient']
+      ]);
+
+     //Antecedentes sintomas generales
+     Asg::create([
+      'id_paciente'  		  => $id_paciente,
+      'astenia_pacient'  	=> $request['astenia_pacient'],
+      'adinamia_pacient'  => $request['adinamia_pacient'],
+      'anorexia_pacient'  => $request['anorexia_pacient'],
+      'fiebre_pacient'   	=> $request['fiebre_pacient'],
+      'pPeso_pacient'   	=> $request['pPeso_pacient'],
+      'otrosSI_pacient'   => $request['otrosSI_pacient']
+     ]);
+
+     //Antecedentes sintomas generales
+     Aer::create([
+      'id_paciente'  		 => $id_paciente,
+      'cuello_sujeto'  	 => $request['cuello_sujeto'],
+      'torax_sujeto'   	 => $request['torax_sujeto'],
+      'abdomen_sujeto'   => $request['abdomen_sujeto'],
+      'miembros_sujeto'  => $request['miembros_sujeto'],
+      'genitales_sujeto' => $request['genitales_sujeto'],
+      'cabeza_sujeto'    => $request['cabeza_sujeto']
+     ]);
+
+
     if (empty($request['menarca']) && empty($request['rmenstrual']) && empty($request['dismenorrea']) && empty($request['ivsa']) && empty($request['parejas']) && empty($request['gestas']) && empty($request['abortos']) && empty($request['partos']) && empty($request['cesareas']) && empty($request['fpp']) && empty($request['menopausia']) && empty($request['climaterio']) && empty($request['mpp']) && empty($request['citologia']) && empty($request['mastografia'])) {
       # nothing to do here...
     }
@@ -182,18 +272,24 @@ class PacientController extends Controller
   }
   public function pdf($apartados2)
   {
-    $apartados              = str_split($apartados2, 1);
-    $fecha                  = Carbon::now();
-    $pacients               = Pacient::all();
-    $upacient               = $pacients->last();
-    $id_paciente            = $upacient->id;
-    $nombre_paciente        = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
-    $datos_personales_array = array();
-    $antecedentes_hf_array  = array();
-    $antecedentes_pp_array  = array();
-    $antecedentes_pnp_array = array();
-    $antecedentes_go_array  = array();
-    $info_array             = array();
+    $apartados                  = str_split($apartados2, 1);
+    $fecha                      = Carbon::now();
+    $pacients                   = Pacient::all();
+    $upacient                   = $pacients->last();
+    $id_paciente                = $upacient->id;
+    $nombre_paciente            = $upacient->nombre.' '.$upacient->apaterno.' '.$upacient->amaterno;
+    $datos_personales_array     = array();
+    $antecedentes_hf_array      = array();
+    $antecedentes_pp_array      = array();
+    $antecedentes_pnp_array     = array();
+    $antecedentes_go_array      = array();
+    $interrogatorio_as_array    = array();
+    $sintomas_generales_array   = array();
+    $padecimiento_actual_array  = array();
+    $somatometria_array         = array();
+    $inspeccion_general_array   = array();
+    $exploracion_fisica_array   = array();
+    $info_array                 = array();
 
     for ($i=0; $i < count($apartados) ; $i++) {
       if ($apartados[$i] == 1) {
@@ -261,13 +357,13 @@ class PacientController extends Controller
         $fila_antecedentes_pnp = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
         foreach ($fila_antecedentes_pnp as $antecedente_pnp) {
           $antecedentes_pnp_array [] = array(
-          'banio'         => $antecedente_pnp->banio,
-          'dientes'       => $antecedente_pnp->dientes,
-          'habitacion'    => $antecedente_pnp->habitacion,
-          'tabaquismo'    => $antecedente_pnp->tabaquismo,
-          'alcoholismo'   => $antecedente_pnp->alcoholismo,
-          'alimentacion'  => $antecedente_pnp->alimentacion,
-          'deportes'      => $antecedente_pnp->deportes
+          'banio'          => $antecedente_pnp->banio,
+          'dientes'        => $antecedente_pnp->dientes,
+          'habitacion'     => $antecedente_pnp->habitacion,
+          'tabaquismo'     => $antecedente_pnp->tabaquismo,
+          'alcoholismo'    => $antecedente_pnp->alcoholismo,
+          'alimentacion'   => $antecedente_pnp->alimentacion,
+          'deportes'       => $antecedente_pnp->deportes
           );
         }
         $info_array[]  = 'Antecedentes_PNP';
@@ -295,14 +391,112 @@ class PacientController extends Controller
         }
         $info_array[]  = 'Antecedentes_GO';
       }
+      if ($apartados[$i] == 6) {
+        $fila_antecedentes_as = DB::select("select * FROM antecedentesapysis where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_as as $antecedente_as) {
+          $interrogatorio_as_array [] = array(
+          'ap_digestivo'       => $antecedente_as->ap_digestivo,
+          'ap_cardivascular'   => $antecedente_as->ap_cardivascular,
+          'ap_respiratorio'    => $antecedente_as->ap_respiratorio,
+          'ap_urinario'        => $antecedente_as->ap_urinario,
+          'ap_genital'         => $antecedente_as->ap_genital,
+          'ap_hematologico'    => $antecedente_as->ap_hematologico,
+          'ap_endocrino'       => $antecedente_as->ap_endocrino,
+          'ap_osteomuscular'   => $antecedente_as->ap_osteomuscular,
+          'si_nervioso'        => $antecedente_as->si_nervioso,
+          'si_sensorial'       => $antecedente_as->si_sensorial,
+          'sicosomatico'       => $antecedente_as->sicosomatico
+          );
+        }
+        $info_array[]  = 'Interrogatorio_AS';
+      }
+      if ($apartados[$i] == 7) {
+        $fila_antecedentes_g = DB::select("select * FROM antecedentesg where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_g as $antecedente_g) {
+          $sintomas_generales_array [] = array(
+          'astenia_pacient'     => $antecedente_g->astenia_pacient,
+          'adinamia_pacient'    => $antecedente_g->adinamia_pacient,
+          'anorexia_pacient'    => $antecedente_g->anorexia_pacient,
+          'fiebre_pacient'      => $antecedente_g->fiebre_pacient,
+          'pPeso_pacient'       => $antecedente_g->pPeso_pacient,
+          'otrosSI_pacient'     => $antecedente_g->otrosSI_pacient,
+          );
+        }
+        $info_array[]  = 'Sintomas_generales';
+      }
+      if ($apartados[$i] == 8) {
+        $fila_antecedentes_apact = DB::select("select * FROM antecedentespact where id_paciente='$id_paciente'");
+        foreach ($fila_antecedentes_apact as $antecedente_apact) {
+          $padecimiento_actual_array [] = array(
+          'descripcion_pacient'   => $antecedente_apact->descripcion_pacient,
+          );
+        }
+        $info_array[]  = 'Padecimiento_actual';
+      }
+      if ($apartados[$i] == 9) {
+        $fila_hde = DB::select("select * FROM nursesheets where id_paciente='$id_paciente'");
+        foreach ($fila_hde as $hde) {
+          $id_hde = $hde->id;
+        }
+        if (isset($id_hde)) {
+          $fila_somatometria = DB::select("select * FROM nsomatometries where id_ns='$id_hde'");
+          foreach ($fila_somatometria as $somatometria) {
+            $somatometria_array [] = array(
+            'peso'            => $somatometria->peso,
+            'altura'          => $somatometria->altura,
+            'psistolica'      => $somatometria->psistolica,
+            'pdiastolica'     => $somatometria->pdiastolica,
+            'frespiratoria'   => $somatometria->frespiratoria,
+            'pulso'           => $somatometria->pulso,
+            'oximetria'       => $somatometria->oximetria,
+            'glucometria'     => $somatometria->glucometria
+            );
+          }
+        }
+        $info_array[]  = 'Somatometria';
+      }
+      if ($apartados[$i] == 10) {
+        $fila_inspeccion_general = DB::select("select * FROM antecedenteseg where id_paciente='$id_paciente'");
+        foreach ($fila_inspeccion_general as $inspeccion_general) {
+          $inspeccion_general_array [] = array(
+          'ori_desori'         => $inspeccion_general->ori_desori,
+          'hidra_deshidra'     => $inspeccion_general->hidra_deshidra,
+          'coloracion'         => $inspeccion_general->coloracion,
+          'marcha_normal'      => $inspeccion_general->marcha_normal,
+          'altMarcha_otrasAlt' => $inspeccion_general->altMarcha_otrasAlt,
+          'otro_iter'          => $inspeccion_general->otro_iter
+          );
+        }
+        $info_array[]  = 'Inspeccion_general';
+      }
+      if ($apartados[$i] == 11) {
+        $fila_exploracion_fisica = DB::select("select * FROM antecedenteser where id_paciente='$id_paciente'");
+        foreach ($fila_exploracion_fisica as $exploracion_fisica) {
+          $exploracion_fisica_array [] = array(
+          'cabeza_sujeto'     => $exploracion_fisica->cabeza_sujeto,
+          'cuello_sujeto'     => $exploracion_fisica->cuello_sujeto,
+          'torax_sujeto'      => $exploracion_fisica->torax_sujeto,
+          'abdomen_sujeto'    => $exploracion_fisica->abdomen_sujeto,
+          'miembros_sujeto'   => $exploracion_fisica->miembros_sujeto,
+          'genitales_sujeto'  => $exploracion_fisica->genitales_sujeto
+          );
+        }
+        $info_array[]  = 'Exploracion_fisica';
+      }
     }
     $pdf = PDF::loadView('reports/pacient_report',compact(
-      'info_array',
-      'datos_personales_array',
-      'antecedentes_hf_array',
-      'antecedentes_pp_array',
-      'antecedentes_pnp_array',
-      'antecedentes_go_array'
+      'info_array'               ,
+      'datos_personales_array'   ,
+      'antecedentes_hf_array'    ,
+      'antecedentes_pp_array'    ,
+      'antecedentes_pnp_array'   ,
+      'antecedentes_go_array'    ,
+      'interrogatorio_as_array'  ,
+      'sintomas_generales_array' ,
+      'padecimiento_actual_array',
+      'somatometria_array'       ,
+      'inspeccion_general_array' ,
+      'exploracion_fisica_array'
     ));
     $nombre_hoja= 'HojaRegistro'.$nombre_paciente.$fecha.'.pdf';
     return $pdf->download($nombre_hoja);

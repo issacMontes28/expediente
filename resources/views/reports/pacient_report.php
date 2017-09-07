@@ -326,6 +326,68 @@
       <?php
             }
           }
+          if ($info_array[$i] == "Interrogatorio_AS") {
+            for ($j=0; $j < count($interrogatorio_as_array); $j++) {
+      ?>
+            <table class="table">
+              <thead><tr><th colspan="3">Interrogatorio por aparatos y sistemas</th></tr></thead>
+              <thead><tr><th>Ap. Digestivo</th><th>Ap. Cardiovascular</th><th>Ap. Respiratorio</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_digestivo"]?></td>
+                  <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_cardivascular"]?></td>
+                  <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_respiratorio"]?></td>
+                </tr>
+              </tbody>
+              <thead><tr><th>Ap. Urinario</th><th>Ap. Genital</th><th>Ap. Hematológico</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $interrogatorio_as_array[$j]["ap_urinario"]?></td>
+                <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_genital"]?></td>
+                <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_hematologico"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Ap. Endócrino</th><th>Ap. Osteomuscular</th><th>Sistema Nervioso</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $interrogatorio_as_array[$j]["ap_endocrino"]?></td>
+                <td class="service"><?php echo $interrogatorio_as_array[$j]["ap_osteomuscular"]?></td>
+                <td class="service"><?php echo $interrogatorio_as_array[$j]["si_nervioso"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Sistema Sensorial</th><th>Sistema Psicosomático</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $interrogatorio_as_array[$j]["si_sensorial"]?></td>
+                <td class="service"><?php echo $interrogatorio_as_array[$j]["sicosomatico"]?></td>
+              </tr></tbody>
+            </table>
+      <?php
+            }
+          }
+          if ($info_array[$i] == "Sintomas_generales") {
+            for ($j=0; $j < count($sintomas_generales_array); $j++) {
+      ?>
+            <table class="table">
+              <thead><tr><th colspan="3">Síntomas generales</th></tr></thead>
+              <thead><tr><th>Ap. Digestivo</th><th>Ap. Cardiovascular</th><th>Ap. Respiratorio</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="service"><?php echo $sintomas_generales_array[$j]["ap_digestivo"]?></td>
+                  <td class="service"><?php echo $sintomas_generales_array[$j]["ap_cardivascular"]?></td>
+                  <td class="service"><?php echo $sintomas_generales_array[$j]["ap_respiratorio"]?></td>
+                </tr>
+              </tbody>
+              <thead><tr><th>Ap. Urinario</th><th>Ap. Genital</th><th>Ap. Hematológico</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $sintomas_generales_array[$j]["ap_urinario"]?></td>
+                <td class="service"><?php echo $sintomas_generales_array[$j]["ap_genital"]?></td>
+                <td class="service"><?php echo $sintomas_generales_array[$j]["ap_hematologico"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Ap. Endócrino</th><th>Ap. Osteomuscular</th><th>Sistema Nervioso</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $sintomas_generales_array[$j]["ap_endocrino"]?></td>
+                <td class="service"><?php echo $sintomas_generales_array[$j]["ap_osteomuscular"]?></td>
+                <td class="service"><?php echo $sintomas_generales_array[$j]["si_nervioso"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Sistema Sensorial</th><th>Sistema Psicosomático</th></tr></thead>
+              <tbody><tr><td class="service"><?php echo $sintomas_generales_array[$j]["si_sensorial"]?></td>
+                <td class="service"><?php echo $sintomas_generales_array[$j]["sicosomatico"]?></td>
+              </tr></tbody>
+            </table>
+      <?php
+          }
+         }
         }
        ?>
       <table>

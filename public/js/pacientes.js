@@ -71,11 +71,11 @@ function appViewModel(){
                      inputType: 'checkbox',
                      inputOptions: [
                          {
-                             text: 'Datos de contacto',
+                             text: 'Datos demográficos',
                              value: '1',
                          },
                          {
-                             text: 'Antecedentes herdo-familiares',
+                             text: 'Antecedentes heredo-familiares',
                              value: '2',
                          },
                          {
@@ -91,11 +91,11 @@ function appViewModel(){
                              value: '5',
                          },
                          {
-                             text: 'Inspección general',
+                             text: 'Interrogatorio por aparatos y sistemas',
                              value: '6',
                          },
                          {
-                             text: 'Interrogatorio por aparatos y sistemas',
+                             text: 'Síntomas generales',
                              value: '7',
                          },
                          {
@@ -103,15 +103,15 @@ function appViewModel(){
                              value: '8',
                          },
                          {
-                             text: 'Síntomas generales',
+                             text: 'Somatometría',
                              value: '9',
                          },
                          {
-                             text: 'Exploración física',
+                             text: 'Inspección general',
                              value: '10',
                          },
                          {
-                             text: 'Somatometría',
+                             text: 'Exploración física',
                              value: '11',
                          }
                        ],

@@ -50,8 +50,7 @@
          <tr>
              <td><input data-bind="value: consecutivo" disabled class="form-control"></input></td>
              <td><input data-bind="value: nombre, style: { size: 80}" disabled class="form-control"></input></td>
-             <td><button data-bind="click: $root.removediag" class="btn btn-danger btn-sm"
-               >Quitar</button></td>
+             <td><button data-bind="click: $root.removediag" class="btn btn-danger btn-sm">Quitar</button></td>
          </tr>
      </tbody>
   </table>

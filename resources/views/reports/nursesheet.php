@@ -159,8 +159,8 @@
           <?php foreach ($somatometria_array as $somatometria) { ?>
             <tr><td><strong>Peso:</strong></td><td><?php echo $somatometria["peso"].' kg'; ?></td>
               <td><strong>Altura:</strong></td><td><?php echo $somatometria["altura"].' cm'; ?></td></tr>
-            <tr><td><strong>Presión sistólica:</strong></td><td><?php echo $somatometria["psistolica"].' mm'; ?></td>
-              <td><strong>Presión diastólica:</strong></td><td><?php echo $somatometria["pdiastolica"].' Hg'; ?></td></tr>
+            <tr><td><strong>Presión sistólica:</strong></td><td><?php echo $somatometria["psistolica"].' mm/Hg'; ?></td>
+              <td><strong>Presión diastólica:</strong></td><td><?php echo $somatometria["pdiastolica"].' mm/Hg'; ?></td></tr>
             <tr><td><strong>Frecuencia respiratoria:</strong></td><td><?php echo $somatometria["frespiratoria"].' p/m'; ?></td>
               <td><strong>Pulso:</strong></td><td><?php echo $somatometria["pulso"].' p/m'; ?></td></tr>
             <tr><td><strong>Oximetría:</strong></td><td><?php echo $somatometria["oximetria"].' %'; ?></td>

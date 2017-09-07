@@ -388,6 +388,91 @@
       <?php
           }
          }
+         if ($info_array[$i] == "Padecimiento_actual") {
+           for ($j=0; $j < count($padecimiento_actual_array); $j++) {
+        ?>
+              <table class="table">
+                <thead><tr><th>Padecimiento actual</th></tr></thead>
+                <thead><tr><th>Descripción</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $padecimiento_actual_array[$j]["descripcion_pacient"]?></td>
+                  </tr>
+                </tbody>
+              </table>
+        <?php
+          }
+         }
+         if ($info_array[$i] == "Somatometria") {
+           for ($j=0; $j < count($somatometria_array); $j++) {
+        ?>
+              <table class="table">
+                <thead><tr><th colspan="3">Somatometría</th></tr></thead>
+                <thead><tr><th>Peso</th><th>Altura</th><th>Presión sistólica</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $somatometria_array[$j]["peso"].' kg'?></td>
+                    <td class="service"><?php echo $somatometria_array[$j]["altura"].' cm'?></td>
+                    <td class="service"><?php echo $somatometria_array[$j]["psistolica"].' mm/Hg'?></td>
+                  </tr>
+                </tbody>
+                <thead><tr><th>Presión diastólica</th><th>Frecuencia respiratoria</th><th>Pulso</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $somatometria_array[$j]["pdiastolica"].' mm/Hg'?></td>
+                  <td class="service"><?php echo $somatometria_array[$j]["frespiratoria"].' p/m'?></td>
+                  <td class="service"><?php echo $somatometria_array[$j]["pulso"].' p/m'?></td>
+                </tr></tbody>
+                <thead><tr><th>Oximetría</th><th>Glucometría</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $somatometria_array[$j]["oximetria"].' %'?></td>
+                  <td class="service"><?php echo $somatometria_array[$j]["glucometria"].' mg/dL'?></td>
+                </tr></tbody>
+              </table>
+        <?php
+          }
+         }
+         if ($info_array[$i] == "Inspeccion_general") {
+           for ($j=0; $j < count($inspeccion_general_array); $j++) {
+        ?>
+              <table class="table">
+                <thead><tr><th colspan="3">Inspección general</th></tr></thead>
+                <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $inspeccion_general_array[$j]["ori_desori"]?></td>
+                    <td class="service"><?php echo $inspeccion_general_array[$j]["hidra_deshidra"]?></td>
+                    <td class="service"><?php echo $inspeccion_general_array[$j]["coloracion"]?></td>
+                  </tr>
+                </tbody>
+                <thead><tr><th>Marcha</th><th>Alteración de la marcha</th><th>Otros</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $inspeccion_general_array[$j]["marcha_normal"]?></td>
+                  <td class="service"><?php echo $inspeccion_general_array[$j]["altMarcha_otrasAlt"]?></td>
+                  <td class="service"><?php echo $inspeccion_general_array[$j]["otro_iter"]?></td>
+                </tr></tbody>
+              </table>
+       <?php
+           }
+          }
+          if ($info_array[$i] == "Exploracion_fisica") {
+            for ($j=0; $j < count($exploracion_fisica_array); $j++) {
+        ?>
+              <table class="table">
+                <thead><tr><th colspan="3">Inspección general</th></tr></thead>
+                <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="service"><?php echo $exploracion_fisica_array[$j]["cabeza_sujeto"]?></td>
+                    <td class="service"><?php echo $exploracion_fisica_array[$j]["cuello_sujeto"]?></td>
+                    <td class="service"><?php echo $exploracion_fisica_array[$j]["torax_sujeto"]?></td>
+                  </tr>
+                </tbody>
+                <thead><tr><th>Marcha</th><th>Alteración de la marcha</th><th>Otros</th></tr></thead>
+                <tbody><tr><td class="service"><?php echo $exploracion_fisica_array[$j]["abdomen_sujeto"]?></td>
+                  <td class="service"><?php echo $exploracion_fisica_array[$j]["miembros_sujeto"]?></td>
+                  <td class="service"><?php echo $exploracion_fisica_array[$j]["genitales_sujeto"]?></td>
+                </tr></tbody>
+              </table>
+       <?php
+          }
+         }
         }
        ?>
       <table>

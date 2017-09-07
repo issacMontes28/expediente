@@ -272,7 +272,7 @@ class PacientController extends Controller
   }
   public function pdf($apartados2)
   {
-    $apartados                  = str_split($apartados2, 1);
+    $apartados                  = explode(",", $apartados2);
     $fecha                      = Carbon::now();
     $pacients                   = Pacient::all();
     $upacient                   = $pacients->last();

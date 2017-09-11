@@ -97,7 +97,7 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">4.-Servicios</label><br>
-			<input type="checkbox" name="agua_pacient_check" id="agua_pacient_check" onclick="agua_pacient_checkClick(this)" />
+			<input type="checkbox" name="agua_pacient_check" id="agua_pacient_check" value="agua_pacient_check"/>
 			<div class="btn-group">
 					<label for="agua_pacient_check" class="btn btn-primary">
 							<span class="fa fa-check "></span>
@@ -108,7 +108,7 @@
 					</label>
 			</div>
 			<br>
-			<input type="checkbox" name="energia_pacient_check" id="energia_pacient_check" onclick="energia_pacient_checkClick(this)" />
+			<input type="checkbox" name="energia_pacient_check" id="energia_pacient_check" value="energia_pacient_check"/>
 			<div class="btn-group">
 					<label for="energia_pacient_check" class="btn btn-primary">
 							<span class="fa fa-check "></span>
@@ -119,7 +119,7 @@
 					</label>
 			</div>
 			<br>
-			<input type="checkbox" name="telefono_pacient_check" id="telefono_pacient_check" onclick="telefono_pacient_checkClick(this)" />
+			<input type="checkbox" name="telefono_pacient_check" id="telefono_pacient_check" value="telefono_pacient_check"/>
 			<div class="btn-group">
 					<label for="telefono_pacient_check" class="btn btn-primary">
 							<span class="fa fa-check "></span>
@@ -130,7 +130,7 @@
 					</label>
 			</div>
 			<br>
-			<input type="checkbox" name="internet_pacient_check" id="internet_pacient_check" onclick="internet_pacient_checkClick(this)" />
+			<input type="checkbox" name="internet_pacient_check" id="internet_pacient_check" value="internet_pacient_check"/>
 			<div class="btn-group">
 					<label for="internet_pacient_check" class="btn btn-primary">
 							<span class="fa fa-check "></span>
@@ -141,7 +141,7 @@
 					</label>
 			</div>
 			<br>
-			<input type="checkbox" name="tv_pacient_check" id="tv_pacient_check" onclick="tv_pacient_checkClick(this)" />
+			<input type="checkbox" name="tv_pacient_check" id="tv_pacient_check" value="tv_pacient_check"/>
 			<div class="btn-group">
 					<label for="tv_pacient_check" class="btn btn-primary">
 							<span class="fa fa-check "></span>

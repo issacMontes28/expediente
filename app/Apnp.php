@@ -19,8 +19,8 @@ class Apnp extends Model
    *
    * @var array
    */
-  protected $fillable = ['id_paciente','banio','dientes','habitacion','servicios',
-  'tabaquismo','alcoholismo','alimentacion','deportes'];
+  protected $fillable = ['id_paciente','banio','dientes','habitacion',
+  'servicios','tabaquismo','alcoholismo','alimentacion','deportes'];
   protected $dates = ['deleted_at'];
 
   public function scopeAntecedentespnp($query,$id){

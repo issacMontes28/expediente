@@ -151,24 +151,25 @@ class PacientController extends Controller
       'otros'            => $request['adicciones']
     ]);
 
-    $servicios = " ";
-    if (isset($_REQUEST['agua_pacient_check']))
+    $servicios = "";
+
+    if (isset($request['agua_pacient_check']))
     {
       $servicios .= "Agua potable. ";
     }
-    if (isset($_REQUEST['energia_pacient_check']))
+    if (isset($request['energia_pacient_check']))
     {
       $servicios .= "Energía eléctrica. ";
     }
-    if (isset($_REQUEST['telefono_pacient_check']))
+    if (isset($request['telefono_pacient_check']))
     {
       $servicios .= "Teléfono fijo. ";
     }
-    if (isset($_REQUEST['internet_pacient_check']))
+    if (isset($request['internet_pacient_check']))
     {
       $servicios .= "Internet. ";
     }
-    if (isset($_REQUEST['tv_pacient_check']))
+    if (isset($request['tv_pacient_check']))
     {
       $servicios .= "TV por cable. ";
     }
@@ -179,7 +180,7 @@ class PacientController extends Controller
       'banio'        => $request['banio'],
       'dientes'      => $request['dientes'],
       'habitacion'   => $request['habitacion'],
-      'servicios '   => $servicios,
+      'servicios'   => $servicios,
       'tabaquismo'   => $request['tabaquismo'],
       'alcoholismo'  => $request['alcoholismo'],
       'alimentacion' => $request['alimentacion'],
@@ -209,6 +210,7 @@ class PacientController extends Controller
     'oximetria' 	  => $request['oximetria_pacient'],
     'glucometria' 	=> $request['glucometria_pacient']
     ]);
+    //
 
     //Antecedentes Exploracion general
      Aeg::create([

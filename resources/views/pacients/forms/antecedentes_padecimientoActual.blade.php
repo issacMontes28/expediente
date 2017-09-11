@@ -30,10 +30,5 @@
 <br>
 <div class="form-group">
 	{!!Form::label('descripcion_pacient','Descripción:')!!}
-	<textarea name="	descripcion_pacient"  class="textarea_css"></textarea>
+	<textarea name="descripcion_pacient"  class="textarea_css"></textarea>
 </div>
-
-
-
-
-

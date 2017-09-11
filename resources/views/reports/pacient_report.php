@@ -276,13 +276,15 @@
                   <td class="service"><?php echo $antecedentes_pnp_array[$j]["habitacion"]?></td>
                 </tr>
               </tbody>
-              <thead><tr><th>Tabaquismo</th><th>Alcoholismo</th><th>Alimentación</th></tr></thead>
-              <tbody><tr><td class="service"><?php echo $antecedentes_pnp_array[$j]["tabaquismo"]?></td>
-                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alcoholismo"]?></td>
-                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alimentacion"]?></td>
-              </tr></tbody>
-              <thead><tr><th>Deportes</th></tr></thead>
+              <thead><tr><th>Servicios</th><th>Tabaquismo</th><th>Alcoholismo</th></tr></thead>
               <tbody><tr>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["servicios"]?>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["tabaquismo"]?></td>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alcoholismo"]?></td>
+              </tr></tbody>
+              <thead><tr><th>Alimentación</th><th>Deportes</th></tr></thead>
+              <tbody><tr>
+                <td class="service"><?php echo $antecedentes_pnp_array[$j]["alimentacion"]?></td>
                 <td class="service"><?php echo $antecedentes_pnp_array[$j]["deportes"]?></td>
               </tr></tbody>
             </table>

@@ -151,12 +151,35 @@ class PacientController extends Controller
       'otros'            => $request['adicciones']
     ]);
 
+    $servicios = " ";
+    if (isset($_REQUEST['agua_pacient_check']))
+    {
+      $servicios .= "Agua potable. ";
+    }
+    if (isset($_REQUEST['energia_pacient_check']))
+    {
+      $servicios .= "Energía eléctrica. ";
+    }
+    if (isset($_REQUEST['telefono_pacient_check']))
+    {
+      $servicios .= "Teléfono fijo. ";
+    }
+    if (isset($_REQUEST['internet_pacient_check']))
+    {
+      $servicios .= "Internet. ";
+    }
+    if (isset($_REQUEST['tv_pacient_check']))
+    {
+      $servicios .= "TV por cable. ";
+    }
+
     //Agregamos antecedentes personales no patológicos
     Apnp::create([
       'id_paciente'  => $id_paciente,
       'banio'        => $request['banio'],
       'dientes'      => $request['dientes'],
       'habitacion'   => $request['habitacion'],
+      'servicios '   => $servicios,
       'tabaquismo'   => $request['tabaquismo'],
       'alcoholismo'  => $request['alcoholismo'],
       'alimentacion' => $request['alimentacion'],
@@ -360,6 +383,7 @@ class PacientController extends Controller
           'banio'          => $antecedente_pnp->banio,
           'dientes'        => $antecedente_pnp->dientes,
           'habitacion'     => $antecedente_pnp->habitacion,
+          'servicios'      => $antecedente_pnp->servicios,
           'tabaquismo'     => $antecedente_pnp->tabaquismo,
           'alcoholismo'    => $antecedente_pnp->alcoholismo,
           'alimentacion'   => $antecedente_pnp->alimentacion,

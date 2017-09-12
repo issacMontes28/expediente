@@ -15,6 +15,8 @@ $("#town").change(function(event){
       }
   });
 });
+
+});
 //La función appViewModel es la clase principal desde la cual se realizan todas
 //las operaciones pertinentes.
 function appViewModel(){

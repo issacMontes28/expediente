@@ -285,4 +285,5 @@
 @section('js')
 	{!!Html::script('js/pacientes.js')!!}
 	{!!Html::script('js/bootbox.min.js')!!}
+	{!!Html::script('js/blockUI.js')!!}
 @stop

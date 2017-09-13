@@ -16,7 +16,27 @@ $("#town").change(function(event){
   });
 });
 
+$("#bloqueo").click(function(event){
+  $.blockUI({ message: $('#question'), css: { width: '275px' } });
 });
+
+$('#yes').click(function() {
+  $.unblockUI();
+  return false;
+});
+
+ $('#no').click(function() {
+   $.blockUI({ message: "<h1>Remote call in progress...</h1>" });
+   $.ajax({
+       url: 'wait.php',
+       cache: false,
+       complete: function() {
+           // unblock when remote call returns
+           $.unblockUI();
+       }
+   });
+ });
+
 //La función appViewModel es la clase principal desde la cual se realizan todas
 //las operaciones pertinentes.
 function appViewModel(){

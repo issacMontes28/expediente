@@ -249,11 +249,17 @@
 
 
 
+
 	</div>
+
 </form>
 
-
-
+<button class="btn btn-primary 	btn-lg" id="bloqueo">Bloquear</button>
+<div id="question" style="display:none; cursor: default">
+		<h1>¿Desbloquear?</h1>
+		<input type="button" id="yes" value="Si" />
+		<input type="button" id="no" value="No" />
+</div>
 @push('scripts')
 	<script>
 

@@ -50,6 +50,8 @@
 .nav-tabs > li.active > a:hover > p, .nav-tabs > li.active > a:focus > p  {
    color: black;
 }
+
+
 </style>
 
 @extends ('layouts.admin')
@@ -255,10 +257,7 @@
 </form>
 
 <button class="btn btn-primary 	btn-lg" id="bloqueo">Bloquear</button>
-<div id="question" style="display:none; cursor: default">
-		<h1>¿Desbloquear?</h1>
-		<input type="button" id="yes" value="Si" />
-		<input type="button" id="no" value="No" />
+<div id="question" name="question" style="display:none; cursor: default">
 </div>
 @push('scripts')
 	<script>
@@ -291,5 +290,4 @@
 @section('js')
 	{!!Html::script('js/pacientes.js')!!}
 	{!!Html::script('js/bootbox.min.js')!!}
-	{!!Html::script('js/blockUI.js')!!}
 @stop

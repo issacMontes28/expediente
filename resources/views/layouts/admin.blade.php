@@ -21,6 +21,7 @@
   <link rel="apple-touch-icon"  href="{{asset('img/icono.png')}}">
   <link rel="shortcut icon"     href="{{asset('img/icono.png')}}">
   <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
+  <script src="{{asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
   <script src="https://code.jquery.com/jquery.js"></script>
   <!-- Importo el archivo Javascript de Highcharts directamente desde su servidor -->
   <script src="http://code.highcharts.com/stock/highstock.js"></script>

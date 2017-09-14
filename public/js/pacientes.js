@@ -16,8 +16,12 @@ $("#town").change(function(event){
   });
 });
 
+
 $("#bloqueo").click(function(event){
-  $.blockUI({ message: $('#question'), css: { width: '275px' } });
+  swal({
+    text: "Hello world!",
+    closeOnClickOutside: false
+   });
 });
 
 $('#yes').click(function() {

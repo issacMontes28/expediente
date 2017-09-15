@@ -289,5 +289,6 @@
 @endsection
 @section('js')
 	{!!Html::script('js/pacientes.js')!!}
+	{!!Html::script('js/session.js')!!}
 	{!!Html::script('js/bootbox.min.js')!!}
 @stop

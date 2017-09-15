@@ -21,6 +21,7 @@ class LogController extends Controller
     public function store(LoginRequest $request)
     {
         if(Auth::attempt(['correo' => $request['email'],'password' => $request['password']])){
+          Auth::check();
         //Se redirecciona a la página principal del sistema donde se mostrará el mensaje de confirmación
         return Redirect::to('index');
         }

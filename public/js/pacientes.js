@@ -16,12 +16,29 @@ $("#town").change(function(event){
   });
 });
 
-
 $("#bloqueo").click(function(event){
-  swal({
-    text: "Hello world!",
-    closeOnClickOutside: false
-   });
+  var timer = 3, // timer in seconds
+      isTimerStarted = false;
+
+  (function customSwal() {
+     if (timer > 0 ){
+       swal({
+           title: "Han pasado tres minutos desde la última actividad en el sistema",
+           text: "El sistema cerrará su sesión automáticamente en " + timer + " " + "segundos ",
+           timer: timer * 1000,
+           closeOnEsc: false,
+           closeOnClickOutside: false,
+           showConfirmButton: false
+       });
+       if(timer) {
+           timer--;
+           setTimeout(customSwal, 1000);
+       }
+     }
+     else {
+       document.location.href = '/logout';
+     }
+  })();
 });
 
 $('#yes').click(function() {

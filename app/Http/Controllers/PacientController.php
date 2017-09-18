@@ -545,7 +545,9 @@ class PacientController extends Controller
     $fila_paciente = DB::select("select * FROM pacients where id='$id'");
     foreach ($fila_paciente as $fila) {
       $paciente_array[] = array(
-        'id_paciente' => $fila->id);
+        'id_paciente' => $fila->id,
+        'nombre' => $fila->nombre." ".$fila->apaterno." ".$fila->amaterno
+      );
     }
 
     foreach ($fila_hojas_enfermeria as $fila) {
@@ -712,17 +714,17 @@ class PacientController extends Controller
 
   public function update(PacientCreateRequest $request,$id)
   {
-  //se encuentra el registro con el id que se busca, y se almacena en una variable
-  $pacient = Pacient::find($id);
-  //se llama a la función que llena el registro con los datos almacenados en
-  //el request
-  $pacient->fill($request->all());
-  //Se guardan los cambios hechos
-  $pacient->save();
-  //se manda mensaje mensaje de confirmación
-  Session::flash('message','Paciente Actualizado Correctamente');
-  //Se redirecciona a la vista que muestra los registros
-  return Redirect::to('pacient/');
+    //se encuentra el registro con el id que se busca, y se almacena en una variable
+    $pacient = Pacient::find($id);
+    //se llama a la función que llena el registro con los datos almacenados en
+    //el request
+    $pacient->fill($request->all());
+    //Se guardan los cambios hechos
+    $pacient->save();
+    //se manda mensaje mensaje de confirmación
+    Session::flash('message','Paciente Actualizado Correctamente');
+    //Se redirecciona a la vista que muestra los registros
+    return Redirect::to('pacient/');
 
   }
   //Muestra todos los pacientes de la base de datos para elegir al que se quiere eliminar

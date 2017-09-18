@@ -9,6 +9,7 @@ function Medicamento(elemento){
 
 function Paciente(elemento){
  this.id_paciente=ko.observable(elemento.id_paciente);
+ this.nombre=ko.observable(elemento.nombre);
 }
 
 function Habitus(elemento){
@@ -131,22 +132,35 @@ function appViewModel(){
            defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
          },
          title: {
-           text: 'Registros previos de peso de paciente'	// Titulo (Opcional)
+           text: 'Registros previos de peso'
          },
          subtitle: {
-           text: 'JM Research'
+           text: (function() {
+                   var text = 'Paciente: ';
+                   var data_paciente = self.Paciente()[0].nombre();
+                   var text_final = text.concat(data_paciente);
+                   return text_final;
+               })()
          },
          xAxis: {
-           semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            categories: (function() {
+                    // generate an array of random data
+                    var data_peso = [];
+                    var tam2 = tam - 1;
+                      for(var i = tam2; i >= 0; i--){
+                         data_peso.push([self.somatometrias_previas2()[i].fecha()]);
+                      }
+                    return data_peso;
+                })(),
            // Pongo el título para el eje de las 'X'
            title: {
-             text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+             text: 'Fecha en la que se pesó a paciente (AA-MM-DD)'
            }
          },
          yAxis: {
            // Pongo el título para el eje de las 'Y'
              title: {
-               text: 'Peso'
+               text: 'Peso (Kg)'
              }
          },
          series: [{
@@ -165,6 +179,7 @@ function appViewModel(){
                  enabled: false
          }
       });
+      
       chart2 = new Highcharts.Chart({
           chart: {
             renderTo: 'contenedor2', 	// Le doy el nombre a la gráfica

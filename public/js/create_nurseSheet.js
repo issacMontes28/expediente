@@ -164,7 +164,9 @@ function appViewModel(){
              }
          },
          series: [{
-             name: 'Peso en Kg',
+             name: 'Peso',
+             color: '#088A68',
+             allowPointSelect: true,
              data: (function() {
                      // generate an array of random data
                      var data = [];
@@ -175,37 +177,54 @@ function appViewModel(){
                      return data;
                  })()
          }],
+         tooltip: {
+                valueSuffix: ' kg'
+            },
          credits: {
                  enabled: false
          }
       });
-      
+
       chart2 = new Highcharts.Chart({
           chart: {
             renderTo: 'contenedor2', 	// Le doy el nombre a la gráfica
             defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
           },
           title: {
-            text: 'Registros previos de oximetría de paciente'	// Titulo (Opcional)
+            text: 'Registros previos de oximetría'	// Titulo (Opcional)
           },
           subtitle: {
-            text: 'JM Research'
+            text:  (function() {
+                    var text = 'Paciente: ';
+                    var data_paciente = self.Paciente()[0].nombre();
+                    var text_final = text.concat(data_paciente);
+                    return text_final;
+                })()
           },
           xAxis: {
-            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
-            // Pongo el título para el eje de las 'X'
+            categories: (function() {
+                    // generate an array of random data
+                    var data_peso = [];
+                    var tam2 = tam - 1;
+                      for(var i = tam2; i >= 0; i--){
+                         data_peso.push([self.somatometrias_previas2()[i].fecha()]);
+                      }
+                    return data_peso;
+                })(),
             title: {
-              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
-            }
+              text: 'Fecha en la que se midió oximetría de paciente (AA-MM-DD)'
+              }
           },
           yAxis: {
             // Pongo el título para el eje de las 'Y'
               title: {
-                text: 'Peso'
+                text: 'Oximetría (%)'
               }
           },
           series: [{
-              name: 'Oximetría en % de oxígeno en la sangre',
+              name: 'Oxígeno en la sangre',
+              color: '#2E64FE',
+              allowPointSelect: true,
               data: (function() {
                       // generate an array of random data
                       var data = [];
@@ -216,6 +235,9 @@ function appViewModel(){
                       return data;
                   })()
           }],
+          tooltip: {
+                valueSuffix: ' %'
+            },
           credits: {
                   enabled: false
           }
@@ -230,23 +252,37 @@ function appViewModel(){
             text: 'Registros previos de presión sistólica y diastólica'	// Titulo (Opcional)
           },
           subtitle: {
-             text: 'JM Research'
+            text:  (function() {
+                     var text = 'Paciente: ';
+                     var data_paciente = self.Paciente()[0].nombre();
+                     var text_final = text.concat(data_paciente);
+                     return text_final;
+                  })()
           },
           xAxis: {
-            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            categories: (function() {
+                   // generate an array of random data
+                   var data_peso = [];
+                   var tam2 = tam - 1;
+                     for(var i = tam2; i >= 0; i--){
+                        data_peso.push([self.somatometrias_previas2()[i].fecha()]);
+                     }
+                   return data_peso;
+               })(),
             // Pongo el título para el eje de las 'X'
             title: {
-              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+              text: 'Fecha en que se tomó la presión del paciente'
             }
           },
           yAxis: {
             // Pongo el título para el eje de las 'Y'
               title: {
-                text: 'Presión'
+                text: 'Presión (mm/Hg)'
               }
           },
           series: [{
-              name: 'Presión sistólica en mm/Hg',
+              name: 'Presión sistólica',
+              allowPointSelect: true,
               data: (function() {
                       // generate an array of random data
                       var data = [];
@@ -257,7 +293,9 @@ function appViewModel(){
                       return data;
                   })()
           },{
-            name: 'Presión diastólica en mm/Hg',
+            name: 'Presión diastólica',
+            color: '#00FF80',
+            allowPointSelect: true,
             data: (function() {
                     // generate an array of random data
                     var data = [];
@@ -268,6 +306,9 @@ function appViewModel(){
                     return data;
                 })()
           }],
+          tooltip: {
+                valueSuffix: ' mm/Hg'
+            },
           credits: {
                   enabled: false
           }
@@ -282,23 +323,38 @@ function appViewModel(){
             text: 'Registros previos de glucometría'	// Titulo (Opcional)
           },
           subtitle: {
-            text: 'JM Research'
+            text: (function() {
+                    var text = 'Paciente: ';
+                    var data_paciente = self.Paciente()[0].nombre();
+                    var text_final = text.concat(data_paciente);
+                    return text_final;
+                })()
           },
           xAxis: {
-            semanas: ['semana 1','semana 2','semana 3','semana 4','semana 5'],
+            categories: (function() {
+                    // generate an array of random data
+                    var data_peso = [];
+                    var tam2 = tam - 1;
+                      for(var i = tam2; i >= 0; i--){
+                         data_peso.push([self.somatometrias_previas2()[i].fecha()]);
+                      }
+                    return data_peso;
+                })(),
             // Pongo el título para el eje de las 'X'
             title: {
-              text: 'Número de la semana en la cual se tomó la medida de peso ej. 0 = primera semana'
+              text: 'Fecha en la cual se midió glucometría de paciente'
             }
           },
           yAxis: {
             // Pongo el título para el eje de las 'Y'
               title: {
-                text: 'Glucometría'
+                text: 'Glucometría (mg/dL)'
               }
           },
           series: [{
-              name: 'Glucometría en mg/dL',
+              name: 'Glucometría',
+              color : '#DF013A',
+              allowPointSelect: true,
               data: (function() {
                       // generate an array of random data
                       var data = [];
@@ -309,6 +365,9 @@ function appViewModel(){
                       return data;
                   })()
           }],
+          tooltip: {
+                valueSuffix: ' mg/dL'
+            },
           credits: {
                   enabled: false
           }

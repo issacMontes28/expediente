@@ -14,6 +14,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{asset('../css/popup.css')}}">
+  <link rel="stylesheet" href="{{asset('../css/typeaheadjs.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet"        href="{{asset('css/_all-skins.min.css')}}">

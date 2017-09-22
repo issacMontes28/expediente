@@ -10,6 +10,12 @@ jQuery(document).ready(function($) {
         queryTokenizer: Bloodhound.tokenizers.whitespace
     });
 
+    $('#scrollable-dropdown-menu .typeahead').typeahead(null, {
+      name: 'countries',
+      limit: 10,
+      source: engine.ttAdapter()
+    });
+
     $('#dinicial').typeahead({
         hint: true,
         highlight: true,

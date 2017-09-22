@@ -44,27 +44,35 @@
 				<br></br><br></br><br></br><br></br>
 				<button class="btn btn-success" data-bind="click: $root.agregarSoap">Guardar SOAP</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
-				<div class="form-group"  data-bind="visible: aux_matchesi().length > 0 || aux_matchesf().length > 0">
-					<h4><strong style="color:#0174DF">Lista de pruebas sugeridas para cada uno de los diagnósticos</strong></h4>
-					<div data-bind="visible: aux_matchesi().length > 0, foreach: aux_matchesi">
-				    <h5 style="color:#0431B4"><strong>Nombre del diagnóstico</strong></h5>
-				    <h5><div data-bind="text: enfermedad"></div></h5>
-						<h5 style="color:#0431B4"><strong>Tipo de diagnóstico</strong></h5>
-				    <h5><div data-bind="text: tipo_diagnostico"></div></h5>
-				    <h5 style="color:#0431B4"><strong>Nombre de prueba sugerida</strong></h5>
-				    <h5><div data-bind="text: estudio"></div></h5>
-				  </div>
-					<br></br>
-					<div  data-bind="visible: aux_matchesf().length > 0, foreach: aux_matchesf">
-				    <h5 style="color:#0431B4"><strong>Nombre del diagnóstico</strong></h5>
-				    <h5><div data-bind="text: enfermedad"></div></h5>
-						<h5 style="color:#0431B4"><strong>Tipo de diagnóstico</strong></h5>
-				    <h5><div data-bind="text: tipo_diagnostico"></div></h5>
-				    <h5 style="color:#0431B4"><strong>Nombre de prueba sugerida</strong></h5>
-				    <h5><div data-bind="text: estudio"></div></h5>
-				  </div>
-				  <br></br>
-				</div>
+				<table class="table table-hover" data-bind="visible: aux_matchesi().length > 0 || aux_matchesf().length > 0">
+				   <thead  class="thead-inverse" >
+				      <tr>
+				         <th colspan="5">
+				            <h4 align="center"><strong style="color:#0174DF">Lista de pruebas sugeridas para cada uno de los diagnósticos</strong></h4>
+				         </th>
+				      </tr>
+				      <tr style="background:#06092E;color:white">
+				         <th>Nombre del diagnóstico</th>
+				         <th>Tipo de diagnóstico</th>
+				         <th>Nombre de prueba sugerida</th>
+				      </tr>
+				   </thead>
+				   <tbody data-bind="foreach: { data: aux_matchesi, as: 'match' }">
+				      <tr>
+						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
+				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
+				         <td data-bind="text: match.estudio()"            ></input></td>
+				      </tr>
+				   </tbody>
+					 <tbody data-bind="foreach: { data: aux_matchesf, as: 'match' }">
+				      <tr>
+						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
+				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
+				         <td data-bind="text: match.estudio()"            ></input></td>
+				      </tr>
+				   </tbody>
+				</table>
+				<br></br>
     {!!Form::close()!!}
 @stop
 @section('js')

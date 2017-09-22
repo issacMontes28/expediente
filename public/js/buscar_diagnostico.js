@@ -10,11 +10,6 @@ jQuery(document).ready(function($) {
         queryTokenizer: Bloodhound.tokenizers.whitespace
     });
 
-    $('#scrollable-dropdown-menu .typeahead').typeahead(null, {
-      name: 'countries',
-      limit: 10,
-      source: engine.ttAdapter()
-    });
 
     $('#dinicial').typeahead({
         hint: true,
@@ -23,7 +18,7 @@ jQuery(document).ready(function($) {
         display: 'value',
     }, {
         source: engine.ttAdapter(),
-
+        limit: 10,
         // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
         name: 'diagnosticList',
         value: function (data) {
@@ -66,7 +61,7 @@ jQuery(document).ready(function($) {
 
         // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
         name: 'diagnosticList',
-
+        limit: 10,
         displayKey: function (data) {
             return data.nombre;
         },

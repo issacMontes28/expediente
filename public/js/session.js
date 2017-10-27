@@ -1,51 +1,65 @@
 $( document ).ready(function() {
+  console.log("Lista la cuenta regresiva");
   var timer1, timer2;
-      document.onkeypress=resetTimer;
-      document.onmousemove=resetTimer;
-      function resetTimer()
-      {
-         document.getElementById('question').style.display='none';
-         clearTimeout(timer1);
-         clearTimeout(timer2);
-              // waiting time in minutes
-          var wait=2;
+  // waiting time in minutes
+  var wait=1;
+  timer1=setTimeout(alertUser, (10000*wait));
+  timer2=setTimeout(logout, (20000*wait));
 
-         // alert user one minute before
-          timer1=setTimeout(alertUser, (10000*wait)-1);
+  $(document).keypress(function() {
+    resetTimer();
+  });
 
-          // logout user
-          timer2=setTimeout(logout, 10000*wait);
-      }
+  $(document).mousemove(function() {
+    resetTimer();
+  });
 
-      function alertUser()
-      {
-        var timer = 3, // timer in seconds
-            isTimerStarted = false;
+  function resetTimer()
+  {
+     clearTimeout(timer1);
+     clearTimeout(timer2);
 
-        (function customSwal() {
-           if (timer > 0 ){
-             swal({
-                 title: "Han pasado tres minutos desde la última actividad en el sistema",
-                 text: "El sistema cerrará su sesión automáticamente en " + timer + " " + "segundos ",
-                 timer: timer * 1000,
-                 closeOnEsc: false,
-                 closeOnClickOutside: false,
-                 showConfirmButton: false
-             });
-             if(timer) {
-                 timer--;
-                 setTimeout(customSwal, 1000);
-             }
-           }
-           else {
-             document.location.href = '/logout';
-           }
-        })();
-      }
+     timer1=setTimeout(alertUser, (10000*wait));
+     timer2=setTimeout(logout, (21000*wait));
 
-      function logout()
-      {
-          window.location.href='/logout';
-      }
+     console.log("se reinicio cuenta");
+  }
 
+  function alertUser()
+  {
+    var timer = 10, // timer in seconds
+    isTimerStarted = false;
+       (function customSwal() {
+          if (timer > 0 ){
+            swal({
+                title: "Se ha detectado inactivad",
+                content: {
+                  element: "input",
+                  attributes: {
+                    placeholder: "Ingresa tu contraseña",
+                    type: "password",
+                    id: "password"
+                  },
+                },
+                text: "El sistema cerrará su sesión automáticamente en " + timer + " " + "segundos ",
+                timer: timer * 1000,
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                button: false,
+            });
+            timer--;
+            setTimeout(customSwal, 1000);
+            $("#password").focusin(function() {
+              timer = 0;
+              console.log("Se va a ingresar contraseña");
+            });
+          }
+       })();
+  }
+
+  function logout()
+  {
+    //console.log("Cerró sesión");
+    window.location.href='/logout';
+  }
 });

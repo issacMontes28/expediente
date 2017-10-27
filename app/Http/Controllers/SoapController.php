@@ -17,7 +17,8 @@ use Carbon\Carbon;
 use Session;
 use Redirect;
 use DB;
-
+use Mail;
+use PDF;
 
 class SoapController extends Controller
 {
@@ -389,5 +390,22 @@ class SoapController extends Controller
       file_put_contents($file, $collection);
 
       return response()->json($data);
+    }
+    public function sendMail(Request $request)
+    {
+
+      Mail::send('mails.solicitud_estudio',$request->all(),function($msj){
+            $msj->subject("Solicitud de prueba");
+            $msj->to("meio139602@upemor.edu.mx");
+        });
+
+       return response()->json("Solicitud enviada");
+    }
+    public function pdf()
+    {
+      $soap = Soap::all()->last();
+      $pdf = PDF::loadView('reports/soap_report',compact('soap'));
+      $nombre_hoja= 'NotaMedica'.$soap->id.'.pdf';
+      return $pdf->download($nombre_hoja);
     }
 }

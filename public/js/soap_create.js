@@ -18,6 +18,45 @@ function AuxMatch(elemento){
 //las operaciones pertinentes.
 function appViewModel(){
 
+  $(document).on('click', '#btnModal', function(event) {
+      $('#exampleModalLabel').html("Solicitud de prueba a JM Research <strong> ("+ $('#btnModal').val() +") </strong>");
+      $('#recipient-name').val(  $('#doctor').val() );
+      $('#pacient-name').val(  $('#pacient').val() );
+      $('#myModal').modal();
+    });
+
+    $(document).on('click', '#send_request', function(event) {
+      var token = $("#token").val();
+
+      $.ajax({
+         url: 'requestStudy',
+         headers: {'X-CSRF-TOKEN': token},
+         type: 'POST',
+         data: {
+           pacient: $('#pacient-name').val(),
+           emisor:  $('#recipient-name').val(),
+           mail:    $('#mail').val(),
+           phones:  $('#phones').val(),
+           cuerpo:  $('#message-text').val(),
+           prueba:  $('#btnModal').val(),
+           date:    $('#date-study').val(),
+           time:    $('#time').val()
+         },
+         dataType: 'JSON',
+         error: function(respuesta) {alert("error");},
+         success: function(respuesta) {
+           if (respuesta) {
+              alert(respuesta);
+              $('#myModal').modal('hide');
+             }else {
+             alert("error");
+           }
+         }
+     });
+    });
+
+
+
   // se utiliza la variable self para evitar causar conflictos en el compilador.
   // hace referencia a los atrubutos de la clase appViewModel.
 	var self=this;
@@ -46,6 +85,7 @@ function appViewModel(){
 
 	//agregar nuevo diagnostico
 	 self.anadirdiagini=function(){
+     console.log($('#dinicial').val());
 		consec ++;
 		self.nuevos_diagnosticos_ini.push(new Diagnostico({consecutivo: consec, nombre: self.dinicial()}));
     self.aux_matchesi.splice(0,self.aux_matchesi().length);
@@ -115,10 +155,15 @@ function appViewModel(){
            success: function(respuesta) {
              if (respuesta) {
                 alert("Se han asignado análisis SOAP correctamente");
-               }else {
-               alert("error");
-             }
+                var r2 = confirm("¿Crear PDF de nota médica?");
+                if (r2 == true) {
+                  document.location.href = 'pdf';
+                }
            }
+           else {
+             alert("error")
+           }
+         }
        });
      }
     }

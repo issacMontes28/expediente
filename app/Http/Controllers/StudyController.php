@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Session;
 use Redirect;
 
+
 class StudyController extends Controller
 {
   /**
@@ -56,120 +57,114 @@ class StudyController extends Controller
   {
     return view('Estudios/studyCreate');
   }
-  public function storeEstudio(Request $request)
-  {
+  public function storeEstudio(Request $request){
     Study::create([
      'nombre' => $request->nombre,
      'folio' => $request->folio
    ]);
    return Redirect::to('studyDelete/');
   }
-  public function AddItem(Request $request)
-  {
-    if($request->ajax()){
-      for ($i=0; $i < count($request->matches) ; $i++) {
-         StudyMatch::create([
-          'id_estudio' => $request->matches[$i]["id_estudio"],
-          'id_enfermedad' => $request->matches[$i]["id_diagnostico"],
-          'proposito' => $request->matches[$i]["proposito"],
-          'metodologia' => $request->matches[$i]["metodologia"]
-        ]);
-    }
-    return response()->json(["mensaje"=>"Estudios asignados a diagnósticos correctamente"]);
+   public function AddItem(Request $request){
+      if($request->ajax()){
+        for ($i=0; $i < count($request->matches) ; $i++) {
+           StudyMatch::create([
+            'id_estudio' => $request->matches[$i]["id_estudio"],
+            'id_enfermedad' => $request->matches[$i]["id_diagnostico"],
+            'proposito' => $request->matches[$i]["proposito"],
+            'metodologia' => $request->matches[$i]["metodologia"]
+          ]);
+      }
+      return response()->json(["mensaje"=>"Estudios asignados a diagnósticos correctamente"]);
+     }
    }
- }
- public function diagnosticos(Request $request, $letra_diagnostico){
-   if ($request->ajax()) {
-     $diag = "$letra_diagnostico"."%";
-     $diagnosticos = DB::table('diagnosticos')
-                 ->where('nombre', 'like', $diag)
+   public function diagnosticos(Request $request, $letra_diagnostico){
+     if ($request->ajax()) {
+       $diag = "$letra_diagnostico"."%";
+       $diagnosticos = DB::table('diagnosticos')
+                   ->where('nombre', 'like', $diag)
+                   ->get();
+       return response()->json($diagnosticos);
+     }
+   }
+   public function estudios(Request $request, $letra_estudio){
+     if ($request->ajax()) {
+       $est = "$letra_estudio"."%";
+       $diagnosticos = DB::table('studies')
+                   ->where('nombre', 'like', $est)
+                   ->get();
+       return response()->json($diagnosticos);
+     }
+   }
+   public function diagnosticosDos(Request $request, $nombre_estudio){
+     if ($request->ajax()) {
+       $est = "%".$nombre_estudio."%";
+       $diagnosticos = DB::table('diagnosticos')
+                   ->where('nombre', 'like', $est)
+                   ->get();
+       return response()->json($diagnosticos);
+     }
+   }
+   public function estudiosDos(Request $request, $nombre_estudio){
+     if ($request->ajax()) {
+       $est = "%".$nombre_estudio."%";
+       $diagnosticos = DB::table('studies')
+                   ->where('nombre', 'like', $est)
+                   ->get();
+       return response()->json($diagnosticos);
+     }
+   }
+   public function eliminar(){
+     $matches = StudyMatch::all();
+     return view('Estudios/studyMatchDelete',['matches'=>$matches]);
+   }
+   public function eliminarEstudio(){
+     $estudios = DB::table('studies')
+                 ->where('id', '>', 4194)
+                 ->where('deleted_at', '=', null)
                  ->get();
-     return response()->json($diagnosticos);
+     return view('Estudios/studyDelete',['studies'=>$estudios]);
    }
- }
- public function estudios(Request $request, $letra_estudio){
-   if ($request->ajax()) {
-     $est = "$letra_estudio"."%";
-     $diagnosticos = DB::table('studies')
-                 ->where('nombre', 'like', $est)
-                 ->get();
-     return response()->json($diagnosticos);
+   public function actualizarEstudio(){
+     $estudios = DB::table('studies')
+                 ->where('deleted_at', '=', null)
+                 ->paginate(50);
+     return view('Estudios/studyUpdate',['studies'=>$estudios]);
    }
- }
- public function diagnosticosDos(Request $request, $nombre_estudio){
-   if ($request->ajax()) {
-     $est = "%".$nombre_estudio."%";
-     $diagnosticos = DB::table('diagnosticos')
-                 ->where('nombre', 'like', $est)
-                 ->get();
-     return response()->json($diagnosticos);
+   public function destroy($id){
+     $match = StudyMatch::find($id);
+     $match->delete();
+     //DB::table('studymatches')->where('id', '=', "$id")->update(['deleted_at' => Carbon::now()]);
+     Session::flash('message','Se ha eliminado enlace correctamente');
+     return Redirect::to('eliminarMatch/');
    }
- }
- public function estudiosDos(Request $request, $nombre_estudio){
-   if ($request->ajax()) {
-     $est = "%".$nombre_estudio."%";
-     $diagnosticos = DB::table('studies')
-                 ->where('nombre', 'like', $est)
-                 ->get();
-     return response()->json($diagnosticos);
+   public function destroyEstudio($id){
+     echo $id;
+     $estudio = Study::find($id);
+     $estudio->delete();
+     Session::flash('message','Se ha eliminado enlace correctamente');
+     return Redirect::to('studyDelete/');
    }
- }
- public function eliminar(){
-   $matches = StudyMatch::all();
-   return view('Estudios/studyMatchDelete',['matches'=>$matches]);
- }
- public function eliminarEstudio(){
-   $estudios = DB::table('studies')
-               ->where('id', '>', 4194)
-               ->where('deleted_at', '=', null)
-               ->get();
-   return view('Estudios/studyDelete',['studies'=>$estudios]);
- }
- public function actualizarEstudio(){
-   $estudios = DB::table('studies')
-               ->where('deleted_at', '=', null)
-               ->paginate(50);
-   return view('Estudios/studyUpdate',['studies'=>$estudios]);
- }
- public function destroy($id){
-   $match = StudyMatch::find($id);
-   $match->delete();
-   //DB::table('studymatches')->where('id', '=', "$id")->update(['deleted_at' => Carbon::now()]);
-   Session::flash('message','Se ha eliminado enlace correctamente');
-   return Redirect::to('eliminarMatch/');
- }
- public function destroyEstudio($id){
-   echo $id;
-   $estudio = Study::find($id);
-   $estudio->delete();
-   Session::flash('message','Se ha eliminado enlace correctamente');
-   return Redirect::to('studyDelete/');
- }
- public function show(Request $request)
-  {
-    $matches = StudyMatch::fecha($request->get('fecha1'))->orderBy('id','DESC');
-    return view('Estudios/studyMatchDelete',['matches'=>$matches]);
-  }
-  public function showEstudio(Request $request)
-   {
+   public function show(Request $request){
+     $matches = StudyMatch::fecha($request->get('fecha1'))->orderBy('id','DESC');
+     return view('Estudios/studyMatchDelete',['matches'=>$matches]);
+   }
+   public function showEstudio(Request $request){
      $estudios = Study::fecha($request->get('fecha1'))->orderBy('id','DESC');
      return view('Estudios/studyDelete',['studies'=>$estudios]);
    }
-  public function showUser(Request $request)
-   {
+   public function showUser(Request $request){
      $matches = StudyMatch::user($request->get('id_user'))->orderBy('id','DESC')->paginate(6);
      return view('Estudios/studyMatchDelete',['matches'=>$matches]);
    }
-   public function modifyEstudio(Request $request, $id)
-    {
-      $estudio = Study::find($id);
-      return response()->json($estudio);
-    }
-    public function updateEstudio(Request $request,$id)
-    {
-      $study = Study::find($id);
-      $study->fill($request->all());
-      $study->save();
-      return response()->json("Estudio actualizado correctamente");
-    }
+   public function modifyEstudio(Request $request, $id){
+     $estudio = Study::find($id);
+     return response()->json($estudio);
+   }
+   public function updateEstudio(Request $request,$id){
+     $study = Study::find($id);
+     $study->fill($request->all());
+     $study->save();
+     return response()->json("Estudio actualizado correctamente");
+   }
+
 }

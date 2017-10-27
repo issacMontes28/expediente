@@ -24,9 +24,6 @@ class Date extends Model
    */
   protected $fillable = ['id_paciente','fecha','hora','area','id_doctor'];
 
-  public function pacient(){
-   		return $this->belongsTo('SIAM\Pacient','id_paciente');
-  }
   /*
   public function date_actions(){
     return $this->hasMany('COEM\Date_action');
@@ -42,6 +39,20 @@ class Date extends Model
         echo $cita->pacient->nombre;*/
   			$query->where('id_paciente',"=","$id_paciente");
   		}
-    }
+  }
+  /**
+   * Get the pacient record associated with the date.
+   */
+  public function pacient()
+  {
+      return $this->belongsTo('SIAM\Pacient','id_paciente');
+  }
+  /**
+   * Get the date record associated with the soap.
+   */
+  public function doctor()
+  {
+      return $this->belongsTo('SIAM\Doctor','id_doctor');
+  }
 
 }

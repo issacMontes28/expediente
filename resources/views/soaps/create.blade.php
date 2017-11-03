@@ -39,32 +39,35 @@
 				         </th>
 				      </tr>
 				      <tr style="background:#06092E;color:white">
-				         <th>Nombre del diagnóstico</th>
+								 <th>Seleccionar</th>
+								 <th>Nombre del diagnóstico</th>
 				         <th>Tipo de diagnóstico</th>
 				         <th>Nombre de prueba sugerida</th>
-								 <th>Acción</th>
 				      </tr>
 				   </thead>
 				   <tbody data-bind="foreach: { data: aux_matchesi, as: 'match' }">
 				      <tr>
+								 <td><input type="checkbox" data-bind="checkedValue: $data, checked: $root.chosenStudies" /></td>
 						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
 				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
 				         <td data-bind="text: match.estudio()"            ></input></td>
-								 <td><button type="button" id="btnModal" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
-									 data-bind="value: match.estudio()">Encargar prueba a JM Research</button></td>
 				      </tr>
 				   </tbody>
 					 <tbody data-bind="foreach: { data: aux_matchesf, as: 'match' }">
 				      <tr>
+								 <td><input type="checkbox" data-bind="checkedValue: $data, checked: $root.chosenStudies" /></td>
 						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
 				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
 				         <td data-bind="text: match.estudio()"            ></input></td>
-								 <td><button type="button" id="btnModal" class="btn btn-info" data-toggle="modal"
-									 data-target="#exampleModal" data-bind="value: match.estudio()">Encargar prueba a JM Research</button></td>
 				      </tr>
 				   </tbody>
 				</table>
 				<br></br>
+				<div>
+					<button type="button" id="btnModal" class="btn	btn-info" data-toggle="modal"
+						data-target="#exampleModal" data-bind="visible: aux_matchesi().length > 0 || aux_matchesf().length > 0">
+						Encargar pruebas seleccionadas a JM Research</button>
+				</div>
 
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
@@ -77,6 +80,8 @@
 		      </div>
 		      <div class="modal-body">
 						<form>
+							<div class="form-group" id="requested_studies">
+							</div>
 							<div class="form-group">
 								<label for="recipient-name" class="form-control-label">Solicitante de prueba:</label>
 								<input type="text" class="form-control" id="recipient-name" disabled>

@@ -2,6 +2,7 @@ function Diagnostico(elemento){
  this.consecutivo=ko.observable(elemento.consecutivo);
  this.nombre=ko.observable(elemento.nombre);
 }
+
 function Match(elemento){
  this.id_estudio=ko.observable(elemento.id_estudio);
  this.estudio=ko.observable(elemento.estudio);
@@ -14,48 +15,11 @@ function AuxMatch(elemento){
  this.tipo_diagnostico=ko.observable(elemento.tipo_diagnostico);
  this.estudio=ko.observable(elemento.estudio);
 }
+
 //La función appViewModel es la clase principal desde la cual se realizan todas
 //las operaciones pertinentes.
+
 function appViewModel(){
-
-  $(document).on('click', '#btnModal', function(event) {
-      $('#exampleModalLabel').html("Solicitud de prueba a JM Research <strong> ("+ $('#btnModal').val() +") </strong>");
-      $('#recipient-name').val(  $('#doctor').val() );
-      $('#pacient-name').val(  $('#pacient').val() );
-      $('#myModal').modal();
-    });
-
-    $(document).on('click', '#send_request', function(event) {
-      var token = $("#token").val();
-
-      $.ajax({
-         url: 'requestStudy',
-         headers: {'X-CSRF-TOKEN': token},
-         type: 'POST',
-         data: {
-           pacient: $('#pacient-name').val(),
-           emisor:  $('#recipient-name').val(),
-           mail:    $('#mail').val(),
-           phones:  $('#phones').val(),
-           cuerpo:  $('#message-text').val(),
-           prueba:  $('#btnModal').val(),
-           date:    $('#date-study').val(),
-           time:    $('#time').val()
-         },
-         dataType: 'JSON',
-         error: function(respuesta) {alert("error");},
-         success: function(respuesta) {
-           if (respuesta) {
-              alert(respuesta);
-              $('#myModal').modal('hide');
-             }else {
-             alert("error");
-           }
-         }
-     });
-    });
-
-
 
   // se utiliza la variable self para evitar causar conflictos en el compilador.
   // hace referencia a los atrubutos de la clase appViewModel.
@@ -70,6 +34,7 @@ function appViewModel(){
   self.difinal = ko.observable();
 	self.nuevos_diagnosticos_ini = ko.observableArray([]);
   self.nuevos_diagnosticos_fin = ko.observableArray([]);
+  self.chosenStudies = ko.observableArray([]);
   self.matches = ko.observableArray([]);
   self.aux_matchesi = ko.observableArray([]);
   self.aux_matchesf = ko.observableArray([]);
@@ -83,7 +48,7 @@ function appViewModel(){
     self.matches(matchesArreglo);
   });
 
-	//agregar nuevo diagnostico
+	//agregar nuevo diagnostico inicial
 	 self.anadirdiagini=function(){
      console.log($('#dinicial').val());
 		consec ++;
@@ -99,12 +64,14 @@ function appViewModel(){
       }
     }
 	 }
-	//Quita nuevo diagnostico
+
+	//Quita nuevo diagnostico inicial
 	self.removediagini=function(diagnostico){
 		consec --;
 		self.nuevos_diagnosticos_ini.remove(diagnostico);
 	}
-  //agregar nuevo diagnostico
+
+  //agregar nuevo diagnostico final
 	 self.anadirdiagfin=function(){
 		consecfin ++;
 		self.nuevos_diagnosticos_fin.push(new Diagnostico({consecutivo: consecfin, nombre: self.difinal()}));
@@ -119,11 +86,61 @@ function appViewModel(){
       }
     }
 	 }
-	//Quita nuevo diagnostico
+
+	//Quita nuevo diagnostico final
 	self.removediagfin=function(diagnostico){
 		consecfin --;
 		self.nuevos_diagnosticos_fin.remove(diagnostico);
 	}
+
+  //Enviando solicitudes de estudios a JM Research
+  $(document).on('click', '#btnModal', function(event) {
+    if (self.chosenStudies().length == 0) {
+      alert("Seleccione una prueba primero");
+    }
+    else {
+      $('#exampleModalLabel').html("<strong> Solicitud de prueba(s) a JM Research </strong><br></br>");
+      $('#requested_studies').empty();
+      $('#requested_studies').append('<label class="form-control-label">Prueba(s) solicitadas:</label>');
+      for (var i = 0; i < self.chosenStudies().length; i++) {
+        $('#requested_studies').append("<input type='text' class='form-control' disabled value='"+self.chosenStudies()[i].estudio()+"'></input>");
+      }
+      $('#recipient-name').val(  $('#doctor').val() );
+      $('#pacient-name').val(  $('#pacient').val() );
+      $('#myModal').modal();
+
+      $(document).on('click', '#send_request', function(event) {
+        var token = $("#token").val();
+
+      $.ajax({
+         url: 'requestStudy',
+         headers: {'X-CSRF-TOKEN': token},
+         type: 'POST',
+         data: {
+           pacient: $('#pacient-name').val(),
+           emisor:  $('#recipient-name').val(),
+           mail:    $('#mail').val(),
+           phones:  $('#phones').val(),
+           cuerpo:  $('#message-text').val(),
+           pruebas: self.chosenStudies(),
+           date:    $('#date-study').val(),
+           time:    $('#time').val()
+         },
+         dataType: 'JSON',
+         error: function(respuesta) {alert("error");},
+         success: function(respuesta) {
+           if (respuesta) {
+              alert(respuesta);
+              $('#myModal').modal('hide');
+             }
+             else {
+             alert("error");
+            }
+          }
+        });
+      });
+     }
+  });
 
   self.agregarSoap=function(){
     var r= confirm("¿Guardar nuevo registro?");

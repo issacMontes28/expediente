@@ -54,4 +54,20 @@ class Soap extends Model
       return $this->belongsTo('SIAM\Date','id_cita');
   }
 
+  /**
+   * Get the date soapDiagnostics associated with the soap.
+   */
+
+   public function soapdiagnostics()
+   {
+       return $this->hasMany('SIAM\SoapDiagnostic','id_soap');
+   }
+
+   /**
+    * Get the date diagnostics associated with the soap.
+    */
+    public function diagnostics()
+    {
+        return $this->belongsToMany('SIAM\Diagnostic','soapDiagnostics','id_soap', 'id_diagnostico');
+    }
 }

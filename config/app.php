@@ -140,6 +140,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Cornford\Googlmapper\MapperServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -194,6 +195,7 @@ return [
     */
 
     'aliases' => [
+        'Mapper'         => Cornford\Googlmapper\Facades\MapperFacade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'App' => Illuminate\Support\Facades\App::class,

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Hoja de registro</title>
+    <title>Nota médica</title>
     <link rel="stylesheet" type="text/css"><style>
     .clearfix:after {
       content: "";
@@ -144,9 +144,11 @@
           <strong>
 					       <?php echo $soap->date->pacient->nombre.' '.$soap->date->pacient->apaterno.' '.$soap->date->pacient->amaterno ?>
           </strong><br>
-				<font style="color:#01579B">Doctor que atendió la consulta</font> <strong>
+				<font style="color:#01579B">Doctor que atendió la consulta:</font> <strong>
 					<?php echo $soap->date->doctor->nombre.' '.$soap->date->doctor->apaterno.' '.$soap->date->doctor->amaterno ?></strong>  <br>
-				<font style="color:#01579B">Fecha:</font><strong> <?php echo $soap->date->fecha ?> </strong><br>
+        <font style="color:#01579B">Cédula profesional:</font> <strong>
+          <?php echo $soap->date->doctor->ced_profesional ?></strong>  <br>
+        <font style="color:#01579B">Fecha:</font><strong> <?php echo $soap->date->fecha ?> </strong><br>
 				<font style="color:#01579B">Hora:</font> <strong> <?php echo $soap->date->hora ?></strong>  <br>
 			  </div>
 
@@ -177,6 +179,27 @@
               <td class="service"><?php echo $soap->analisis  ?></td>
             </tr>
           </tbody>
+          <thead><tr><th>Diagnóstico(s) emitido(s)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="service">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tipo de diagnóstico</th><th>Nombre de diagnóstico</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                      @foreach ($soap->soapdiagnostics as $diagnostico)
+                      <tr>
+                        <td>{{$diagnostico->tipo}}</td><td>{{$diagnostico->diagnostic->nombre}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+           </tbody>
           <thead><tr><th>Plan</th></tr></thead>
           <tbody>
             <tr>
@@ -188,22 +211,9 @@
         <table style="width:100%;text-align:center">
           <thead>
             <tr style="text-align:center">
-              <th colspan="2"> _____________________________ <br>Doctor</th>
-              <th> _____________________________ <br> Cédula </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="text-align:center">
-              <td class="service" colspan="2"></td>
-              <td class="service"></td>
-            </tr>
-          </tbody>
-
-          <thead>
-            <tr style="text-align:center">
               <th colspan="3">
                   <br><br><br><br>
-                   _____________________________  <br> Firma
+                   _____________________________  <br> Firma <br>{{' Dr(a). '.$soap->date->doctor->nombre.' '.$soap->date->doctor->apaterno.' '.$soap->date->doctor->amaterno}}
               </th>
             </tr>
           </thead>

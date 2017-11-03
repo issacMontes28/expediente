@@ -150,14 +150,15 @@
     <font style="color:#01579B">Info. de contacto de solicitante:</font>
     <strong>{{'Correo: '.$mail}}</strong><br>
     <strong>{{'Teléfonos: '.$phones}}</strong><br>
-    <font style="color:#01579B">Prueba solicitada:</font>
-    <strong>{{$prueba}}</strong><br>
+    <font style="color:#01579B">Prueba(s) solicitada:</font><br>
+    @foreach ($pruebas as $prueba)
+      <strong>{{'-'.$prueba['estudio']}}</strong><br>
+    @endforeach
     <font style="color:#01579B">Fecha y hora solicitadas</font><br>
     <font style="color:#01579B">Fecha:</font><strong>{{$date}}</strong><br>
     <font style="color:#01579B">Hora:</font> <strong>{{$time}}</strong><br>
     <font style="color:#01579B">Mensaje:</font> <strong>{{$cuerpo}}</strong><br>
     </div>
-
   </div>
 </body>
 </html>

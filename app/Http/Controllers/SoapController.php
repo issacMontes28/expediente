@@ -19,6 +19,7 @@ use Redirect;
 use DB;
 use Mail;
 use PDF;
+//use Mapper;
 
 class SoapController extends Controller
 {
@@ -393,7 +394,7 @@ class SoapController extends Controller
     }
     public function sendMail(Request $request)
     {
-
+      //Mapper::location('JM Research, S.C. Cuernavaca');
       Mail::send('mails.solicitud_estudio',$request->all(),function($msj){
             $msj->subject("Solicitud de prueba");
             $msj->to("meio139602@upemor.edu.mx");
@@ -404,8 +405,9 @@ class SoapController extends Controller
     public function pdf()
     {
       $soap = Soap::all()->last();
+      //dd($soap->soapdiagnostics);
       $pdf = PDF::loadView('reports/soap_report',compact('soap'));
-      $nombre_hoja= 'NotaMedica'.$soap->id.'.pdf';
+      $nombre_hoja= 'NotaMedica'.$soap->date->doctor->nombre.$soap->date->fecha.'.pdf';
       return $pdf->download($nombre_hoja);
     }
 }

@@ -31,12 +31,6 @@ class Soap extends Model
       return $this->belongsTo('SIAM\Date','id_cita');
   }
 
-/*
-  public function date_actions(){
-    return $this->hasMany('COEM\Date_action');
-  }
-*/
-
   public function scopeFecha($query,$fecha1){
     if ($fecha1 != null) {
       $query->where('fecha',"=","$fecha1");
@@ -52,5 +46,28 @@ class Soap extends Model
       $query->whereIn('id_cita',$array);
     }
   }
+  /**
+   * Get the date record associated with the soap.
+   */
+  public function date()
+  {
+      return $this->belongsTo('SIAM\Date','id_cita');
+  }
 
+  /**
+   * Get the date soapDiagnostics associated with the soap.
+   */
+
+   public function soapdiagnostics()
+   {
+       return $this->hasMany('SIAM\SoapDiagnostic','id_soap');
+   }
+
+   /**
+    * Get the date diagnostics associated with the soap.
+    */
+    public function diagnostics()
+    {
+        return $this->belongsToMany('SIAM\Diagnostic','soapDiagnostics','id_soap', 'id_diagnostico');
+    }
 }

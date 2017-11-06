@@ -14,20 +14,18 @@ jQuery(document).ready(function($) {
     $('#dinicial').typeahead({
         hint: true,
         highlight: true,
-        minLength: 3,
-        display: 'value',
+        minLength: 3
     }, {
         source: engine.ttAdapter(),
-        limit: 10,
+
         // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
         name: 'diagnosticList',
-        value: function (data) {
-            return data.id;
-        },
+        limit: 10,
         displayKey: function (data) {
             return data.nombre;
         },
 
+        // the key from the array we want to display (name,id,email,etc...)
         templates: {
             empty: [
                 '<div class="list-group search-results-dropdown"><div class="list-group-item">No se hallaron coincidencias.</div></div>'
@@ -38,8 +36,9 @@ jQuery(document).ready(function($) {
             suggestion: function (data) {
                 return '<label class="list-group-item">' + data.nombre + '</label>'
               }
-        }
+        },
     });
+
 
 
     // Set the Options for "Bloodhound" suggestion engine
@@ -62,6 +61,9 @@ jQuery(document).ready(function($) {
         // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
         name: 'diagnosticList',
         limit: 10,
+        value: function (data) {
+            return data.id;
+        },
         displayKey: function (data) {
             return data.nombre;
         },

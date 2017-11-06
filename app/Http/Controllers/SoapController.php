@@ -17,7 +17,9 @@ use Carbon\Carbon;
 use Session;
 use Redirect;
 use DB;
-
+use Mail;
+use PDF;
+//use Mapper;
 
 class SoapController extends Controller
 {
@@ -389,5 +391,28 @@ class SoapController extends Controller
       file_put_contents($file, $collection);
 
       return response()->json($data);
+    }
+    public function sendMail(Request $request)
+    {
+      //Mapper::location('JM Research, S.C. Cuernavaca');
+      Mail::send('mails.solicitud_estudio',$request->all(),function($msj){
+            $msj->subject("Solicitud de prueba");
+            $msj->to("meio139602@upemor.edu.mx");
+        });
+
+       return response()->json("Solicitud enviada");
+    }
+    public function pdf()
+    {
+      $soap = Soap::all()->last();
+      $pdf = PDF::loadView('reports/soap_report',compact('soap'));
+      $nombre_hoja= 'NotaMedica'.$soap->date->doctor->nombre.$soap->date->fecha.'.pdf';
+      return $pdf->download($nombre_hoja);
+    }
+    public function pdf_study(Request $request)
+    {
+      $pdf = PDF::loadView('reports/study_order',$request->all());
+      $nombre_orden= 'SolicitudEstudio'.$request->pacient'.pdf';
+      return $pdf->download($nombre_orden);
     }
 }

@@ -7,39 +7,26 @@
    <table class="table">
      <thead>
        <th>Paciente</th>
-       <th>Fecha de consulta (AA-MM-DD)</th>
-       <th>Hora de consulta</th>
+       <th>Fecha y hora de consulta (AA-MM-DD)</th>
        <th>Área a la que asiste</th>
        <th>Doctor asignado</th>
      </thead>
-       <?php
-         $mysqli = new mysqli("localhost", "root", "", "siam");
-         if ($mysqli->connect_errno) {
-             echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-         }
-         $acentos = $mysqli->query("SET NAMES 'utf8'");
-         //obtenemos el id de la cita
-         $id_paciente=$cita->id_paciente;
-         //se obtienen los datos de esa cita, interesa el nombre del paciente y el doctor que lo está atendiendo
-         $query = $mysqli->query("select * from pacients where id='$id_paciente'");
-         $fila = $query->fetch_assoc();
-         $pac = $fila['nombre'].' '.$fila['apaterno'].' '.$fila['amaterno'];
-
-         $id_doctor = $cita->id_doctor;
-         $query2 = $mysqli->query("select * from doctors where id='$id_doctor'");
-         $fila2 = $query2->fetch_assoc();
-         $ndoc = $fila2['nombre'].' '.$fila2['apaterno'].' '.$fila2['amaterno'];
-       ?>
      <tbody>
-       <td><?php echo $pac; ?></td>
-       <td>{{$cita->fecha}}</td>
-       <td>{{$cita->hora}}</td>
-       <td>{{$cita->area}}</td>
-       <td><?php echo $ndoc; ?></td>
+       <td><input id="pacient"
+				 value="{{$cita->pacient->nombre.' '.$cita->pacient->apaterno.' '.$cita->pacient->amaterno}}" class="form-control" disabled /></td>
+       <td><input id="date" value="{{$cita->fecha.', '.$cita->hora}}" class="form-control" disabled /></td>
+       <td><input id="area" value="{{$cita->area}}" class="form-control" disabled /></td>
+       <td><input id="doctor" value="{{$cita->doctor->nombre.' '.$cita->doctor->apaterno.' '.$cita->doctor->amaterno}}" class="form-control" disabled /></td>
+		</tbody>
    </table>
+
 	 {!!Form::open()!!}
 	 <input type="hidden" name="_token" value="{{ csrf_token()}}" id="token"></input>
 	 <input type="hidden" name="id_cita" value="<?php echo $id_cita?>" id="id_cita"></input>
+	 <input type="hidden" value="{{$cita->doctor->correo.', '}}" id="mail"></input>
+	 <input type="hidden" value="{{'Casa: '.$cita->doctor->telefono_casa.'. Cel:'.
+		 $cita->doctor->telefono_celular.'. Oficina: '.$cita->doctor->telefono_oficina}}" id="phones"></input>
+
         @include('soaps.forms.soap')
 				<br></br><br></br><br></br><br></br>
 				<button class="btn btn-success" data-bind="click: $root.agregarSoap">Guardar SOAP</button>
@@ -52,7 +39,8 @@
 				         </th>
 				      </tr>
 				      <tr style="background:#06092E;color:white">
-				         <th>Nombre del diagnóstico</th>
+								 <th>Seleccionar</th>
+								 <th>Nombre del diagnóstico</th>
 				         <th>Tipo de diagnóstico</th>
 				         <th>Nombre de prueba sugerida</th>
 								 <th>Acción</th>
@@ -60,6 +48,7 @@
 				   </thead>
 				   <tbody data-bind="foreach: { data: aux_matchesi, as: 'match' }">
 				      <tr>
+								 <td><input type="checkbox" data-bind="checkedValue: $data, checked: $root.chosenStudies" /></td>
 						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
 				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
 				         <td data-bind="text: match.estudio()"            ></input></td>
@@ -67,6 +56,7 @@
 				   </tbody>
 					 <tbody data-bind="foreach: { data: aux_matchesf, as: 'match' }">
 				      <tr>
+								 <td><input type="checkbox" data-bind="checkedValue: $data, checked: $root.chosenStudies" /></td>
 						 		 <td data-bind="text: match.enfermedad()"   ></input></td>
 				         <td data-bind="text: match.tipo_diagnostico()"       ></input></td>
 				         <td data-bind="text: match.estudio()"            ></input></td>
@@ -74,6 +64,54 @@
 				   </tbody>
 				</table>
 				<br></br>
+				<div>
+					<button type="button" id="btnModal" class="btn	btn-info" data-toggle="modal"
+						data-target="#exampleModal" data-bind="visible: aux_matchesi().length > 0 || aux_matchesf().length > 0">
+						Encargar pruebas seleccionadas a JM Research</button>
+				</div>
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+						<form>
+							<div class="form-group" id="requested_studies">
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Solicitante de prueba:</label>
+								<input type="text" class="form-control" id="recipient-name" disabled>
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="form-control-label">Paciente a quien se realizará prueba:</label>
+								<input type="text" class="form-control" id="pacient-name" disabled>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="form-control-label">Fecha y hora solicitada (La disponibilidad dependerá enteramente de JM Research):</label>
+								<br></br>
+								<label for="date">Fecha</label>
+								<input type="date" id="date-study" name="date">
+								<label for="time">Hora</label>
+								<input type="time" id="time">
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="form-control-label">Cuerpo del mensaje:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+						</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		        <button type="button" class="btn btn-primary" id="send_request">Enviar solicitud</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
     {!!Form::close()!!}
 @stop
 @section('js')

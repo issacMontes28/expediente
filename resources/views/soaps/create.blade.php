@@ -55,6 +55,7 @@
 				         <th>Nombre del diagnóstico</th>
 				         <th>Tipo de diagnóstico</th>
 				         <th>Nombre de prueba sugerida</th>
+								 <th>Acción</th>
 				      </tr>
 				   </thead>
 				   <tbody data-bind="foreach: { data: aux_matchesi, as: 'match' }">

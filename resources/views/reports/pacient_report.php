@@ -42,15 +42,11 @@
     }
 
     h1 {
-      border-top: 1px solid  #5D6975;
-      border-bottom: 1px solid  #5D6975;
       color: #5D6975;
       font-size: 2.4em;
       line-height: 1.4em;
       font-weight: normal;
-      text-align: center;
-      margin: 0 0 20px 0;
-      background-image: url("imagenes_menu/dimension.png");
+      margin: 0 0 0 0;
     }
 
     #project {
@@ -89,7 +85,7 @@
 
     table th,
     table td {
-      text-align: center;
+      text-align: left;
     }
 
     table th {
@@ -98,6 +94,7 @@
       border-bottom: 1px solid #C1CED9;
       white-space: nowrap;
       font-weight: normal;
+	  text-align: left;
     }
 
     table .service,
@@ -107,7 +104,7 @@
 
     table td {
       padding: 20px;
-      text-align: right;
+      text-align: left;
     }
 
     table td.service,
@@ -143,12 +140,34 @@
     </style>
   </head>
   <body>
-    <header class="clearfix">
-      <div id="logo">
-        <img src="img/logo.png">
-      </div>
-      <h1>Hoja de registro</h1>
-    </header>
+
+
+	 <?php
+          for ($i=0; $i < count($info_array); $i++) {
+            if ( $info_array[$i] == "Datos_personales") {
+              for ($j=0; $j < count($datos_personales_array); $j++) {
+      ?>
+
+	  		<h1>
+				<?php echo $datos_personales_array[$j]["nombre"]?>
+				<?php echo $datos_personales_array[$j]["apaterno"]?>
+	  			<?php echo $datos_personales_array[$j]["amaterno"]?>
+	  		</h1>
+
+	  		<h2>
+				Hoja de registro
+			</h2>
+	  		<hr>
+	  <div style="position:absolute;top:10px;right:10px;">
+		  <img  src=" {{ asset('assets/img/logo.png') }}"  />
+	  </div>
+
+       <?php
+              }
+            }
+		}
+       ?>
+
     <main>
       <?php
           for ($i=0; $i < count($info_array); $i++) {
@@ -156,7 +175,7 @@
               for ($j=0; $j < count($datos_personales_array); $j++) {
       ?>
               <table class="table">
-                <thead><tr><th colspan="3">Datos demográficos</th></tr></thead>
+                <tr><th colspan="3"><h2 align="left">Datos demográficos</h2></th></tr>
                 <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
                 <tbody>
                   <tr>
@@ -207,7 +226,7 @@
               for ($j=0; $j < count($antecedentes_hf_array); $j++) {
        ?>
                 <table class="table">
-                  <thead><tr><th colspan="3">Antecedentes heredo-familiares</th></tr></thead>
+				  <tr><th colspan="3"><h2 align="left">Antecedentes heredo-familiares</h2></th></tr>
                   <thead><tr><th>Diabetes</th><th>Hipertensión</th><th>Cardiopatía</th></tr></thead>
                   <tbody>
                     <tr>
@@ -240,7 +259,7 @@
               for ($j=0; $j < count($antecedentes_pp_array); $j++) {
        ?>
                 <table class="table">
-                  <thead><tr><th colspan="3">Antecedentes personales patológicos</th></tr></thead>
+				  <tr><th colspan="3"><h2 align="left">Antecedentes personales patológicos</h2></th></tr>
                   <thead><tr><th>Enfermedades actuales</th><th>Quirúrgicos</th><th>Transfucionales</th></tr></thead>
                   <tbody>
                     <tr>
@@ -267,7 +286,7 @@
               for ($j=0; $j < count($antecedentes_pnp_array); $j++) {
       ?>
             <table class="table">
-              <thead><tr><th colspan="3">Antecedentes personales no patológicos</th></tr></thead>
+			  <tr><th colspan="3"><h2 align="left">Antecedentes personales no patológicos</h2></th></tr>
               <thead><tr><th>Baño</th><th>Dientes</th><th>Habitación</th></tr></thead>
               <tbody>
                 <tr>
@@ -295,7 +314,7 @@
              for ($j=0; $j < count($antecedentes_go_array); $j++) {
       ?>
             <table class="table">
-              <thead><tr><th colspan="3">Antecedentes gineco-obstétricos</th></tr></thead>
+			  <tr><th colspan="3"><h2 align="left">Antecedentes gineco-obstétricos</h2></th></tr>
               <thead><tr><th>Menarca</th><th>Ritmo menstrual</th><th>Dismenorrea</th></tr></thead>
               <tbody>
                 <tr>
@@ -332,7 +351,7 @@
             for ($j=0; $j < count($interrogatorio_as_array); $j++) {
       ?>
             <table class="table">
-              <thead><tr><th colspan="3">Interrogatorio por aparatos y sistemas</th></tr></thead>
+			  <tr><th colspan="3"><h2 align="left">Interrogatorio por aparatos y sistemas</h2></th></tr>
               <thead><tr><th>Ap. Digestivo</th><th>Ap. Cardiovascular</th><th>Ap. Respiratorio</th></tr></thead>
               <tbody>
                 <tr>
@@ -363,7 +382,7 @@
             for ($j=0; $j < count($sintomas_generales_array); $j++) {
       ?>
             <table class="table">
-              <thead><tr><th colspan="3">Síntomas generales</th></tr></thead>
+			  <tr><th colspan="3"><h2 align="left">Síntomas generales</h2></th></tr>
               <thead><tr><th>Astenia</th><th>Adinamia</th><th>Anorexia</th></tr></thead>
               <tbody>
                 <tr>
@@ -385,7 +404,7 @@
            for ($j=0; $j < count($padecimiento_actual_array); $j++) {
         ?>
               <table class="table">
-                <thead><tr><th>Padecimiento actual</th></tr></thead>
+				<tr><th colspan="3"><h2 align="left">Padecimiento actual</h2></th></tr>
                 <thead><tr><th>Descripción</th></tr></thead>
                 <tbody>
                   <tr>
@@ -400,7 +419,7 @@
            for ($j=0; $j < count($somatometria_array); $j++) {
         ?>
               <table class="table">
-                <thead><tr><th colspan="3">Somatometría</th></tr></thead>
+				<tr><th colspan="3"><h2 align="left">Somatometría</h2></th></tr>
                 <thead><tr><th>Peso</th><th>Altura</th><th>Presión sistólica</th></tr></thead>
                 <tbody>
                   <tr>
@@ -426,7 +445,7 @@
            for ($j=0; $j < count($inspeccion_general_array); $j++) {
         ?>
               <table class="table">
-                <thead><tr><th colspan="3">Inspección general</th></tr></thead>
+				<tr><th colspan="3"><h2 align="left">Inspección general</h2></th></tr>
                 <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
                 <tbody>
                   <tr>
@@ -448,7 +467,7 @@
             for ($j=0; $j < count($exploracion_fisica_array); $j++) {
         ?>
               <table class="table">
-                <thead><tr><th colspan="3">Inspección general</th></tr></thead>
+				<tr><th colspan="3"><h2 align="left">Inspección general</h2></th></tr>
                 <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
                 <tbody>
                   <tr>

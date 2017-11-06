@@ -131,6 +131,26 @@ function appViewModel(){
          success: function(respuesta) {
            if (respuesta) {
               alert(respuesta);
+              var r3 = confirm("¿Desea imprimir hoja de solicitud de estudio?");
+              if (r3 == true) {
+                $.ajax({
+                  url: 'pdf_study',
+                  headers: {'X-CSRF-TOKEN': token},
+                  type: 'POST',
+                  data: {
+                    pacient: $('#pacient-name').val(),
+                    emisor:  $('#recipient-name').val(),
+                    mail:    $('#mail').val(),
+                    phones:  $('#phones').val(),
+                    cuerpo:  $('#message-text').val(),
+                    pruebas: self.chosenStudies(),
+                    date:    $('#date-study').val(),
+                    time:    $('#time').val()
+                  },
+                  dataType: 'JSON',
+                  error: function(respuesta) {alert("error");},              
+                });
+              }
               $('#myModal').modal('hide');
              }
              else {

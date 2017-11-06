@@ -405,9 +405,14 @@ class SoapController extends Controller
     public function pdf()
     {
       $soap = Soap::all()->last();
-      //dd($soap->soapdiagnostics);
       $pdf = PDF::loadView('reports/soap_report',compact('soap'));
       $nombre_hoja= 'NotaMedica'.$soap->date->doctor->nombre.$soap->date->fecha.'.pdf';
       return $pdf->download($nombre_hoja);
+    }
+    public function pdf_study(Request $request)
+    {
+      $pdf = PDF::loadView('reports/study_order',$request->all());
+      $nombre_orden= 'SolicitudEstudio'.$request->pacient'.pdf';
+      return $pdf->download($nombre_orden);
     }
 }

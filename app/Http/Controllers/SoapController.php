@@ -412,7 +412,7 @@ class SoapController extends Controller
     public function pdf_study(Request $request)
     {
       $pdf = PDF::loadView('reports/study_order',$request->all());
-      $nombre_orden= 'SolicitudEstudio'.$request->pacient'.pdf';
+      $nombre_orden= 'SolicitudEstudio'.$request["pacient"].'pdf';
       return $pdf->download($nombre_orden);
     }
 }

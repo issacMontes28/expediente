@@ -111,6 +111,9 @@
 		    </div>
 		  </div>
 		</div>
+
+		<div id="pdf"></div>
+
     {!!Form::close()!!}
 @stop
 @section('js')

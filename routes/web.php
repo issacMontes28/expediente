@@ -70,7 +70,7 @@ Route::get('find', 'SoapController@diagnosticos');
 Route::post('soap/create/AddSoap','SoapController@addItem');
 Route::get('soap/create/pdf','SoapController@pdf');
 //
-Route::get('soap/create/pdf_study','SoapController@pdf_study');
+Route::post('soap/create/pdf_study','SoapController@pdf_study');
 //
 Route::post('soap/{id}/UpdateSoap','SoapController@updateItem');
 Route::get('/soap/create/{id}',

@@ -38,6 +38,7 @@ function appViewModel(){
   self.matches = ko.observableArray([]);
   self.aux_matchesi = ko.observableArray([]);
   self.aux_matchesf = ko.observableArray([]);
+  self.studyArray = ko.observableArray([]);
 	var consec = 0;
   var consecfin = 0;
 
@@ -110,22 +111,23 @@ function appViewModel(){
       $('#myModal').modal();
 
       $(document).on('click', '#send_request', function(event) {
-        var token = $("#token").val();
+
+      var token = $("#token").val();
+      self.studyArray().push(
+        pacient: $('#pacient-name').val(),
+        emisor:  $('#recipient-name').val(),
+        mail:    $('#mail').val(),
+        phones:  $('#phones').val(),
+        cuerpo:  $('#message-text').val(),
+        pruebas: self.chosenStudies(),
+        date:    $('#date-study').val(),
+        time:    $('#time').val()
+      );
 
       $.ajax({
          url: 'requestStudy',
          headers: {'X-CSRF-TOKEN': token},
          type: 'POST',
-         data: {
-           pacient: $('#pacient-name').val(),
-           emisor:  $('#recipient-name').val(),
-           mail:    $('#mail').val(),
-           phones:  $('#phones').val(),
-           cuerpo:  $('#message-text').val(),
-           pruebas: self.chosenStudies(),
-           date:    $('#date-study').val(),
-           time:    $('#time').val()
-         },
          dataType: 'JSON',
          error: function(respuesta) {alert("error");},
          success: function(respuesta) {
@@ -133,23 +135,7 @@ function appViewModel(){
               alert(respuesta);
               var r3 = confirm("¿Desea imprimir hoja de solicitud de estudio?");
               if (r3 == true) {
-                $.ajax({
-                  url: 'pdf_study',
-                  headers: {'X-CSRF-TOKEN': token},
-                  type: 'POST',
-                  data: {
-                    pacient: $('#pacient-name').val(),
-                    emisor:  $('#recipient-name').val(),
-                    mail:    $('#mail').val(),
-                    phones:  $('#phones').val(),
-                    cuerpo:  $('#message-text').val(),
-                    pruebas: self.chosenStudies(),
-                    date:    $('#date-study').val(),
-                    time:    $('#time').val()
-                  },
-                  dataType: 'JSON',
-                  error: function(respuesta) {alert("error");},              
-                });
+                window.location.href = 'printRequest?Data=' + studyArray;
               }
               $('#myModal').modal('hide');
              }

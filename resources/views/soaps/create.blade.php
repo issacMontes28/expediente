@@ -22,6 +22,8 @@
 
 	 {!!Form::open()!!}
 	 <input type="hidden" name="_token" value="{{ csrf_token()}}" id="token"></input>
+	 <input type="hidden" name="id_doctor" value="<?php echo $cita->doctor->id ?>" id="id_doctor"></input>
+	 <input type="hidden" name="id_paciente" value="<?php echo $cita->pacient->id ?>" id="id_paciente"></input>
 	 <input type="hidden" name="id_cita" value="<?php echo $id_cita?>" id="id_cita"></input>
 	 <input type="hidden" value="{{$cita->doctor->correo.', '}}" id="mail"></input>
 	 <input type="hidden" value="{{'Casa: '.$cita->doctor->telefono_casa.'. Cel:'.

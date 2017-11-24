@@ -16,6 +16,17 @@ function AuxMatch(elemento){
  this.estudio=ko.observable(elemento.estudio);
 }
 
+function StudyRequest(elemento){
+ this.pacient=ko.observable(elemento.pacient);
+ this.emisor=ko.observable(elemento.emisor);
+ this.mail=ko.observable(elemento.mail);
+ this.phones=ko.observable(elemento.phones);
+ this.cuerpo=ko.observable(elemento.cuerpo);
+ this.pruebas=ko.observableArray(elemento.pruebas);
+ this.date=ko.observable(elemento.date);
+ this.time=ko.observable(elemento.time);
+}
+
 //La función appViewModel es la clase principal desde la cual se realizan todas
 //las operaciones pertinentes.
 
@@ -113,20 +124,22 @@ function appViewModel(){
       $(document).on('click', '#send_request', function(event) {
 
       var token = $("#token").val();
-      self.studyArray().push(
-        pacient: $('#pacient-name').val(),
-        emisor:  $('#recipient-name').val(),
-        mail:    $('#mail').val(),
-        phones:  $('#phones').val(),
-        cuerpo:  $('#message-text').val(),
-        pruebas: self.chosenStudies(),
-        date:    $('#date-study').val(),
-        time:    $('#time').val()
-      );
 
       $.ajax({
          url: 'requestStudy',
          headers: {'X-CSRF-TOKEN': token},
+         data: {
+           id_doctor:    $('#id_doctor').val(),
+           id_paciente:  $('#id_paciente').val(),
+           pacient:      $('#pacient-name').val(),
+           emisor:       $('#recipient-name').val(),
+           mail:         $('#mail').val(),
+           phones:       $('#phones').val(),
+           cuerpo:       $('#message-text').val(),
+           pruebas:      self.chosenStudies(),
+           date:         $('#date-study').val(),
+           time:         $('#time').val()
+         },
          type: 'POST',
          dataType: 'JSON',
          error: function(respuesta) {alert("error");},
@@ -135,7 +148,33 @@ function appViewModel(){
               alert(respuesta);
               var r3 = confirm("¿Desea imprimir hoja de solicitud de estudio?");
               if (r3 == true) {
-                window.location.href = 'printRequest?Data=' + studyArray;
+                $.ajax({
+                   url: 'printRequest',
+                   headers: {'X-CSRF-TOKEN': token},
+                   type: 'POST',
+                   data: {
+                     id_doctor:    $('#id_doctor').val(),
+                     id_paciente:  $('#id_paciente').val(),
+                     pacient:      $('#pacient-name').val(),
+                     emisor:       $('#recipient-name').val(),
+                     mail:         $('#mail').val(),
+                     phones:       $('#phones').val(),
+                     cuerpo:       $('#message-text').val(),
+                     pruebas:      self.chosenStudies(),
+                     date:         $('#date-study').val(),
+                     time:         $('#time').val()
+                   },
+                   dataType: 'JSON',
+                   error: function(respuesta) {alert("error");},
+                   success: function(respuesta) {
+                     if (respuesta) {
+                       alert('Éxito');
+                   }
+                   else {
+                     alert("error")
+                   }
+                 }
+               });
               }
               $('#myModal').modal('hide');
              }
@@ -151,15 +190,23 @@ function appViewModel(){
   self.agregarSoap=function(){
     var r= confirm("¿Guardar nuevo registro?");
     if (r==true) {
+
       //Variable que indica si hubo algún error
       var bandera = 0;
+
       //condiciones para la somatometría
-      if (self.subjetivo()==undefined && bandera==0) {alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
-      if (self.objetivo()==undefined && bandera==0) {alert("Faltan datos: objetivo en el análisis SOAP"); bandera =1;}
-      if (self.analisis()==undefined && bandera==0) {alert("Faltan datos: análisis en el análisis SOAP"); bandera =1;}
-      if (self.plan()==undefined && bandera==0) {alert("Faltan datos: plan en el análisis SOAP"); bandera =1;}
-      if (self.nuevos_diagnosticos_ini().length == 0 && bandera==0) {alert("Faltan datos: diagnóstico inicial en el análisis SOAP"); bandera =1;}
-      if (self.nuevos_diagnosticos_fin().length == 0 && bandera==0) {alert("Faltan datos: diagnóstico final en el análisis SOAP"); bandera =1;}
+      if (self.subjetivo()==undefined && bandera==0) {
+        alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
+      if (self.objetivo()==undefined && bandera==0) {
+        alert("Faltan datos: objetivo en el análisis SOAP"); bandera =1;}
+      if (self.analisis()==undefined && bandera==0) {
+        alert("Faltan datos: análisis en el análisis SOAP"); bandera =1;}
+      if (self.plan()==undefined && bandera==0) {
+        alert("Faltan datos: plan en el análisis SOAP"); bandera =1;}
+      if (self.nuevos_diagnosticos_ini().length == 0 && bandera==0) {
+        alert("Faltan datos: diagnóstico inicial en el análisis SOAP"); bandera =1;}
+      if (self.nuevos_diagnosticos_fin().length == 0 && bandera==0) {
+        alert("Faltan datos: diagnóstico final en el análisis SOAP"); bandera =1;}
 
       if(bandera == 0){
         var token = $("#token").val();
@@ -169,9 +216,10 @@ function appViewModel(){
            headers: {'X-CSRF-TOKEN': token},
            type: 'POST',
            data: {
-             subjetivo: self.subjetivo(), objetivo: self.objetivo(), analisis: self.analisis(),
-						 plan: self.plan(), diniciales: self.nuevos_diagnosticos_ini(),
-             id_cita: id_cita, difinales: self.nuevos_diagnosticos_fin()
+             subjetivo: self.subjetivo(), objetivo: self.objetivo(),
+             analisis: self.analisis(), plan: self.plan(),
+             diniciales: self.nuevos_diagnosticos_ini(), id_cita: id_cita,
+             difinales: self.nuevos_diagnosticos_fin()
            },
            dataType: 'JSON',
            error: function(respuesta) {alert("error");},

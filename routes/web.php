@@ -103,5 +103,6 @@ Route::get('soap/show/{id}', 'SoapController@showsoap')->name('mostrar_analisis_
 Route::get('study/show/usuario', 'StudyController@showUser');
 //Route for sending study request
 Route::post('soap/create/requestStudy','SoapController@sendMail');
+Route::post('soap/create/printRequest','SoapController@pdf_study');
 
 Route::resource('study', 'studyController');

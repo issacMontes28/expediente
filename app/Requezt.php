@@ -4,16 +4,17 @@ namespace SIAM;
 
 use SIAM\Pacient;
 use SIAM\Doctor;
+use SIAM\Study;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Request extends Model
+class Requezt extends Model
 {
   use SoftDeletes;
 
   protected $table = 'requests';
   protected $dates = ['deleted_at'];
-  protected $fillable = ['id_cita','subjetivo','objetivo','analisis','plan'];
+  protected $fillable = ['id_doctor','id_paciente','fecha','hora','mensaje','id_usuario'];
 
   /**
   * Get the date doctor associated with the request.
@@ -35,10 +36,9 @@ class Request extends Model
   * Get the studies associated with the request.
   */
 
-  public function studyRequests()
+  public function studies()
   {
-    return $this->hasMany('SIAM\StudyRequest','id_request');
+    return $this->belongsToMany('SIAM\Study','studyrequests','id_request', 'id_study');
   }
-
 
 }

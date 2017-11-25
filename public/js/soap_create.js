@@ -129,6 +129,7 @@ function appViewModel(){
          url: 'requestStudy',
          headers: {'X-CSRF-TOKEN': token},
          data: {
+           id_cita:      $("#id_cita").val(),
            id_doctor:    $('#id_doctor').val(),
            id_paciente:  $('#id_paciente').val(),
            pacient:      $('#pacient-name').val(),
@@ -148,35 +149,12 @@ function appViewModel(){
               alert(respuesta);
               var r3 = confirm("¿Desea imprimir hoja de solicitud de estudio?");
               if (r3 == true) {
-                $.ajax({
-                   url: 'printRequest',
-                   headers: {'X-CSRF-TOKEN': token},
-                   type: 'POST',
-                   data: {
-                     id_doctor:    $('#id_doctor').val(),
-                     id_paciente:  $('#id_paciente').val(),
-                     pacient:      $('#pacient-name').val(),
-                     emisor:       $('#recipient-name').val(),
-                     mail:         $('#mail').val(),
-                     phones:       $('#phones').val(),
-                     cuerpo:       $('#message-text').val(),
-                     pruebas:      self.chosenStudies(),
-                     date:         $('#date-study').val(),
-                     time:         $('#time').val()
-                   },
-                   dataType: 'JSON',
-                   error: function(respuesta) {alert("error");},
-                   success: function(respuesta) {
-                     if (respuesta) {
-                       alert('Éxito');
-                   }
-                   else {
-                     alert("error")
-                   }
-                 }
-               });
+                $('#myModal').modal('hide');
+                document.location.href = 'printStudy';
               }
-              $('#myModal').modal('hide');
+              else {
+                $('#myModal').modal('hide');
+              }
              }
              else {
              alert("error");

@@ -69,9 +69,11 @@ Route::resource('date', 'DateController');
 Route::get('find', 'SoapController@diagnosticos');
 Route::post('soap/create/AddSoap','SoapController@addItem');
 Route::get('soap/create/pdf','SoapController@pdf');
-//
-Route::post('soap/create/pdf_study','SoapController@pdf_study');
-//
+
+//Route for sending study request
+Route::get('soap/create/printStudy','SoapController@pdf_study');
+Route::post('soap/create/requestStudy','SoapController@sendMail');
+
 Route::post('soap/{id}/UpdateSoap','SoapController@updateItem');
 Route::get('/soap/create/{id}',
 ['uses' => 'PacientController@addsoap', 'as' => 'asignar_analisis_soap']);
@@ -101,8 +103,5 @@ Route::post('pacient/pacientUpdate/update/{id}', 'PacientController@updatePacien
 
 Route::get('soap/show/{id}', 'SoapController@showsoap')->name('mostrar_analisis_soap');
 Route::get('study/show/usuario', 'StudyController@showUser');
-//Route for sending study request
-Route::post('soap/create/requestStudy','SoapController@sendMail');
-Route::post('soap/create/printRequest','SoapController@pdf_study');
 
 Route::resource('study', 'studyController');

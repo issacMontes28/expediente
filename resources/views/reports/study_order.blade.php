@@ -144,20 +144,20 @@
     </h2>
     <div style="border-radius: 5px;border: 2px solid #01579B;padding: 20px; width: 50%;height: auto; ">
     <font style="color:#01579B">Paciente:</font>
-    <strong>{{$pacient}}</strong><br>
+    <strong>{{$request->pacient->nombre.' '.$request->pacient->apaterno.' '.$request->pacient->amaterno}}</strong><br>
     <font style="color:#01579B">Solicitante:</font>
-    <strong>{{$emisor}}</strong><br>
+    <strong>{{$request->doctor->nombre.' '.$request->doctor->apellidos}}</strong><br>
     <font style="color:#01579B">Info. de contacto de solicitante:</font>
-    <strong>{{'Correo: '.$mail}}</strong><br>
-    <strong>{{'Teléfonos: '.$phones}}</strong><br>
+    <strong>{{'Correo: '.$request->pacient->correo}}</strong><br>
+    <strong>{{'Teléfonos: Casa: '.$request->pacient->telefono_casa.'. Cel.: '.$request->pacient->telefono_celular.'. Oficina: '.$request->pacient->telfono_oficina.'.'}}</strong><br>
     <font style="color:#01579B">Prueba(s) solicitada:</font><br>
-    @foreach ($pruebas as $prueba)
-      <strong>{{'-'.$prueba['estudio']}}</strong><br>
+    @foreach ($request->studies as $study)
+      <strong>{{'-'.$study['nombre']}}</strong><br>
     @endforeach
     <font style="color:#01579B">Fecha y hora solicitadas</font><br>
-    <font style="color:#01579B">Fecha:</font><strong>{{$date}}</strong><br>
-    <font style="color:#01579B">Hora:</font> <strong>{{$time}}</strong><br>
-    <font style="color:#01579B">Mensaje:</font> <strong>{{$cuerpo}}</strong><br>
+    <font style="color:#01579B">Fecha:</font><strong>{{$request->date}}</strong><br>
+    <font style="color:#01579B">Hora:</font> <strong>{{$request->time}}</strong><br>
+    <font style="color:#01579B">Mensaje:</font> <strong>{{$request->mensaje}}</strong><br>
     </div>
   </div>
 </body>

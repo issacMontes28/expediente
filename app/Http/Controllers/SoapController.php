@@ -13,12 +13,15 @@ use SIAM\Doctor;
 use SIAM\Soap;
 use SIAM\Diagnostic;
 use SIAM\SoapDiagnostic;
+use SIAM\Requezt;
+use SIAM\StudyRequest;
 use Carbon\Carbon;
 use Session;
 use Redirect;
 use DB;
 use Mail;
 use PDF;
+use Illuminate\Support\Facades\Auth;
 //use Mapper;
 
 class SoapController extends Controller
@@ -395,6 +398,32 @@ class SoapController extends Controller
     public function sendMail(Request $request)
     {
       //Mapper::location('JM Research, S.C. Cuernavaca');
+
+      $cita = Date::find($request->id_cita);
+
+      Requezt::create([
+      'id_doctor'   => $cita->doctor->id,
+      'id_paciente' => $cita->pacient->id,
+      'fecha'       => $request->date,
+      'hora'        => $request->time,
+      'mensaje'     => $request->cuerpo,
+      'id_usuario'  => Auth::id()
+      ]);
+
+      $urequest = Requezt::all()->last();
+
+      for ($i=0; $i < count($request->pruebas) ; $i++) {
+        $prueba_aux = $request->pruebas[$i]["estudio"];
+        $estudios = DB::select("select * from studies where nombre='$prueba_aux'");
+        foreach ($estudios as $estudio) {
+          $id_estudio = $estudio->id;
+        }
+        StudyRequest::create([
+        'id_request' => $urequest->id,
+        'id_study' => $id_estudio
+        ]);
+      }
+
       Mail::send('mails.solicitud_estudio',$request->all(),function($msj){
             $msj->subject("Solicitud de prueba");
             $msj->to("meio139602@upemor.edu.mx");
@@ -409,10 +438,19 @@ class SoapController extends Controller
       $nombre_hoja= 'NotaMedica'.$soap->date->doctor->nombre.$soap->date->fecha.'.pdf';
       return $pdf->download($nombre_hoja);
     }
-    public function pdf_study(Request $request)
+    public function pdf_study()
     {
-      $pdf = PDF::loadView('reports/study_order',$request->all());
-      $nombre_orden= 'SolicitudEstudio'.$request["pacient"].'pdf';
+      $id_usuario = Auth::id();
+
+      $requests = DB::select("select * from requests where id_usuario='$id_usuario'");
+      foreach ($requests as $aux_request) {
+        $id_request  = $aux_request->id;
+      }
+
+      $request = Requezt::find($id_request);
+
+      $pdf = PDF::loadView('reports/study_order',compact('request'));
+      $nombre_orden= 'SolicitudEstudio'.$request->pacient->nombre.$request->pacient->apaterno.'.pdf';
       return $pdf->download($nombre_orden);
     }
 }

@@ -72,53 +72,56 @@
       white-space: nowrap;
     }
 
-    table {
+    table.issac {
       width: 100%;
       border-collapse: collapse;
       border-spacing: 0;
       margin-bottom: 20px;
     }
 
-    table tr:nth-child(2n-1) td {
+    table.issac.issac tr:nth-child(2n-1) td {
       background: #F5F5F5;
+      padding-top:      6px;
+      padding-bottom:   6px;
     }
 
-    table th,
-    table td {
-      text-align: left;
+    table.issac th,
+    table.issac td {
+      text-align: center;
     }
 
-    table th {
+    table.issac th {
+      font-size: 13px;
       padding: 5px 20px;
       color: #5D6975;
       border-bottom: 1px solid #C1CED9;
       white-space: nowrap;
       font-weight: normal;
-	  text-align: left;
+	    text-align: center;
     }
 
-    table .service,
-    table .desc {
-      text-align: left;
+    table.issac .service,
+    table.issac .desc {
+      text-align: center;
     }
 
-    table td {
+    table.issac td {
       padding: 20px;
-      text-align: left;
+      text-align: center;
     }
 
-    table td.service,
-    table td.desc {
+    table.issac td.service,
+    table.issac td.desc {
       vertical-align: top;
     }
 
-    table td.unit,
-    table td.qty,
-    table td.total {
+    table.issac td.unit,
+    table.issac td.qty,
+    table.issac td.total {
       font-size: 1.2em;
     }
 
-    table td.grand {
+    table.issac td.grand {
       border-top: 1px solid #5D6975;;
     }
 
@@ -127,16 +130,6 @@
       font-size: 1.2em;
     }
 
-    footer {
-      color: #5D6975;
-      width: 100%;
-      height: 30px;
-      position: absolute;
-      bottom: 0;
-      border-top: 1px solid #C1CED9;
-      padding: 8px 0;
-      text-align: center;
-    }
     </style>
   </head>
   <body>
@@ -148,18 +141,23 @@
               for ($j=0; $j < count($datos_personales_array); $j++) {
       ?>
 
-	  		<h1>
-				<?php echo $datos_personales_array[$j]["nombre"]?>
-				<?php echo $datos_personales_array[$j]["apaterno"]?>
-	  			<?php echo $datos_personales_array[$j]["amaterno"]?>
-	  		</h1>
-
 	  		<h2>
 				Hoja de registro
 			</h2>
-	  		<hr>
+
+	  		<div style="border-radius: 5px;border: 2px solid #01579B;padding: 20px; width: 50%;height: auto; ">
+				<font style="color:#01579B">Paciente:</font> <strong>
+					<?php echo $datos_personales_array[$j]["nombre"]?>
+					<?php echo $datos_personales_array[$j]["apaterno"]?>
+					<?php echo $datos_personales_array[$j]["amaterno"]?> </strong>  <br>
+				<font style="color:#01579B">Curp:</font> <strong>
+					<?php echo $datos_personales_array[$j]["curp"]?>  </strong>  <br>
+				<font style="color:#01579B">Sexo:</font><strong> <?php echo $datos_personales_array[$j]["sexo"]?> </strong><br>
+				<font style="color:#01579B">Fecha de registro:</font> <strong> <?php echo $datos_personales_array[$j]["curp"]?> </strong>  <br>
+			  </div>
+
 	  <div style="position:absolute;top:10px;right:10px;">
-		  <img  src=" {{ asset('assets/img/logo.png') }}"  />
+		  <img  src="http://laboratorio.jmresearch.org/images/logo.png" style="width:200px;"  />
 	  </div>
 
        <?php
@@ -174,8 +172,10 @@
             if ( $info_array[$i] == "Datos_personales") {
               for ($j=0; $j < count($datos_personales_array); $j++) {
       ?>
-              <table class="table">
-                <tr><th colspan="3"><h2 align="left">Datos demográficos</h2></th></tr>
+		 	  <div style="width:100%; background:#8B342B;color:white;">
+				<h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Datos demográficos</h2>
+			  </div>
+              <table class="table issac">
                 <thead><tr><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th></tr></thead>
                 <tbody>
                   <tr>
@@ -225,8 +225,10 @@
             if ( $info_array[$i] == "Antecedentes_HF") {
               for ($j=0; $j < count($antecedentes_hf_array); $j++) {
        ?>
-                <table class="table">
-				  <tr><th colspan="3"><h2 align="left">Antecedentes heredo-familiares</h2></th></tr>
+				<div style="width:100%; background:#8B342B;color:white;">
+					<h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Antecedentes heredo-familiares</h2>
+				</div>
+                <table class="table issac">
                   <thead><tr><th>Diabetes</th><th>Hipertensión</th><th>Cardiopatía</th></tr></thead>
                   <tbody>
                     <tr>
@@ -258,8 +260,10 @@
             if ( $info_array[$i] == "Antecedentes_PP") {
               for ($j=0; $j < count($antecedentes_pp_array); $j++) {
        ?>
-                <table class="table">
-				  <tr><th colspan="3"><h2 align="left">Antecedentes personales patológicos</h2></th></tr>
+				<div style="width:100%; background:#8B342B;color:white;">
+                    <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Antecedentes personales patológicos</h2>
+                </div>
+                <table class="table issac">
                   <thead><tr><th>Enfermedades actuales</th><th>Quirúrgicos</th><th>Transfucionales</th></tr></thead>
                   <tbody>
                     <tr>
@@ -285,8 +289,10 @@
             if ( $info_array[$i] == "Antecedentes_PNP") {
               for ($j=0; $j < count($antecedentes_pnp_array); $j++) {
       ?>
-            <table class="table">
-			  <tr><th colspan="3"><h2 align="left">Antecedentes personales no patológicos</h2></th></tr>
+			<div style="width:100%; background:#8B342B;color:white;">
+				<h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Antecedentes personales no patológicos</h2>
+			</div>
+            <table class="table issac">
               <thead><tr><th>Baño</th><th>Dientes</th><th>Habitación</th></tr></thead>
               <tbody>
                 <tr>
@@ -313,8 +319,10 @@
            if ( $info_array[$i] == "Antecedentes_GO") {
              for ($j=0; $j < count($antecedentes_go_array); $j++) {
       ?>
-            <table class="table">
-			  <tr><th colspan="3"><h2 align="left">Antecedentes gineco-obstétricos</h2></th></tr>
+			<div style="width:100%; background:#8B342B;color:white;">
+                <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Antecedentes gineco-obstétricos</h2>
+            </div>
+            <table class="table issac">
               <thead><tr><th>Menarca</th><th>Ritmo menstrual</th><th>Dismenorrea</th></tr></thead>
               <tbody>
                 <tr>
@@ -350,8 +358,10 @@
           if ($info_array[$i] == "Interrogatorio_AS") {
             for ($j=0; $j < count($interrogatorio_as_array); $j++) {
       ?>
-            <table class="table">
-			  <tr><th colspan="3"><h2 align="left">Interrogatorio por aparatos y sistemas</h2></th></tr>
+			<div style="width:100%; background:#8B342B;color:white;">
+                <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Interrogatorio por aparatos y sistemas</h2>
+            </div>
+            <table class="table issac">
               <thead><tr><th>Ap. Digestivo</th><th>Ap. Cardiovascular</th><th>Ap. Respiratorio</th></tr></thead>
               <tbody>
                 <tr>
@@ -381,8 +391,10 @@
           if ($info_array[$i] == "Sintomas_generales") {
             for ($j=0; $j < count($sintomas_generales_array); $j++) {
       ?>
-            <table class="table">
-			  <tr><th colspan="3"><h2 align="left">Síntomas generales</h2></th></tr>
+			<div style="width:100%; background:#8B342B;color:white;">
+                <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Síntomas generales</h2>
+            </div>
+            <table class="table issac">
               <thead><tr><th>Astenia</th><th>Adinamia</th><th>Anorexia</th></tr></thead>
               <tbody>
                 <tr>
@@ -403,8 +415,10 @@
          if ($info_array[$i] == "Padecimiento_actual") {
            for ($j=0; $j < count($padecimiento_actual_array); $j++) {
         ?>
-              <table class="table">
-				<tr><th colspan="3"><h2 align="left">Padecimiento actual</h2></th></tr>
+			  <div style="width:100%; background:#8B342B;color:white;">
+				<h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Padecimiento actual</h2>
+			  </div>
+              <table class="table issac">
                 <thead><tr><th>Descripción</th></tr></thead>
                 <tbody>
                   <tr>
@@ -418,8 +432,10 @@
          if ($info_array[$i] == "Somatometria") {
            for ($j=0; $j < count($somatometria_array); $j++) {
         ?>
-              <table class="table">
-				<tr><th colspan="3"><h2 align="left">Somatometría</h2></th></tr>
+			  <div style="width:100%; background:#8B342B;color:white;">
+                  <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Somatometría</h2>
+              </div>
+              <table class="table issac">
                 <thead><tr><th>Peso</th><th>Altura</th><th>Presión sistólica</th></tr></thead>
                 <tbody>
                   <tr>
@@ -444,8 +460,10 @@
          if ($info_array[$i] == "Inspeccion_general") {
            for ($j=0; $j < count($inspeccion_general_array); $j++) {
         ?>
-              <table class="table">
-				<tr><th colspan="3"><h2 align="left">Inspección general</h2></th></tr>
+			  <div style="width:100%; background:#8B342B;color:white;">
+                  <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Inspección general</h2>
+              </div>
+              <table class="table issac">
                 <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
                 <tbody>
                   <tr>
@@ -466,8 +484,10 @@
           if ($info_array[$i] == "Exploracion_fisica") {
             for ($j=0; $j < count($exploracion_fisica_array); $j++) {
         ?>
-              <table class="table">
-				<tr><th colspan="3"><h2 align="left">Inspección general</h2></th></tr>
+			  <div style="width:100%; background:#8B342B;color:white;">
+                  <h2 align="left" style="padding-top:3px;padding-left:10px;padding-bottom:3px;">Exploración física</h2>
+              </div>
+              <table class="table issac">
                 <thead><tr><th>Orientación</th><th>Hidratación</th><th>Coloración</th></tr></thead>
                 <tbody>
                   <tr>
@@ -487,19 +507,43 @@
          }
         }
        ?>
-      <table>
-        <thead><tr><th colspan="2">Doctor</th><th>Cédula</th></tr></thead>
-        <tbody><tr><td class="service" colspan="2"></td><td class="service"></td></tr></tbody>
-        <thead><tr><th colspan="3">Firma</th></tr></thead>
-        <tbody><tr><td class="service" colspan="3"></td></tr></tbody>
+      <br><br>
+      <table style="width:100%;text-align:center">
+        <thead>
+          <tr style="text-align:center">
+            <th colspan="2"> _____________________________ <br>Doctor</th>
+            <th> _____________________________ <br> Cédula </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align:center">
+            <td class="service" colspan="2"></td>
+            <td class="service"></td>
+          </tr>
+        </tbody>
+
+        <thead>
+          <tr style="text-align:center">
+            <th colspan="3">
+                <br><br><br><br>
+                 _____________________________  <br> Firma
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service" colspan="3"></td>
+          </tr>
+        </tbody>
       </table>
+      <br><br><br><br>
       <div id="notices">
         <div>NOTA:</div>
         <div class="notice">Si hay alguna inconsistecia en sus datos, puede modificarlos.</div>
+
+        <div class="notice">Ésta hoja de registro fue creada en computadora y no es v�lida sin firma..</div>
       </div>
+      <br><br>
     </main>
-    <footer>
-      Ésta hoja de registro fue creada en computadora y no es válida sin firma.
-    </footer>
   </body>
 </html>

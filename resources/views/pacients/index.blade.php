@@ -22,7 +22,7 @@
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
                         <th>CURP</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acción</th>
                     </thead>
                     @foreach ($pacients as $pacient)
                         <tr>
@@ -33,6 +33,10 @@
                             <td>
 															<button  type="button" value="<?php  echo $pacient->id?>" Onclick="mostrar(this.value);" class="btn btn-primary btn-sm" data-toggle='modal' data-target='#myModal'>Exhibir detalles</a>
                             </td>
+														<td>
+															{!!link_to_route('createNote', $title = 'Generar nota médica', $parameters = $pacient->id,
+											          $attributes = ['class'=>'btn btn-primary btn-sm','style'=>"color:#FFFFFF"])!!}
+                            </td>
                         </tr>
                     @include('pacients.modal')
                     @endforeach
@@ -41,7 +45,7 @@
             {{$pacients->render()}}
         </div>
     </div>
-		<!-- Modal -->
+
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">

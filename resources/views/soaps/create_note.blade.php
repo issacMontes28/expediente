@@ -12,11 +12,11 @@
  			</div>
  			<div class="form-group">
 	 			{!!Form::label('fecha_1','Fecha de la consulta (DD-MM-AA):')!!}
-	 			{!!Form::date('fecha',null,['class'=>'form-control', 'placeholder'=>'Ingrese fecha de la consulta'])!!}
+				<input type="date" id="fecha_consulta" class="form-control"></input>
  			</div>
  			<div class="form-group">
 	 			{!!Form::label('hora_1','Hora de la consulta (opcional):')!!}
-	 			{!!Form::time('hora',null,['class'=>'form-control', 'placeholder'=>'Ingrese hora de la consulta'])!!}
+				<input type="time" id="hora_consulta" class="form-control"></input>
  			</div>
  			<div class="form-group">
  				{!!Form::label('id_doctor_1','Doctor asignado a la consulta:')!!}

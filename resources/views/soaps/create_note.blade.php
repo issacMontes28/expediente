@@ -5,7 +5,7 @@
 @include('alerts.request')
   @section('contenido')
 	{!!Form::open()!!}
-				<h3>Datos de consulta *</h3>
+			<h3>Datos de consulta *</h3>
 			<div class="form-group">
  				{!!Form::label('id_doctor_1','Paciente al que se le asignará la consulta:')!!}
 				<input id="pacient" value="{{$pacient->nombre.' '.$pacient->apaterno.' '.$pacient->amaterno}}" class="form-control" disabled />

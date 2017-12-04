@@ -217,6 +217,59 @@ function appViewModel(){
      }
     }
   }
+
+  self.addSoap=function(){
+    var r= confirm("¿Guardar nuevo registro?");
+    if (r==true) {
+
+      //Variable que indica si hubo algún error
+      var bandera = 0;
+
+      //condiciones para la somatometría
+      if (self.subjetivo()==undefined && bandera==0) {
+        alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
+      if (self.objetivo()==undefined && bandera==0) {
+        alert("Faltan datos: objetivo en el análisis SOAP"); bandera =1;}
+      if (self.analisis()==undefined && bandera==0) {
+        alert("Faltan datos: análisis en el análisis SOAP"); bandera =1;}
+      if (self.plan()==undefined && bandera==0) {
+        alert("Faltan datos: plan en el análisis SOAP"); bandera =1;}
+      if (self.nuevos_diagnosticos_ini().length == 0 && bandera==0) {
+        alert("Faltan datos: diagnóstico inicial en el análisis SOAP"); bandera =1;}
+      if (self.nuevos_diagnosticos_fin().length == 0 && bandera==0) {
+        alert("Faltan datos: diagnóstico final en el análisis SOAP"); bandera =1;}
+
+      if(bandera == 0){
+        var token = $("#token").val();
+        var id_cita = $("#id_cita").val();
+        $.ajax({
+           url: 'AddSoap',
+           headers: {'X-CSRF-TOKEN': token},
+           type: 'POST',
+           data: {
+             subjetivo: self.subjetivo(), objetivo: self.objetivo(),
+             analisis: self.analisis(), plan: self.plan(),
+             diniciales: self.nuevos_diagnosticos_ini(), id_cita: id_cita,
+             difinales: self.nuevos_diagnosticos_fin()
+           },
+           dataType: 'JSON',
+           error: function(respuesta) {alert("error");},
+           success: function(respuesta) {
+             if (respuesta) {
+                alert("Se han asignado análisis SOAP correctamente");
+                var r2 = confirm("¿Crear PDF de nota médica?");
+                if (r2 == true) {
+                  document.location.href = 'pdf';
+                }
+           }
+           else {
+             alert("error")
+           }
+         }
+       });
+     }
+    }
+  }
 }
 //Se aplican los "enlaces" o "encadenamientos"  de las variables de javascript con sus
 //contrapartes en la parte visual de la aplicación

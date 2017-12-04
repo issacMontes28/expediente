@@ -5,52 +5,31 @@
 @include('alerts.request')
   @section('contenido')
 	{!!Form::open()!!}
-
-   <table class="table">
-     <thead>
-       <th>Paciente</th>
-       <th>Fecha y hora de consulta (AA-MM-DD)</th>
-       <th>Área a la que asiste</th>
-       <th>Doctor asignado</th>
-     </thead>
-     <tbody>
-			 <div class="form-group">
+				<h3>Datos de consulta *</h3>
+			<div class="form-group">
  				{!!Form::label('id_doctor_1','Paciente al que se le asignará la consulta:')!!}
-				<td><input id="pacient" value="{{$pacient->nombre.' '.$pacient->apaterno.' '.$pacient->amaterno}}" class="form-control" disabled /></td>
+				<input id="pacient" value="{{$pacient->nombre.' '.$pacient->apaterno.' '.$pacient->amaterno}}" class="form-control" disabled />
  			</div>
  			<div class="form-group">
- 			{!!Form::label('fecha_1','Fecha de la consulta (DD-MM-AA):')!!}
- 			{!!Form::date('fecha',null,['class'=>'form-control', 'placeholder'=>'Ingrese fecha de la consulta'])!!}
+	 			{!!Form::label('fecha_1','Fecha de la consulta (DD-MM-AA):')!!}
+	 			{!!Form::date('fecha',null,['class'=>'form-control', 'placeholder'=>'Ingrese fecha de la consulta'])!!}
  			</div>
  			<div class="form-group">
- 			{!!Form::label('hora_1','Hora de la consulta (opcional):')!!}
- 			{!!Form::time('hora',null,['class'=>'form-control', 'placeholder'=>'Ingrese hora de la consulta'])!!}
+	 			{!!Form::label('hora_1','Hora de la consulta (opcional):')!!}
+	 			{!!Form::time('hora',null,['class'=>'form-control', 'placeholder'=>'Ingrese hora de la consulta'])!!}
  			</div>
  			<div class="form-group">
  				{!!Form::label('id_doctor_1','Doctor asignado a la consulta:')!!}
- 				<select name="id_doctor" class="form-control">
- 				<?php
- 					foreach ($doctors as $doctor) {
- 				?>
- 					<option value="<?php echo $doctor->id ?>"><?php echo $doctor->apaterno.' '.$doctor->amaterno.' '.$doctor->nombre ;?></option>
- 				<?php
- 					}
- 				 ?>
- 				</select>
+				<input id="pacient" value="{{ Auth::user()->nombre.' '.Auth::user()->apellidos }}" class="form-control" disabled />
  			</div>
- 			<div>
 
-		</tbody>
-   </table>
-
-
+	 <br></br>
 	 <input type="hidden" name="_token" value="{{ csrf_token()}}" id="token"></input>
-	 <input type="hidden" name="id_doctor" value="<?php echo $cita->doctor->id ?>" id="id_doctor"></input>
-	 <input type="hidden" name="id_paciente" value="<?php echo $cita->pacient->id ?>" id="id_paciente"></input>
-	 <input type="hidden" name="id_cita" value="<?php echo $id_cita?>" id="id_cita"></input>
-	 <input type="hidden" value="{{$cita->doctor->correo.', '}}" id="mail"></input>
-	 <input type="hidden" value="{{'Casa: '.$cita->doctor->telefono_casa.'. Cel:'.
-		 $cita->doctor->telefono_celular.'. Oficina: '.$cita->doctor->telefono_oficina}}" id="phones"></input>
+	 <input type="hidden" name="id_doctor" value="{{ Auth::id() }}" id="id_doctor"></input>
+	 <input type="hidden" name="id_paciente" value="<?php echo $pacient->id ?>" id="id_paciente"></input>
+	 <input type="hidden" name="id_cita" value="<?php echo '1'?>" id="id_cita"></input>
+	 <input type="hidden" value="{{ Auth::user()->correo.', '}}" id="mail"></input>
+	 <input type="hidden" value="{{'Teléfono: '.Auth::user()->telefono }}" id="phones"></input>
 
         @include('soaps.forms.soap')
 				<br></br><br></br><br></br><br></br>

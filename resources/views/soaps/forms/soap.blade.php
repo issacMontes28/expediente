@@ -1,4 +1,7 @@
 <div class="form-group">
+  <h3>Datos de nota médica *</h3>
+</div>
+<div class="form-group">
   {!!Form::label('objetivo_1','Diagnóstico inicial:')!!}
   <input name="dinicial" id="dinicial" placeholder="Su diagnóstico inicial..." data-bind="value: dinicial" class="form-control" autocomplete="off">
   <button id="btnAgregar" data-bind="click: $root.anadirdiagini"

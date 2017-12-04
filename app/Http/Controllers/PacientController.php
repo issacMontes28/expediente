@@ -811,15 +811,10 @@ class PacientController extends Controller
   }
   public function createNote($id)
   {
-    $cita        = Date::find($id);
-    $id_cita     = $cita->id;
-    $id_paciente = $cita->id_paciente;
-    $paciente    = Pacient::find($id_paciente);
 
-    $pacients = DB::table('pacients')
-                ->orderBy('apaterno', 'asc')
-                ->get();
-    $doctors = DB::table('doctors')
+    $pacient    = Pacient::find($id);
+
+    $doctor = DB::table('doctors')
                 ->orderBy('apaterno', 'asc')
                 ->get();
     $matches_array = array();
@@ -850,7 +845,7 @@ class PacientController extends Controller
     $file4       = 'json/matches.json';
     file_put_contents($file4, $collection4);
 
-    return view('soaps/create',compact('cita','pacients','doctors','paciente','id_cita'));
+    return view('soaps/create_note',compact('pacient'));
   }
   public function show_details(Request $request,$id){
     if ($request->ajax()) {

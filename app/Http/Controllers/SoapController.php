@@ -121,12 +121,12 @@ class SoapController extends Controller
         ]);
 
         //se recupera la última hoja SOAP para poder asignale los diagósticos iniciales y finales
-        $dates= Date::where('id_usuario', Auth::id())->get();
+        $dates= Date::where('id_doctor', Auth::id())->get();
         $date = $dates->last();
 
         //Se crea la somatometría de la hoja de enfermería
         Soap::create([
-        'id_cita' => $request->id_cita,
+        'id_cita' => $date->id,
         'subjetivo' => $request->subjetivo,
         'objetivo' => $request->objetivo,
         'analisis' => $request->analisis,

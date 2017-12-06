@@ -107,6 +107,62 @@ class SoapController extends Controller
         //self::reporte($request);
       }
     }
+
+    public function addItemDate(Request $request)
+    {
+      if($request->ajax()){
+
+        Date::create([
+          'id_paciente' => $request['id_paciente'],
+          'fecha' => $request['fecha_consulta'],
+          'hora' => $request['hora_consulta'],
+          'area' => 'Médica',
+          'id_doctor' => $request['id_doctor']
+        ]);
+
+        //se recupera la última hoja SOAP para poder asignale los diagósticos iniciales y finales
+        $dates= Date::where('id_usuario', Auth::id())->get();
+        $date = $dates->last();
+
+        //Se crea la somatometría de la hoja de enfermería
+        Soap::create([
+        'id_cita' => $request->id_cita,
+        'subjetivo' => $request->subjetivo,
+        'objetivo' => $request->objetivo,
+        'analisis' => $request->analisis,
+        'plan' => $request->plan]);
+
+        //se recupera la última hoja SOAP para poder asignale los diagósticos iniciales y finales
+        $soaps= Soap::all();
+        $soap = $soaps->last();
+
+        for ($i=0; $i < count($request->diniciales); $i++) {
+          $nombre_diag = $request->diniciales[$i]["nombre"];
+          $diagnosticos = DB::select("select * from diagnosticos where nombre='$nombre_diag'");
+          foreach ($diagnosticos as $diagnostico) {
+            $id_diag= $diagnostico->id;
+          }
+          SoapDiagnostic::create([
+          'id_soap' => $soap->id,
+          'id_diagnostico' => $id_diag,
+          'tipo' => "Inicial"]);
+        }
+        for ($i=0; $i < count($request->difinales); $i++) {
+          $nombre_diag = $request->difinales[$i]["nombre"];
+          $diagnosticos = DB::select("select * from diagnosticos where nombre='$nombre_diag'");
+          foreach ($diagnosticos as $diagnostico) {
+            $id_diag= $diagnostico->id;
+          }
+          SoapDiagnostic::create([
+          'id_soap' => $soap->id,
+          'id_diagnostico' => $id_diag,
+          'tipo' => "Final"]);
+        }
+
+        return response()->json(["mensaje"=>"Análisis SOAP asignado correctamente"]);
+      }
+    }
+
     public function updateItem(Request $request)
     {
       if($request->ajax()){

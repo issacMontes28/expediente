@@ -69,6 +69,7 @@ Route::resource('date', 'DateController');
 //ruta para obtener los diagnósticos
 Route::get('find', 'SoapController@diagnosticos');
 Route::post('soap/create/AddSoap','SoapController@addItem');
+Route::post('soap/create/AddSoapDate','SoapController@addItemDate');
 Route::get('soap/create/pdf','SoapController@pdf');
 
 //Route for sending study request

@@ -37,6 +37,8 @@ function appViewModel(){
 	var self=this;
 
   //Variables para el SOAP
+  self.fecha_consulta = ko.observable();
+  self.hora_consulta = ko.observable();
   self.subjetivo = ko.observable();
   self.objetivo = ko.observable();
   self.analisis = ko.observable();
@@ -225,7 +227,14 @@ function appViewModel(){
       //Variable que indica si hubo algún error
       var bandera = 0;
 
-      //condiciones para la somatometría
+      //condiciones para la consulta
+      if (self.fecha_consulta()==undefined && bandera==0) {
+        alert("Faltan datos: fecha de consulta"); bandera =1;}
+      if (self.hora_consulta()==undefined && bandera==0) {
+        alert("Faltan datos: hora de consulta"); bandera =1;}
+
+
+      //condiciones para la nota médica
       if (self.subjetivo()==undefined && bandera==0) {
         alert("Faltan datos: subjetivo en el análisis SOAP"); bandera =1;}
       if (self.objetivo()==undefined && bandera==0) {
@@ -241,16 +250,21 @@ function appViewModel(){
 
       if(bandera == 0){
         var token = $("#token").val();
-        var id_cita = $("#id_cita").val();
         $.ajax({
-           url: 'AddSoap',
+           url: 'AddSoapDate',
            headers: {'X-CSRF-TOKEN': token},
            type: 'POST',
            data: {
-             subjetivo: self.subjetivo(), objetivo: self.objetivo(),
-             analisis: self.analisis(), plan: self.plan(),
-             diniciales: self.nuevos_diagnosticos_ini(), id_cita: id_cita,
-             difinales: self.nuevos_diagnosticos_fin()
+             subjetivo:      self.subjetivo(),
+             objetivo:       self.objetivo(),
+             analisis:       self.analisis(),
+             plan:           self.plan(),
+             diniciales:     self.nuevos_diagnosticos_ini(),
+             difinales:      self.nuevos_diagnosticos_fin(),
+             id_paciente:    $('#id_paciente'),
+             id_doctor:      $('#id_doctor'),
+             fecha_consulta: self.fecha_consulta(),
+             hora_consulta:  self.hora_consulta(),
            },
            dataType: 'JSON',
            error: function(respuesta) {alert("error");},

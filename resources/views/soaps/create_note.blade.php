@@ -12,11 +12,11 @@
  			</div>
  			<div class="form-group">
 	 			{!!Form::label('fecha_1','Fecha de la consulta (DD-MM-AA):')!!}
-				<input type="date" id="fecha_consulta" class="form-control"></input>
+				<input type="date" id="fecha_consulta" class="form-control" data-bind="value: fecha_consulta" class="form-control"></input>
  			</div>
  			<div class="form-group">
 	 			{!!Form::label('hora_1','Hora de la consulta (opcional):')!!}
-				<input type="time" id="hora_consulta" class="form-control"></input>
+				<input type="time" id="hora_consulta" data-bind="value: hora_consulta" class="form-control"></input>
  			</div>
  			<div class="form-group">
  				{!!Form::label('id_doctor_1','Doctor asignado a la consulta:')!!}
@@ -27,13 +27,12 @@
 	 <input type="hidden" name="_token" value="{{ csrf_token()}}" id="token"></input>
 	 <input type="hidden" name="id_doctor" value="{{ Auth::id() }}" id="id_doctor"></input>
 	 <input type="hidden" name="id_paciente" value="<?php echo $pacient->id ?>" id="id_paciente"></input>
-	 <input type="hidden" name="id_cita" value="<?php echo '1'?>" id="id_cita"></input>
 	 <input type="hidden" value="{{ Auth::user()->correo.', '}}" id="mail"></input>
 	 <input type="hidden" value="{{'Teléfono: '.Auth::user()->telefono }}" id="phones"></input>
 
         @include('soaps.forms.soap')
 				<br></br><br></br><br></br><br></br>
-				<button class="btn btn-success" data-bind="click: $root.agregarSoap">Guardar SOAP</button>
+				<button class="btn btn-success" data-bind="click: $root.addSoap">Guardar SOAP</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
 				<table class="table table-hover" data-bind="visible: aux_matchesi().length > 0 || aux_matchesf().length > 0">
 				   <thead  class="thead-inverse" >
@@ -116,8 +115,6 @@
 		    </div>
 		  </div>
 		</div>
-
-		<div id="pdf"></div>
 
     {!!Form::close()!!}
 @stop

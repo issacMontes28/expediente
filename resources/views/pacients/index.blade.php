@@ -125,7 +125,7 @@
 							</div>
 							<div class="tab-content col-sm-9">
 								<div class="tab-pane active"  id="tab1">
-									@include('pacients.forms.pacient')
+									@include('pacients.forms.pacient_modal')
 									<div align="center">
 										<br>
 										<a 	class="btn btn-primary  btn-lg btnNext">

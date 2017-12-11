@@ -44,9 +44,11 @@ class PacientController extends Controller
   {
     if ($request)
         {
+            $states = State::pluck('NOM_ENT','CVE_ENT');
+            $nationalities = Nationality::nationalities();
             $query=trim($request->get('searchText'));
             $pacientes = Pacient::name($request->get('name'))->orderBy('id','DESC')->paginate(5);
-            return view('pacients.index',["pacients"=>$pacientes,"searchText"=>$query]);
+            return view('pacients.index',["pacients"=>$pacientes,"searchText"=>$query,"states"=>$states,"nationalities"=>$nationalities]);
         }
   }
   /**

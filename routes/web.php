@@ -27,7 +27,7 @@ Route::get('pacient/towns/{id_estado}/localities/{id_municipio}', 'PacientContro
 Route::get('pacient/{id_paciente}/towns/{id}', 'PacientController@getTowns2');
 Route::get('pacient/{id_paciente}/towns/{id_estado}/localities/{id_municipio}', 'PacientController@getLocalities2');
 Route::get('pacient/deleter','PacientController@deleter');
-Route::get('pacient/createNote/{id_paciente}','PacientController@createNote')->name('createNote');;
+Route::get('pacient/createNote/{id_paciente}','PacientController@createNote')->name('createNote');
 Route::get('pacient/actualizar','PacientController@actualizar');
 //sub-rutas para extraer el detalle del paciente
 Route::get('pacient/show_details/{id}','PacientController@show_details');

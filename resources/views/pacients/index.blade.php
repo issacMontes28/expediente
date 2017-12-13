@@ -110,7 +110,7 @@
 		      <div class="modal-body">
 						<div class="col col-sm-3">
 								<ul class="nav nav-tabs nav-stacked text-center" role="tablist">
-									<li role="presentation" class="active"><a href="#tab1" data-toggle="tab"> <p>Nuevo paciente</p> </a></li>
+									<li role="presentation" class="active"><a href="#tab1" data-toggle="tab"> <p>Datos demográficos</p> </a></li>
 									<li role="presentation"><a href="#tab2" data-toggle="tab" > <p>Antecedentes - heredo familiares 				</p></a></li>
 									<li role="presentation"><a href="#tab3" data-toggle="tab" > <p>Antecedentes - patológicos 						</p></a></li>
 									<li role="presentation"><a href="#tab4" data-toggle="tab" > <p>Antecedentes - no patológicos 					</p></a></li>
@@ -125,7 +125,7 @@
 							</div>
 							<div class="tab-content col-sm-9">
 								<div class="tab-pane active"  id="tab1">
-									@include('pacients.forms.pacient_modal')
+									@include('pacients.details.demograficos')
 									<div align="center">
 										<br>
 										<a 	class="btn btn-primary  btn-lg btnNext">
@@ -148,7 +148,7 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="tab3">
-									@include('pacients.forms.antecedentes_pp')
+									@include('pacients.details.antecedentes_pp')
 
 									<div class="row">
 										<br>
@@ -163,7 +163,7 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="tab4">
-									@include('pacients.forms.antecedentes_pnp')
+									@include('pacients.details.antecedentes_pnp')
 									<div class="row">
 										<br>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -178,7 +178,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab5">
-									@include('pacients.forms.antecedentes_go')
+									@include('pacients.details.antecedentes_go')
 									<div class="row">
 										<br>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -193,7 +193,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab6">
-									@include('pacients.forms.antecedentes_exploracionAPySis')
+									@include('pacients.details.antecedentes_exploracionAPySis')
 
 									<div class="row">
 										<br>
@@ -209,7 +209,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab7">
-									@include('pacients.forms.antecedenes_sintomasGenerales')
+									@include('pacients.details.antecedenes_sintomasGenerales')
 
 									<div class="row">
 										<br>
@@ -225,7 +225,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab8">
-									@include('pacients.forms.antecedentes_padecimientoActual')
+									@include('pacients.details.antecedentes_padecimientoActual')
 
 									<div class="row">
 										<br>
@@ -241,7 +241,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab9">
-									@include('pacients.forms.antecedentes_somasometria')
+									@include('pacients.details.antecedentes_somasometria')
 									<div class="row">
 										<br>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -256,7 +256,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab10">
-									@include('pacients.forms.antecedentes_exploracionGeneral')
+									@include('pacients.details.antecedentes_exploracionGeneral')
 
 									<div class="row">
 										<br>
@@ -273,7 +273,7 @@
 
 
 								<div class="tab-pane" id="tab11">
-									@include('pacients.forms.antecedentes_exploracionRegional')
+									@include('pacients.details.antecedentes_exploracionRegional')
 
 									<div class="form-group" align="center">
 										<br>

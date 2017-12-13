@@ -34,6 +34,20 @@ function mostrar(btn){
     $("#otros").val(res.antecedenteshf.otros);
     $("#intneg").val(res.antecedenteshf.intneg);
 
+    //Antecedentes heredo-familiares disabled
+    $("#diabetes").prop('disabled', true);
+    $("#hipertension").prop('disabled', true);
+    $("#cardiopatia").prop('disabled', true);
+    $("#hepatopatia").prop('disabled', true);
+    $("#nefropatia").prop('disabled', true);
+    $("#enmentales").prop('disabled', true);
+    $("#asma").prop('disabled', true);
+    $("#cancer").prop('disabled', true);
+    $("#enalergicas").prop('disabled', true);
+    $("#endocrinas").prop('disabled', true);
+    $("#otros").prop('disabled', true);
+    $("#intneg").prop('disabled', true);
+
     //Antecedentes personales patologicos
     $("#enactuales").val(res.antecedentespp.enactuales);
     $("#quirurjicos").val(res.antecedentespp.quirurjicos);

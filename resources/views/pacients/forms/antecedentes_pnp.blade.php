@@ -74,24 +74,24 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">1.-Baño</label> <br>
-			<label class="radio-inline"><input type="radio" name="banio" value="Diario">Diario 	</label>
-			<label class="radio-inline"><input type="radio" name="banio" value="C/3er día">C/3er día 	</label>
-			<label class="radio-inline"><input type="radio" name="banio" value="Irregular">Irregular 	</label>
+			<label class="radio-inline"><input type="radio" name="banio" id="banio" value="Diario">Diario</label>
+			<label class="radio-inline"><input type="radio" name="banio" id="banio" value="Cada_tercer_día">Cada tercer día</label>
+			<label class="radio-inline"><input type="radio" name="banio" id="banio" value="Irregular">Irregular</label>
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">2.-Lavado de dientes</label><br>
-			<label class="radio-inline"><input type="radio" name="dientes" value="1/Día">1/Día</label>
-			<label class="radio-inline"><input type="radio" name="dientes" value="2/Día">2/Día</label>
-			<label class="radio-inline"><input type="radio" name="dientes" value="3/Día">3/Día</label>
+			<label class="radio-inline"><input type="radio" name="dientes" id="dientes" value="1_al_Día">1/Día</label>
+			<label class="radio-inline"><input type="radio" name="dientes" id="dientes" value="2_al_Día">2/Día</label>
+			<label class="radio-inline"><input type="radio" name="dientes" id="dientes" value="3_al_Día">3/Día</label>
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">3.-Habitación</label><br>
-			<label class="radio-inline"><input type="radio" name="habitacion" value="Urbana ">Urbana 				</label>
-			<label class="radio-inline"><input type="radio" name="habitacion" value="Rural">Rural 				</label>
+			<label class="radio-inline"><input type="radio" name="habitacion" id="habitacion" value="Urbana">Urbana</label>
+			<label class="radio-inline"><input type="radio" name="habitacion" id="habitacion" value="Rural">Rural</label>
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -148,7 +148,7 @@
 							<span> </span>
 					</label>
 					<label for="tv_pacient_check" class="btn btn-default active">
-							Televisión por cable
+							TV por cable
 					</label>
 			</div>
 			<br>

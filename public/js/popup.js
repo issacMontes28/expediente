@@ -1,6 +1,8 @@
 function mostrar(btn){
   var route="pacient/show_details/"+btn;
   $.get(route,function(res){
+
+
     //Datos del paciente
     $("#id").val(res.paciente.id);
     $("#nombre").val(res.paciente.nombre);
@@ -48,6 +50,7 @@ function mostrar(btn){
     $("#otros").prop('disabled', true);
     $("#intneg").prop('disabled', true);
 
+
     //Antecedentes personales patologicos
     $("#enactuales").val(res.antecedentespp.enactuales);
     $("#quirurjicos").val(res.antecedentespp.quirurjicos);
@@ -58,10 +61,21 @@ function mostrar(btn){
     $("#adicciones").val(res.antecedentespp.adicciones);
     $("#otros2").val(res.antecedentespp.otros);
 
-    //Antecedentes personales patologicos
-    $("#banio").val(res.antecedentespnp.banio);
-    $("#dientes").val(res.antecedentespnp.dientes);
-    $("#habitacion").val(res.antecedentespnp.habitacion);
+    //Antecedentes personales patologicos disabled
+    $("#enactuales").prop('disabled', true);
+    $("#quirurjicos").prop('disabled', true);
+    $("#transfuncionales").prop('disabled', true);
+    $("#alergias").prop('disabled', true);
+    $("#traumaticos").prop('disabled', true);
+    $("#hosprevias").prop('disabled', true);
+    $("#adicciones").prop('disabled', true);
+    $("#otros2").prop('disabled', true);
+
+    //Antecedentes personales NO patologicos
+    $('input[name=banio][value=' + res.antecedentespnp.banio + ']').prop('checked',true)
+    $('input[name=dientes][value=' + res.antecedentespnp.dientes + ']').prop('checked',true)
+    $('input[name=habitacion][value=' + res.antecedentespnp.habitacion + ']').prop('checked',true)
+
     $("#tabaquismo").val(res.antecedentespnp.tabaquismo);
     $("#alcoholismo").val(res.antecedentespnp.alcoholismo);
     $("#alimentacion").val(res.antecedentespnp.alimentacion);

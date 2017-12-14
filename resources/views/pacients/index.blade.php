@@ -148,7 +148,7 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="tab3">
-									@include('pacients.details.antecedentes_pp')
+									@include('pacients.forms.antecedentes_pp')
 
 									<div class="row">
 										<br>
@@ -163,7 +163,7 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="tab4">
-									@include('pacients.details.antecedentes_pnp')
+									@include('pacients.forms.antecedentes_pnp')
 									<div class="row">
 										<br>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">

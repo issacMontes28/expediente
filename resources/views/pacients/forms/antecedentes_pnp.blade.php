@@ -157,26 +157,26 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">5.-Tabaquismo</label>
-			<input class="form-control" placeholder="ingrese antecedente" name="tabaquismo"></input>
+			<input class="form-control" placeholder="ingrese antecedente" name="tabaquismo" id="tabaquismo"></input>
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">6.-Alcoholismo</label>
-			<input class="form-control" placeholder="ingrese antecedente" name="alcoholismo"></input>
+			<input class="form-control" placeholder="ingrese antecedente" name="alcoholismo" id="alcoholismo"></input>
 		</div>
 	</div>
 
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">7.-Alimentación</label>
-			<input class="form-control" placeholder="ingrese antecedente" name="alimentacion"></input>
+			<input class="form-control" placeholder="ingrese antecedente" name="alimentacion" id="alimentacion"></input>
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-group">
 			<label for="nombre">8.-Deportes</label>
-			<input class="form-control" placeholder="ingrese antecedente" name="deportes"></input>
+			<input class="form-control" placeholder="ingrese antecedente" name="deportes" id="deportes"></input>
 		</div>
 	</div>
 </div>

@@ -162,6 +162,7 @@
 										</div>
 									</div>
 								</div>
+
 								<div class="tab-pane" id="tab4">
 									@include('pacients.forms.antecedentes_pnp')
 									<div class="row">
@@ -178,7 +179,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab5">
-									@include('pacients.details.antecedentes_go')
+									@include('pacients.forms.antecedentes_go')
 									<div class="row">
 										<br>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -193,7 +194,7 @@
 								</div>
 
 								<div class="tab-pane" id="tab6">
-									@include('pacients.details.antecedentes_exploracionAPySis')
+									@include('pacients.forms.antecedentes_exploracionAPySis')
 
 									<div class="row">
 										<br>

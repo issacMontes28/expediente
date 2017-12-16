@@ -20,7 +20,7 @@
   padding: 5px 8px;
   transition: background-color 0.2s ease 0s;
   margin-top:10px;
-  
+
 }
 
 .textarea_css1 {
@@ -59,14 +59,14 @@
     display: none;
 }
 .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-    display: inline-block;   
+    display: inline-block;
 }
 
 .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
     display: inline-block;
 }
 .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-    display: none;   
+    display: none;
 }
 </style>
 
@@ -101,7 +101,7 @@
                     <span> </span>
                 </label>
                 <label for="ap_cardivascular_check" class="btn btn-default active">
-                    Aparato cardivascular: 
+                    Aparato cardivascular:
                 </label>
             </div>
             <br>
@@ -275,31 +275,31 @@
 
     $("#ap_respiratorio")   .attr("disabled","disabled");
     $("#ap_respiratorio")   .attr("class","textarea_css");
-    
+
     $("#ap_urinario")       .attr("disabled","disabled");
     $("#ap_urinario")       .attr("class","textarea_css");
-    
+
     $("#ap_genital")        .attr("disabled","disabled");
     $("#ap_genital")        .attr("class","textarea_css");
-    
+
     $("#ap_hematologico")   .attr("disabled","disabled");
     $("#ap_hematologico")   .attr("class","textarea_css");
-    
+
     $("#ap_endocrino")      .attr("disabled","disabled");
     $("#ap_endocrino")      .attr("class","textarea_css");
-    
+
     $("#ap_osteomuscular")  .attr("disabled","disabled");
     $("#ap_osteomuscular")  .attr("class","textarea_css");
-    
+
     $("#si_nervioso")       .attr("disabled","disabled");
     $("#si_nervioso")       .attr("class","textarea_css");
-    
+
     $("#si_sensorial")      .attr("disabled","disabled");
     $("#si_sensorial")      .attr("class","textarea_css");
-    
+
     $("#sicosomatico")      .attr("disabled","disabled");
     $("#sicosomatico")      .attr("class","textarea_css");
-    
+
     function ap_digestivo_checkClick(res) {
         if(res.checked == true){
             $("#ap_digestivo").attr("disabled",false);
@@ -309,7 +309,7 @@
             $("#ap_digestivo").attr("class","textarea_css");
         }
     }
-    
+
     function ap_cardivascular_checkClick(res) {
         if(res.checked == true){
             $("#ap_cardivascular").attr("disabled",false);

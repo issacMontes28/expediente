@@ -81,6 +81,23 @@ function mostrar(btn){
     $("#alimentacion").val(res.antecedentespnp.alimentacion);
     $("#deportes").val(res.antecedentespnp.deportes);
 
+
+    //Antecedentes personales NO patologicos disabled
+    $('input[name=banio]').prop('disabled', true);
+    $('input[name=dientes]').prop('disabled', true);
+    $('input[name=habitacion]').prop('disabled', true);
+
+    $('input[name=agua_pacient_check]').prop('disabled', true);
+    $('input[name=energia_pacient_check]').prop('disabled', true);
+    $('input[name=telefono_pacient_check]').prop('disabled', true);
+    $('input[name=internet_pacient_check]').prop('disabled', true);
+    $('input[name=tv_pacient_check]').prop('disabled', true);
+
+    $("#tabaquismo").prop('disabled', true);
+    $("#alcoholismo").prop('disabled', true);
+    $("#alimentacion").prop('disabled', true);
+    $("#deportes").prop('disabled', true);
+
     //Antecedentes gineco-obstétricos
     $("#menarca").val(res.antecedentesgo.menarca);
     $("#rmenstrual").val(res.antecedentesgo.rmenstrual);
@@ -97,6 +114,51 @@ function mostrar(btn){
     $("#mpp").val(res.antecedentesgo.mpp);
     $("#citologia").val(res.antecedentesgo.citologia);
     $("#mastografia").val(res.antecedentesgo.mastografia);
+
+    //Antecedentes gineco-obstétricos disabled
+    $("#menarca").prop('disabled', true);
+    $("#rmenstrual").prop('disabled', true);
+    $("#dismenorrea").prop('disabled', true);
+    $("#ivsa").prop('disabled', true);
+    $("#parejas").prop('disabled', true);
+    $("#gestas").prop('disabled', true);
+    $("#abortos").prop('disabled', true);
+    $("#partos").prop('disabled', true);
+    $("#cesareas").prop('disabled', true);
+    $("#fpp").prop('disabled', true);
+    $("#menopausia").prop('disabled', true);
+    $("#climaterio").prop('disabled', true);
+    $("#mpp").prop('disabled', true);
+    $("#citologia").prop('disabled', true);
+    $("#mastografia").prop('disabled', true);
+
+    //Exploración por aparatos y sistemas
+    $("#ap_digestivo").val(res.antecedentesgo.dismenorrea);
+    $("#ap_cardivascular").val(res.antecedentesgo.dismenorrea);
+    $("#ap_respiratorio").val(res.antecedentesgo.dismenorrea);
+    $("#ap_urinario").val(res.antecedentesgo.ivsa);
+    $("#ap_genital").val(res.antecedentesgo.parejas);
+    $("#ap_hematologico").val(res.antecedentesgo.gestas);
+    $("#ap_endocrino").val(res.antecedentesgo.abortos);
+    $("#ap_osteomuscular").val(res.antecedentesgo.partos);
+    $("#si_nervioso").val(res.antecedentesgo.cesareas);
+    $("#si_sensorial").val(res.antecedentesgo.fpp);
+    $("#sicosomatico").val(res.antecedentesgo.menopausia);
+
+    //Exploración por aparatos y sistemas disabled
+    $("#ap_digestivo_check").prop('disabled', true);
+    $("#ap_cardivascular_check").prop('disabled', true);
+    $("#ap_respiratorio_check").prop('disabled', true);
+    $("#ap_urinario_check").prop('disabled', true);
+    $("#ap_genital_check").prop('disabled', true);
+    $("#ap_hematologico_check").prop('disabled', true);
+    $("#ap_endocrino_check").prop('disabled', true);
+    $("#ap_osteomuscular_check").prop('disabled', true);
+    $("#si_nervioso_check").prop('disabled', true);
+    $("#si_sensorial_check").prop('disabled', true);
+    $("#sicosomatico_check").prop('disabled', true);
+
+
   });
 }
 function modifyPacient(btn){

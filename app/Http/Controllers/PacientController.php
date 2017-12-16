@@ -851,34 +851,69 @@ class PacientController extends Controller
   }
   public function show_details(Request $request,$id){
     if ($request->ajax()) {
+
       $paciente          = Pacient::find($id);
       $id_paciente       = $paciente->id;
+
+      $antecedentes_eas   = " ";
+      $fila_eas          = DB::select("select * FROM antecedentesapysis where id_paciente='$id_paciente'");
+      foreach ($fila_eas as $eas) {
+      $antecedentes_eas   = $eas;
+      }
+
+      $antecedentesg   = " ";
+      $fila_g          = DB::select("select * FROM antecedentesg where id_paciente='$id_paciente'");
+      foreach ($fila_g as $g) {
+      $antecedentesg   = $g;
+      }
+
+      $antecedentes_pact  = " ";
+      $fila_pact          = DB::select("select * FROM antecedentespact where id_paciente='$id_paciente'");
+      foreach ($fila_pact as $pact) {
+      $antecedentes_pact  = $pact;
+      }
+
+      $somatometria  = " ";
+      $fila_soma          = DB::select("select * FROM nsomatometries where id_paciente='$id_paciente'");
+      foreach ($fila_soma as $som) {
+      $somatometria  = $som;
+      }
+
       $antecedentes_go   = " ";
       $fila_go           = DB::select("select * FROM antecedentesgo where id_paciente='$id_paciente'");
       foreach ($fila_go as $go) {
       $antecedentes_go   = $go;
       }
+
       $antecedentes_hf   = " ";
       $fila_hf           = DB::select("select * FROM antecedenteshf where id_paciente='$id_paciente'");
       foreach ($fila_hf as $hf) {
       $antecedentes_hf   = $hf;
       }
+
       $antecedentes_pnp  = " ";
       $fila_pnp          = DB::select("select * FROM antecedentespnp where id_paciente='$id_paciente'");
       foreach ($fila_pnp as $pnp) {
       $antecedentes_pnp  = $pnp;
       }
+
       $antecedentes_pp   = " ";
       $fila_pp           = DB::select("select * FROM antecedentespp where id_paciente='$id_paciente'");
       foreach ($fila_pp as $pp) {
       $antecedentes_pp   = $pp;
       }
+
       $info = array(
         'paciente'        => $paciente,
         'antecedentesgo'  => $antecedentes_go,
         'antecedenteshf'  => $antecedentes_hf,
         'antecedentespnp' => $antecedentes_pnp,
         'antecedentespp'  => $antecedentes_pp,
+        'paciente'        => $paciente,
+        'antecedentesgo'  => $antecedentes_go,
+        'antecedenteshf'  => $antecedentes_hf,
+        'antecedentespnp' => $antecedentes_pnp,
+        'antecedentespp'  => $antecedentes_pp
       );
       return response()->json($info);
     }
